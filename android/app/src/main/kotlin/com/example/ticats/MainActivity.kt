@@ -1,4 +1,4 @@
-package com.example.ticats
+package com.potatoes.ticats
 
 import io.flutter.embedding.android.FlutterActivity
 

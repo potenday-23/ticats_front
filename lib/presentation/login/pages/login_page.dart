@@ -49,19 +49,21 @@ Widget _buildSSOLayout() {
         ),
       ),
       SizedBox(height: 16.h),
-      TicatsButton(
-        color: Colors.black,
-        onPressed: () async => await Get.find<LoginController>().loginWithApple(),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SvgPicture.asset('assets/logos/apple_logo.svg'),
-            SizedBox(width: 21.w),
-            Text("Apple로 시작하기", style: AppTypeFace.smallSemiBold.copyWith(color: Colors.white)),
-          ],
+      if (GetPlatform.isIOS) ...[
+        TicatsButton(
+          color: Colors.black,
+          onPressed: () async => await Get.find<LoginController>().loginWithApple(),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SvgPicture.asset('assets/logos/apple_logo.svg'),
+              SizedBox(width: 21.w),
+              Text("Apple로 시작하기", style: AppTypeFace.smallSemiBold.copyWith(color: Colors.white)),
+            ],
+          ),
         ),
-      ),
-      SizedBox(height: 16.h),
+        SizedBox(height: 16.h),
+      ],
       TicatsButton(
         color: AppColor.grayC7,
         onPressed: () {},

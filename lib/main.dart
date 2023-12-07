@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
+import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:ticats/app/config/app_binding.dart';
 import 'package:ticats/app/config/app_color.dart';
 import 'package:ticats/app/config/routes/route_path.dart';
@@ -20,6 +21,9 @@ void main() async {
 
   // Load .env file
   await dotenv.load(fileName: ".env");
+
+  // Initialize Kakao SDK
+  KakaoSdk.init(nativeAppKey: dotenv.env['KAKAO_NATIVE_APP_KEY']!);
 
   runApp(const MainApp());
 }

@@ -5,7 +5,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
+import 'package:ticats/app/config/app_binding.dart';
 import 'package:ticats/app/config/app_color.dart';
+import 'package:ticats/app/config/routes/route_path.dart';
+import 'package:ticats/app/config/routes/routes.dart';
 
 void main() async {
   // Ensure that the WidgetsBinding has been initialized
@@ -54,11 +57,9 @@ class MainApp extends StatelessWidget {
               child: child!,
             );
           },
-          home: Scaffold(
-            body: Center(
-              child: Text('Hello World!'),
-            ),
-          ),
+          initialBinding: AppBinding(),
+          initialRoute: RoutePath.login,
+          getPages: Routes.routes,
         );
       },
     );

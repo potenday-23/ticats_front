@@ -27,6 +27,8 @@ flutter:
 
   assets:
     - .env
+    - assets/cats/
+    - assets/logos/
 
   fonts:
     - family: SUIT

@@ -51,7 +51,7 @@ Widget _buildSSOLayout() {
       SizedBox(height: 16.h),
       TicatsButton(
         color: Colors.black,
-        onPressed: () {},
+        onPressed: () async => await Get.find<LoginController>().loginWithApple(),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [

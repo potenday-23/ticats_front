@@ -16,8 +16,10 @@ dependencies:
   flutter_screenutil: ^5.9.0
   flutter_secure_storage: ^9.0.0
   flutter_svg: ^2.0.9
+  fluttertoast: ^8.2.4
   freezed_annotation: ^2.4.1
   get: ^4.6.6
+  http_parser: ^4.0.2
   intl: ^0.18.1
   json_annotation: ^4.8.1
   kakao_flutter_sdk: ^1.7.0

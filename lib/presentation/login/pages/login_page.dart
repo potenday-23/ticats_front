@@ -34,11 +34,13 @@ class LoginPage extends StatelessWidget {
 }
 
 Widget _buildSSOLayout() {
+  final LoginController loginController = Get.find<LoginController>();
+
   return Column(
     children: [
       TicatsButton(
         color: const Color(0xFFFFE300),
-        onPressed: () async => await Get.find<LoginController>().loginWithKakao(),
+        onPressed: () async => await loginController.login(SSOType.kakao),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -52,7 +54,7 @@ Widget _buildSSOLayout() {
       if (GetPlatform.isIOS) ...[
         TicatsButton(
           color: Colors.black,
-          onPressed: () async => await Get.find<LoginController>().loginWithApple(),
+          onPressed: () async => await loginController.login(SSOType.apple),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -66,7 +68,7 @@ Widget _buildSSOLayout() {
       ],
       TicatsButton(
         color: AppColor.grayC7,
-        onPressed: () {},
+        onPressed: () async {},
         child: Text("로그인 없이 둘러보기", style: AppTypeFace.smallSemiBold),
       ),
     ],

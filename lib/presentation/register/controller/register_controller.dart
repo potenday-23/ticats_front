@@ -1,12 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:ticats/domain/usecases/auth_use_cases.dart';
+import 'package:ticats/domain/usecases/member_use_cases.dart';
 
 class RegisterController extends GetxController {
-  final AuthUseCases authUseCases = Get.find<AuthUseCases>();
+  final MemberUseCases memberUseCases = Get.find<MemberUseCases>();
 
-  CheckNicknameUseCase get checkNicknameUseCase => authUseCases.checkNicknameUseCase;
+  CheckNicknameUseCase get checkNicknameUseCase => memberUseCases.checkNicknameUseCase;
 
   // Profile
   RxString nickname = "".obs;

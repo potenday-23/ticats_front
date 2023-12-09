@@ -4,15 +4,17 @@ import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart' as kakao;
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:ticats/app/config/routes/route_path.dart';
 import 'package:ticats/app/service/auth_service.dart';
-import 'package:ticats/domain/entities/user.dart';
+import 'package:ticats/domain/entities/ticats_member.dart';
 import 'package:ticats/domain/usecases/auth_use_cases.dart';
+import 'package:ticats/domain/usecases/member_use_cases.dart';
 
 enum SSOType { apple, kakao }
 
 class LoginController extends GetxController {
   final AuthUseCases authUseCases = Get.find<AuthUseCases>();
+  final MemberUseCases memberUseCases = Get.find<MemberUseCases>();
 
-  CheckUserUseCase get checkUserUseCase => authUseCases.checkUserUseCase;
+  CheckUserUseCase get checkUserUseCase => memberUseCases.checkUserUseCase;
   LoginUseCase get loginUseCase => authUseCases.loginUseCase;
 
   Future<void> login(SSOType type) async {
@@ -31,7 +33,7 @@ class LoginController extends GetxController {
       // User 정보가 있는지 확인
       // 있으면 로그인 / 없으면 회원가입
       if (checkUserResult) {
-        User user = await loginUseCase.execute(userOAuth);
+        TicatsMember user = await loginUseCase.execute(userOAuth);
         await AuthService.to.setUser(user);
 
         Get.toNamed(RoutePath.termAgree);

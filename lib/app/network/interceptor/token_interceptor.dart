@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:ticats/app/service/auth_service.dart';
-import 'package:ticats/domain/entities/user.dart';
+import 'package:ticats/domain/entities/ticats_member.dart';
 
 class TokenInterceptor extends QueuedInterceptorsWrapper {
   final Dio _dio;
@@ -17,7 +17,7 @@ class TokenInterceptor extends QueuedInterceptorsWrapper {
     if (kDebugMode) print('onRequest TokenInterceptor ${options.uri}');
 
     try {
-      User? user = AuthService.to.user;
+      TicatsMember? user = AuthService.to.user;
 
       var localToken = user?.token?.accessToken;
       final expiredTime = user?.member?.updatedDate;
@@ -30,8 +30,9 @@ class TokenInterceptor extends QueuedInterceptorsWrapper {
         } else if (user.userOAuth?.socialType == 'KAKAO') {
           ssoType = SSOType.kakao;
         }
+      } else {
+        options.headers[_authHeaderKey] = '$_bearer $localToken';
       }
-      options.headers[_authHeaderKey] = '$_bearer $localToken';
       handler.next(options);
     } on DioException catch (e) {
       handler.reject(e);
@@ -43,7 +44,7 @@ class TokenInterceptor extends QueuedInterceptorsWrapper {
     if (kDebugMode) print('onError TokenInterceptor ${err.requestOptions.uri}');
     if (err.response?.statusCode == HttpStatus.unauthorized || err.response?.statusCode == HttpStatus.forbidden) {
       try {
-        User? user = AuthService.to.user;
+        TicatsMember? user = AuthService.to.user;
 
         // Check latest token
         final request = err.requestOptions;

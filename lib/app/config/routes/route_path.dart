@@ -4,4 +4,8 @@ class RoutePath {
 
   // Home
   static const String home = '/home';
+
+  // Register
+  static const String termAgree = '/termAgree';
+  static const String termDetail = '/termDetail';
 }

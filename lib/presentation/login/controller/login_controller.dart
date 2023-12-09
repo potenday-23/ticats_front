@@ -34,7 +34,7 @@ class LoginController extends GetxController {
         User user = await loginUseCase.execute(userOAuth);
         await AuthService.to.setUser(user);
 
-        Get.toNamed(RoutePath.home);
+        Get.toNamed(RoutePath.termAgree);
       } else {
         Get.toNamed(RoutePath.home);
       }

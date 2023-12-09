@@ -3,6 +3,7 @@ import 'package:ticats/presentation/home/pages/home_page.dart';
 import 'package:ticats/presentation/login/binding/login_binding.dart';
 import 'package:ticats/presentation/login/pages/login_page.dart';
 import 'package:ticats/presentation/register/controller/register_binding.dart';
+import 'package:ticats/presentation/register/pages/register_profile_page.dart';
 import 'package:ticats/presentation/register/pages/request_permission_page.dart';
 import 'package:ticats/presentation/register/pages/term_agree_page.dart';
 import 'package:ticats/presentation/register/pages/term_detail_page.dart';
@@ -37,6 +38,10 @@ class Routes {
     GetPage(
       name: RoutePath.requestPermssion,
       page: () => const RequestPermissionPage(),
+    ),
+    GetPage(
+      name: RoutePath.registerProfile,
+      page: () => const RegisterProfilePage(),
     ),
   ];
 }

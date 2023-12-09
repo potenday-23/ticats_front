@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:ticats/app/config/app_color.dart';
 import 'package:ticats/app/config/app_typeface.dart';
+import 'package:ticats/app/config/routes/route_path.dart';
 import 'package:ticats/app/service/permission_service.dart';
 import 'package:ticats/presentation/common/widgets/ticats_appbar.dart';
 import 'package:ticats/presentation/common/widgets/ticats_button.dart';
@@ -49,6 +51,8 @@ class RequestPermissionPage extends StatelessWidget {
               TicatsButton(
                 onPressed: () async {
                   await PermissionService.to.requestPhotoPermission();
+
+                  Get.toNamed(RoutePath.registerProfile);
                 },
                 child: Text("다음", style: AppTypeFace.smallBold.copyWith(color: Colors.white)),
               ),

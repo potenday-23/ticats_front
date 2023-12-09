@@ -13,6 +13,21 @@ class AuthRepositoryImpl extends AuthRepository {
   final AuthAPI _api = Get.find();
 
   @override
+  Future<bool> checkNickname(String nickname) async {
+    try {
+      await _api.checkNickname(nickname);
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 400) {
+        return false;
+      } else {
+        return Future.error(e);
+      }
+    }
+
+    return true;
+  }
+
+  @override
   Future<bool> checkUser(UserOAuth userOAuth) async {
     try {
       await _api.checkUser(userOAuth.socialId, userOAuth.socialType);

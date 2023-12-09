@@ -18,7 +18,7 @@ class DioBuilder extends DioMixin implements Dio {
     options = BaseOptions(
       responseType: ResponseType.json,
       baseUrl: AppConst.baseUrl,
-      contentType: Headers.multipartFormDataContentType,
+      contentType: Headers.jsonContentType,
       connectTimeout: connectionTimeOutMls,
       receiveTimeout: readTimeOutMls,
       sendTimeout: writeTimeOutMls,

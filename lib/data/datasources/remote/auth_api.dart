@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/http.dart';
-import 'package:ticats/data/models/user_model.dart';
+import 'package:ticats/data/models/ticats_member_model.dart';
 
 part 'auth_api.g.dart';
 
@@ -8,13 +8,7 @@ part 'auth_api.g.dart';
 abstract class AuthAPI {
   factory AuthAPI(Dio dioBuilder) = _AuthAPI;
 
-  @GET('/members')
-  Future<void> checkNickname(@Query('nickname') String nickname);
-
-  @GET('/members')
-  Future<UserModel> checkUser(@Query('socialId') String socialId, @Query('socialType') String socialType);
-
   @POST('/auth/login')
   @MultiPart()
-  Future<UserModel> login(@Part(contentType: "application/json") Map<String, MultipartFile> request);
+  Future<TicatsMemberModel> login(@Part(contentType: "application/json") Map<String, MultipartFile> request);
 }

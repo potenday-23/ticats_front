@@ -1,7 +1,5 @@
-import 'package:ticats/domain/entities/user.dart';
+import 'package:ticats/domain/entities/ticats_member.dart';
 
 abstract class AuthRepository {
-  Future<bool> checkNickname(String nickname);
-  Future<bool> checkUser(UserOAuth userOAuth);
-  Future<User> login(UserOAuth userOAuth);
+  Future<TicatsMember> login(UserOAuth userOAuth);
 }

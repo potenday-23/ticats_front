@@ -1,16 +1,16 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'user_model.freezed.dart';
-part 'user_model.g.dart';
+part 'ticats_member_model.freezed.dart';
+part 'ticats_member_model.g.dart';
 
 @freezed
-class UserModel with _$UserModel {
-  const factory UserModel({
+class TicatsMemberModel with _$TicatsMemberModel {
+  const factory TicatsMemberModel({
     required TokenModel? token,
     required MemberModel? member,
-  }) = _UserModel;
+  }) = _TicatsMemberModel;
 
-  factory UserModel.fromJson(Map<String, Object?> json) => _$UserModelFromJson(json);
+  factory TicatsMemberModel.fromJson(Map<String, Object?> json) => _$TicatsMemberModelFromJson(json);
 }
 
 @freezed

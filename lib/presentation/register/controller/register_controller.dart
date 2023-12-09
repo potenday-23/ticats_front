@@ -1,6 +1,29 @@
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:ticats/domain/usecases/auth_use_cases.dart';
 
 class RegisterController extends GetxController {
+  final AuthUseCases authUseCases = Get.find<AuthUseCases>();
+
+  CheckNicknameUseCase get checkNicknameUseCase => authUseCases.checkNicknameUseCase;
+
+  // Profile
+  RxString nickname = "".obs;
+  Rx<XFile?> profileImage = XFile("").obs;
+
+  Future<void> getImage() async {
+    try {
+      final ImagePicker picker = ImagePicker();
+
+      profileImage.value = await picker.pickImage(source: ImageSource.gallery);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+  }
+
   // Term
   bool get isAllAgree => isAgreeList.contains(false) ? false : true;
   bool get isRequiredAgree => isAgreeList[0] && isAgreeList[1];

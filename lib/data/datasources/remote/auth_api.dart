@@ -9,6 +9,9 @@ abstract class AuthAPI {
   factory AuthAPI(Dio dioBuilder) = _AuthAPI;
 
   @GET('/members')
+  Future<void> checkNickname(@Query('nickname') String nickname);
+
+  @GET('/members')
   Future<UserModel> checkUser(@Query('socialId') String socialId, @Query('socialType') String socialType);
 
   @POST('/auth/login')

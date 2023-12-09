@@ -6,8 +6,20 @@ import 'package:ticats/domain/repositories/auth_repository.dart';
 class AuthUseCases {
   final AuthRepository _repository = Get.find<AuthRepositoryImpl>();
 
-  LoginUseCase get loginUseCase => Get.put(LoginUseCase(_repository));
+  CheckNicknameUseCase get checkNicknameUseCase => Get.put(CheckNicknameUseCase(_repository));
   CheckUserUseCase get checkUserUseCase => Get.put(CheckUserUseCase(_repository));
+  LoginUseCase get loginUseCase => Get.put(LoginUseCase(_repository));
+}
+
+class CheckNicknameUseCase {
+  final AuthRepository _repository;
+  CheckNicknameUseCase(this._repository);
+
+  Future<bool> execute(String nickname) async {
+    bool result = await _repository.checkNickname(nickname);
+
+    return result;
+  }
 }
 
 class CheckUserUseCase {

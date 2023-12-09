@@ -19,7 +19,7 @@ class TicatsButton extends StatelessWidget {
         height: 56.w,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.r),
-          color: color ?? AppColor.systemPositiveBlue,
+          color: onPressed != null ? color ?? AppColor.systemPositiveBlue : AppColor.grayC7,
           gradient: gradient,
         ),
         child: Center(child: child),

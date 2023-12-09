@@ -24,6 +24,7 @@ dependencies:
   intl: ^0.18.1
   json_annotation: ^4.8.1
   kakao_flutter_sdk: ^1.7.0
+  permission_handler: ^11.1.0
   retrofit: ^4.0.3
   sign_in_with_apple: ^5.0.0
 

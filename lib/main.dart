@@ -52,7 +52,12 @@ class MainApp extends StatelessWidget {
             fontFamily: 'SUIT',
             useMaterial3: true,
             colorSchemeSeed: AppColor.primaryNormal,
-            appBarTheme: const AppBarTheme(backgroundColor: Colors.white, elevation: 0.0),
+            appBarTheme: AppBarTheme(
+              backgroundColor: Colors.white,
+              elevation: 0,
+              scrolledUnderElevation: 0,
+              toolbarHeight: 56.w,
+            ),
             scaffoldBackgroundColor: Colors.white,
           ),
           builder: (context, child) {

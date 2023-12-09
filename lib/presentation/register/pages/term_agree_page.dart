@@ -32,7 +32,9 @@ class TermAgreePage extends StatelessWidget {
               GetX<RegisterController>(
                 builder: (controller) {
                   return TicatsButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      if (controller.isRequiredAgree) Get.toNamed(RoutePath.requestPermssion);
+                    },
                     color: controller.isRequiredAgree ? null : AppColor.grayC7,
                     child: Text("다음", style: AppTypeFace.smallBold.copyWith(color: Colors.white)),
                   );

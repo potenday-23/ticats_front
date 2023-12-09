@@ -8,4 +8,5 @@ class RoutePath {
   // Register
   static const String termAgree = '/termAgree';
   static const String termDetail = '/termDetail';
+  static const String requestPermssion = '/requestPermssion';
 }

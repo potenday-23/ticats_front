@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:ticats/app/config/app_const.dart';
 import 'package:ticats/app/network/builder/dio_builder.dart';
 import 'package:ticats/app/service/auth_service.dart';
+import 'package:ticats/app/service/permission_service.dart';
 import 'package:ticats/data/datasources/remote/auth_api.dart';
 import 'package:ticats/data/repositories_impl/auth_repository_impl.dart';
 import 'package:ticats/domain/usecases/auth_use_cases.dart';
@@ -42,6 +43,7 @@ class AppBinding extends Bindings {
 
   void injectService() {
     Get.put(AuthService());
+    Get.lazyPut(() => PermissionService(), fenix: true);
   }
 
   void injectUseCase() {

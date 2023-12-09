@@ -36,41 +36,44 @@ class LoginPage extends StatelessWidget {
 Widget _buildSSOLayout() {
   final LoginController loginController = Get.find<LoginController>();
 
-  return Column(
-    children: [
-      TicatsButton(
-        color: const Color(0xFFFFE300),
-        onPressed: () async => await loginController.login(SSOType.kakao),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SvgPicture.asset('assets/logos/kakao_logo.svg'),
-            SizedBox(width: 21.w),
-            Text("카카오로 시작하기", style: AppTypeFace.smallSemiBold),
-          ],
-        ),
-      ),
-      SizedBox(height: 16.h),
-      if (GetPlatform.isIOS) ...[
+  return Padding(
+    padding: EdgeInsets.symmetric(horizontal: 25.w),
+    child: Column(
+      children: [
         TicatsButton(
-          color: Colors.black,
-          onPressed: () async => await loginController.login(SSOType.apple),
+          color: const Color(0xFFFFE300),
+          onPressed: () async => await loginController.login(SSOType.kakao),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              SvgPicture.asset('assets/logos/apple_logo.svg'),
+              SvgPicture.asset('assets/logos/kakao_logo.svg'),
               SizedBox(width: 21.w),
-              Text("Apple로 시작하기", style: AppTypeFace.smallSemiBold.copyWith(color: Colors.white)),
+              Text("카카오로 시작하기", style: AppTypeFace.smallSemiBold),
             ],
           ),
         ),
         SizedBox(height: 16.h),
+        if (GetPlatform.isIOS) ...[
+          TicatsButton(
+            color: Colors.black,
+            onPressed: () async => await loginController.login(SSOType.apple),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SvgPicture.asset('assets/logos/apple_logo.svg'),
+                SizedBox(width: 21.w),
+                Text("Apple로 시작하기", style: AppTypeFace.smallSemiBold.copyWith(color: Colors.white)),
+              ],
+            ),
+          ),
+          SizedBox(height: 16.h),
+        ],
+        TicatsButton(
+          color: AppColor.grayC7,
+          onPressed: () async {},
+          child: Text("로그인 없이 둘러보기", style: AppTypeFace.smallSemiBold),
+        ),
       ],
-      TicatsButton(
-        color: AppColor.grayC7,
-        onPressed: () async {},
-        child: Text("로그인 없이 둘러보기", style: AppTypeFace.smallSemiBold),
-      ),
-    ],
+    ),
   );
 }

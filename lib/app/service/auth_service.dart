@@ -33,7 +33,7 @@ class AuthService extends GetxService {
         gravity: ToastGravity.BOTTOM,
       );
     } else {
-      Get.offAllNamed('/home');
+      // Get.offAllNamed('/home');
     }
   }
 

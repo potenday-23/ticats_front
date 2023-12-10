@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:ticats/app/config/app_color.dart';
 import 'package:ticats/app/config/app_typeface.dart';
+import 'package:ticats/app/config/routes/route_path.dart';
 import 'package:ticats/app/extension/input_validate.dart';
 import 'package:ticats/presentation/common/widgets/ticats_appbar.dart';
 import 'package:ticats/presentation/common/widgets/ticats_button.dart';
@@ -41,8 +42,7 @@ class RegisterProfilePage extends StatelessWidget {
               GetX<RegisterController>(
                 builder: (controller) {
                   return TicatsButton(
-                    onPressed: () {},
-                    color: controller.nickname.value.isNotEmpty ? null : AppColor.grayC7,
+                    onPressed: controller.nickname.value.isNotEmpty ? () => Get.toNamed(RoutePath.selectCategory) : null,
                     child: Text("다음", style: AppTypeFace.smallBold.copyWith(color: Colors.white)),
                   );
                 },

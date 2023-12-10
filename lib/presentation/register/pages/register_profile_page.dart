@@ -105,6 +105,12 @@ class _NickNameTextFieldState extends State<_NickNameTextField> {
   bool get hasNickError => nickErrorMessage.isNotEmpty;
 
   @override
+  void initState() {
+    super.initState();
+    nickController.text = Get.find<RegisterController>().nickname.value;
+  }
+
+  @override
   void dispose() {
     nickController.dispose();
     super.dispose();

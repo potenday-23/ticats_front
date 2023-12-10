@@ -23,13 +23,7 @@ class TokenInterceptor extends QueuedInterceptorsWrapper {
       final expiredTime = user?.member?.updatedDate;
       final isExpired = expiredTime != null && user!.member!.updatedDate!.isAfter(DateTime.now().subtract(const Duration(days: 1)));
       if (isExpired) {
-        SSOType ssoType;
-
-        if (user.userOAuth?.socialType == 'APPLE') {
-          ssoType = SSOType.apple;
-        } else if (user.userOAuth?.socialType == 'KAKAO') {
-          ssoType = SSOType.kakao;
-        }
+        // TODO: Implement token refresh logic
       } else {
         options.headers[_authHeaderKey] = '$_bearer $localToken';
       }

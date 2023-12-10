@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
-import 'package:ticats/domain/entities/ticats_member.dart';
+import 'package:ticats/domain/entities/user_oauth.dart';
 import 'package:ticats/domain/repositories/member_repository.dart';
 
 import '../datasources/remote/member_api.dart';

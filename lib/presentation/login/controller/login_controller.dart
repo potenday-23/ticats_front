@@ -5,6 +5,7 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:ticats/app/config/routes/route_path.dart';
 import 'package:ticats/app/service/auth_service.dart';
 import 'package:ticats/domain/entities/ticats_member.dart';
+import 'package:ticats/domain/entities/user_oauth.dart';
 import 'package:ticats/domain/usecases/auth_use_cases.dart';
 import 'package:ticats/domain/usecases/member_use_cases.dart';
 
@@ -28,17 +29,25 @@ class LoginController extends GetxController {
 
     // SSO 로그인 성공
     if (userOAuth != null) {
-      bool checkUserResult = await checkUserUseCase.execute(userOAuth);
-
       // User 정보가 있는지 확인
       // 있으면 로그인 / 없으면 회원가입
+      bool checkUserResult = await checkUserUseCase.execute(userOAuth);
+
       if (checkUserResult) {
-        TicatsMember user = await loginUseCase.execute(userOAuth);
-        await AuthService.to.setUser(user);
+        try {
+          TicatsMember user = await loginUseCase.execute(userOAuth);
+
+          await AuthService.to.setUser(user);
+          await AuthService.to.setUserOAuth(userOAuth);
+
+          Get.toNamed(RoutePath.home);
+        } catch (e) {
+          if (kDebugMode) print(e);
+        }
+      } else {
+        AuthService.to.tempUserOAuth = userOAuth;
 
         Get.toNamed(RoutePath.termAgree);
-      } else {
-        Get.toNamed(RoutePath.home);
       }
     }
   }

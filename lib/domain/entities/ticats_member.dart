@@ -8,7 +8,6 @@ class TicatsMember with _$TicatsMember {
   const factory TicatsMember({
     required Token? token,
     required Member? member,
-    required UserOAuth? userOAuth,
   }) = _TicatsMember;
 
   factory TicatsMember.fromJson(Map<String, Object?> json) => _$TicatsMemberFromJson(json);
@@ -38,14 +37,4 @@ class Member with _$Member {
   }) = _Member;
 
   factory Member.fromJson(Map<String, Object?> json) => _$MemberFromJson(json);
-}
-
-@freezed
-class UserOAuth with _$UserOAuth {
-  const factory UserOAuth({
-    required String socialId,
-    required String socialType,
-  }) = _UserOAuth;
-
-  factory UserOAuth.fromJson(Map<String, Object?> json) => _$UserOAuthFromJson(json);
 }

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart' hide User;
 import 'package:ticats/data/datasources/local/auth_local_datasource.dart';
 import 'package:ticats/domain/entities/ticats_member.dart';
+import 'package:ticats/domain/entities/user_oauth.dart';
 
 enum SSOType { apple, kakao }
 
@@ -11,6 +12,11 @@ class AuthService extends GetxService {
 
   TicatsMember? _user;
   TicatsMember? get user => _user;
+
+  UserOAuth? _userOAuth;
+  UserOAuth? get userOAuth => _userOAuth;
+
+  UserOAuth? tempUserOAuth;
 
   bool get isTokenExpired {
     if (user == null) return false;
@@ -22,7 +28,7 @@ class AuthService extends GetxService {
   void onInit() async {
     super.onInit();
 
-    await getUser();
+    await getCredential();
 
     if (_user == null) {
       return;
@@ -37,8 +43,9 @@ class AuthService extends GetxService {
     }
   }
 
-  Future<void> getUser() async {
+  Future<void> getCredential() async {
     _user = await AuthLocalDataSource().getUser();
+    _userOAuth = await AuthLocalDataSource().getUserOAuth();
   }
 
   Future<void> setUser(TicatsMember user) async {
@@ -47,8 +54,14 @@ class AuthService extends GetxService {
     AuthLocalDataSource().saveUser(user);
   }
 
+  Future<void> setUserOAuth(UserOAuth userOAuth) async {
+    _userOAuth = userOAuth;
+
+    AuthLocalDataSource().saveUserOAuth(userOAuth);
+  }
+
   Future<void> logout() async {
-    if (user?.userOAuth?.socialType == 'KAKAO') {
+    if (userOAuth?.socialType == 'KAKAO') {
       await UserApi.instance.logout();
     }
 

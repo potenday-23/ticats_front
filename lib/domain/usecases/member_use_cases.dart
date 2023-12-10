@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import '../entities/ticats_member.dart';
+import '../entities/user_oauth.dart';
 import '../repositories/member_repository.dart';
 
 class MemberUseCases {

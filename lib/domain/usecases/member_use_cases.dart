@@ -1,13 +1,13 @@
 import 'package:get/get.dart';
 
-import '../entities/user_oauth.dart';
+import '../entities/member_oauth.dart';
 import '../repositories/member_repository.dart';
 
 class MemberUseCases {
   final MemberRepository _repository = Get.find<MemberRepository>();
 
   CheckNicknameUseCase get checkNicknameUseCase => Get.put(CheckNicknameUseCase(_repository));
-  CheckUserUseCase get checkUserUseCase => Get.put(CheckUserUseCase(_repository));
+  CheckMemberUseCase get checkMemberUseCase => Get.put(CheckMemberUseCase(_repository));
 }
 
 class CheckNicknameUseCase {
@@ -21,12 +21,12 @@ class CheckNicknameUseCase {
   }
 }
 
-class CheckUserUseCase {
+class CheckMemberUseCase {
   final MemberRepository _repository;
-  CheckUserUseCase(this._repository);
+  CheckMemberUseCase(this._repository);
 
-  Future<bool> execute(UserOAuth userOMember) async {
-    bool result = await _repository.checkUser(userOMember);
+  Future<bool> execute(MemberOAuth memberOAuth) async {
+    bool result = await _repository.checkMember(memberOAuth);
 
     return result;
   }

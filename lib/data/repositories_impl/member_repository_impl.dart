@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
-import 'package:ticats/domain/entities/user_oauth.dart';
+import 'package:ticats/domain/entities/member_oauth.dart';
 import 'package:ticats/domain/repositories/member_repository.dart';
 
 import '../datasources/remote/member_api.dart';
@@ -24,9 +24,9 @@ class MemberRepositoryImpl extends MemberRepository {
   }
 
   @override
-  Future<bool> checkUser(UserOAuth userOAuth) async {
+  Future<bool> checkMember(MemberOAuth memberOAuth) async {
     try {
-      await _api.checkUser(userOAuth.socialId, userOAuth.socialType);
+      await _api.checkMember(memberOAuth.socialId, memberOAuth.socialType);
     } on DioException catch (e) {
       if (e.response?.statusCode == 400) {
         return false;

@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 
 import '../entities/register_entity.dart';
 import '../entities/ticats_member.dart';
-import '../entities/user_oauth.dart';
+import '../entities/member_oauth.dart';
 import '../repositories/auth_repository.dart';
 
 class AuthUseCases {
@@ -16,10 +16,10 @@ class LoginUseCase {
   final AuthRepository _repository;
   LoginUseCase(this._repository);
 
-  Future<TicatsMember> execute(UserOAuth userOAuth) async {
-    TicatsMember user = await _repository.login(userOAuth);
+  Future<TicatsMember> execute(MemberOAuth memberOAuth) async {
+    TicatsMember member = await _repository.login(memberOAuth);
 
-    return user;
+    return member;
   }
 }
 
@@ -28,8 +28,8 @@ class RegisterUseCase {
   RegisterUseCase(this._repository);
 
   Future<TicatsMember> execute(RegisterEntity registerEntity) async {
-    TicatsMember user = await _repository.register(registerEntity);
+    TicatsMember member = await _repository.register(registerEntity);
 
-    return user;
+    return member;
   }
 }

@@ -2,47 +2,47 @@ import 'dart:convert';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:ticats/domain/entities/ticats_member.dart';
-import 'package:ticats/domain/entities/user_oauth.dart';
+import 'package:ticats/domain/entities/member_oauth.dart';
 
-const String userKey = 'user';
-const String userOAuthKey = 'oauth';
+const String memberKey = 'member';
+const String memberOAuthKey = 'oauth';
 
 class AuthLocalDataSource {
   final storage = const FlutterSecureStorage();
 
-  Future<void> deleteUser() async {
-    await storage.delete(key: userKey);
+  Future<void> deleteMember() async {
+    await storage.delete(key: memberKey);
   }
 
-  Future<void> deleteUserOAuth() async {
-    await storage.delete(key: userOAuthKey);
+  Future<void> deleteMemberOAuth() async {
+    await storage.delete(key: memberOAuthKey);
   }
 
-  Future<TicatsMember?> getUser() async {
-    final user = await storage.read(key: userKey);
+  Future<TicatsMember?> getMember() async {
+    final member = await storage.read(key: memberKey);
 
-    if (user != null) {
-      return TicatsMember.fromJson(jsonDecode(user));
+    if (member != null) {
+      return TicatsMember.fromJson(jsonDecode(member));
     } else {
       return null;
     }
   }
 
-  Future<UserOAuth?> getUserOAuth() async {
-    final user = await storage.read(key: userOAuthKey);
+  Future<MemberOAuth?> getMemberOAuth() async {
+    final member = await storage.read(key: memberOAuthKey);
 
-    if (user != null) {
-      return UserOAuth.fromJson(jsonDecode(user));
+    if (member != null) {
+      return MemberOAuth.fromJson(jsonDecode(member));
     } else {
       return null;
     }
   }
 
-  Future<void> saveUser(TicatsMember user) async {
-    await storage.write(key: userKey, value: jsonEncode(user.toJson()));
+  Future<void> saveMember(TicatsMember member) async {
+    await storage.write(key: memberKey, value: jsonEncode(member.toJson()));
   }
 
-  Future<void> saveUserOAuth(UserOAuth userOAuth) async {
-    await storage.write(key: userOAuthKey, value: jsonEncode(userOAuth.toJson()));
+  Future<void> saveMemberOAuth(MemberOAuth memberOAuth) async {
+    await storage.write(key: memberOAuthKey, value: jsonEncode(memberOAuth.toJson()));
   }
 }

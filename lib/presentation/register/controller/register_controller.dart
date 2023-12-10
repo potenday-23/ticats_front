@@ -49,8 +49,8 @@ class RegisterController extends GetxController {
   // Register
   Future<void> register() async {
     final RegisterEntity registerEntity = RegisterEntity(
-      socialId: AuthService.to.tempUserOAuth!.socialId,
-      socialType: AuthService.to.tempUserOAuth!.socialType,
+      socialId: AuthService.to.tempMemberOAuth!.socialId,
+      socialType: AuthService.to.tempMemberOAuth!.socialType,
       pushAgree: isAgreeList[2] ? "AGREE" : "DISAGREE",
       marketingAgree: isAgreeList[3] ? "AGREE" : "DISAGREE",
       nickname: nickname.value,
@@ -61,8 +61,8 @@ class RegisterController extends GetxController {
     try {
       TicatsMember member = await registerUseCase.execute(registerEntity);
 
-      await AuthService.to.setUser(member);
-      await AuthService.to.setUserOAuth(AuthService.to.tempUserOAuth!);
+      await AuthService.to.setMember(member);
+      await AuthService.to.setMemberOAuth(AuthService.to.tempMemberOAuth!);
 
       Get.toNamed(RoutePath.home);
     } catch (e) {

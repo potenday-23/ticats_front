@@ -1,14 +1,22 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:ticats/app/config/routes/route_path.dart';
+import 'package:ticats/app/service/auth_service.dart';
+import 'package:ticats/domain/entities/register_entity.dart';
+import 'package:ticats/domain/entities/ticats_member.dart';
+import 'package:ticats/domain/usecases/auth_use_cases.dart';
 import 'package:ticats/domain/usecases/member_use_cases.dart';
 
 class RegisterController extends GetxController {
+  final AuthUseCases authUseCases = Get.find<AuthUseCases>();
   final MemberUseCases memberUseCases = Get.find<MemberUseCases>();
 
   CheckNicknameUseCase get checkNicknameUseCase => memberUseCases.checkNicknameUseCase;
+  RegisterUseCase get registerUseCase => authUseCases.registerUseCase;
 
   // Profile
+  RxList<String> categoryList = <String>[].obs;
   RxString nickname = "".obs;
   Rx<XFile?> profileImage = XFile("").obs;
 
@@ -35,6 +43,32 @@ class RegisterController extends GetxController {
       isAgreeList.assignAll([true, true, true, true]);
     } else {
       isAgreeList.assignAll([false, false, false, false]);
+    }
+  }
+
+  // Register
+  Future<void> register() async {
+    final RegisterEntity registerEntity = RegisterEntity(
+      socialId: AuthService.to.tempUserOAuth!.socialId,
+      socialType: AuthService.to.tempUserOAuth!.socialType,
+      pushAgree: isAgreeList[2] ? "AGREE" : "DISAGREE",
+      marketingAgree: isAgreeList[3] ? "AGREE" : "DISAGREE",
+      nickname: nickname.value,
+      profileImage: profileImage.value,
+      categorys: categoryList,
+    );
+
+    try {
+      TicatsMember member = await registerUseCase.execute(registerEntity);
+
+      await AuthService.to.setUser(member);
+      await AuthService.to.setUserOAuth(AuthService.to.tempUserOAuth!);
+
+      Get.toNamed(RoutePath.home);
+    } catch (e) {
+      if (kDebugMode) {
+        print("ERROR: $e");
+      }
     }
   }
 }

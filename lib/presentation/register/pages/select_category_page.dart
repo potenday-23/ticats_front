@@ -49,7 +49,7 @@ class SelectCategoryPage extends StatelessWidget {
                 GetX<RegisterController>(
                   builder: (controller) {
                     return TicatsButton(
-                      onPressed: controller.categoryList.isNotEmpty ? () => Get.toNamed(RoutePath.selectCategory) : null,
+                      onPressed: controller.categoryList.isNotEmpty ? () async => await controller.register() : null,
                       child: Text("티캣츠 시작하기", style: AppTypeFace.smallBold.copyWith(color: Colors.white)),
                     );
                   },

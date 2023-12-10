@@ -1,4 +1,4 @@
-import 'package:ticats/domain/entities/ticats_member.dart';
+import '../entities/user_oauth.dart';
 
 abstract class MemberRepository {
   Future<bool> checkNickname(String nickname);

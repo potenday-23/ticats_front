@@ -10,4 +10,5 @@ class RoutePath {
   static const String termDetail = '/termDetail';
   static const String requestPermssion = '/requestPermssion';
   static const String registerProfile = '/registerProfile';
+  static const String selectCategory = '/selectCategory';
 }

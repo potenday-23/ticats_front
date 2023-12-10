@@ -5,7 +5,7 @@ import 'package:get/get.dart' hide FormData, MultipartFile;
 import 'package:http_parser/http_parser.dart';
 import 'package:ticats/domain/entities/register_entity.dart';
 import 'package:ticats/domain/entities/ticats_member.dart';
-import 'package:ticats/domain/entities/user_oauth.dart';
+import 'package:ticats/domain/entities/member_oauth.dart';
 import 'package:ticats/domain/repositories/auth_repository.dart';
 
 import '../datasources/remote/auth_api.dart';
@@ -15,17 +15,17 @@ class AuthRepositoryImpl extends AuthRepository {
   final AuthAPI _api = Get.find();
 
   @override
-  Future<TicatsMember> login(UserOAuth userOAuth) async {
-    TicatsMemberModel user = await _api.login({
+  Future<TicatsMember> login(MemberOAuth memberOAuth) async {
+    TicatsMemberModel member = await _api.login({
       'request': MultipartFile.fromString(
-        jsonEncode({'socialId': userOAuth.socialId, 'socialType': userOAuth.socialType}),
+        jsonEncode({'socialId': memberOAuth.socialId, 'socialType': memberOAuth.socialType}),
         contentType: MediaType('application', 'json'),
       ),
     });
 
     return TicatsMember(
-      member: Member.fromJson(user.member!.toJson()),
-      token: Token.fromJson(user.token!.toJson()),
+      member: Member.fromJson(member.member!.toJson()),
+      token: Token.fromJson(member.token!.toJson()),
     );
   }
 
@@ -57,11 +57,11 @@ class AuthRepositoryImpl extends AuthRepository {
       ]);
     }
 
-    TicatsMemberModel user = await _api.register(data);
+    TicatsMemberModel member = await _api.register(data);
 
     return TicatsMember(
-      member: Member.fromJson(user.member!.toJson()),
-      token: Token.fromJson(user.token!.toJson()),
+      member: Member.fromJson(member.member!.toJson()),
+      token: Token.fromJson(member.token!.toJson()),
     );
   }
 }

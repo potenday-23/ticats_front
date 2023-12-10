@@ -1,27 +1,27 @@
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart' hide User;
+import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:ticats/data/datasources/local/auth_local_datasource.dart';
 import 'package:ticats/domain/entities/ticats_member.dart';
-import 'package:ticats/domain/entities/user_oauth.dart';
+import 'package:ticats/domain/entities/member_oauth.dart';
 
 enum SSOType { apple, kakao }
 
 class AuthService extends GetxService {
   static AuthService get to => Get.find();
 
-  TicatsMember? _user;
-  TicatsMember? get user => _user;
+  TicatsMember? _member;
+  TicatsMember? get member => _member;
 
-  UserOAuth? _userOAuth;
-  UserOAuth? get userOAuth => _userOAuth;
+  MemberOAuth? _memberOAuth;
+  MemberOAuth? get memberOAuth => _memberOAuth;
 
-  UserOAuth? tempUserOAuth;
+  MemberOAuth? tempMemberOAuth;
 
   bool get isTokenExpired {
-    if (user == null) return false;
+    if (member == null) return true;
 
-    return !user!.member!.updatedDate!.isAfter(DateTime.now().subtract(const Duration(days: 1)));
+    return !member!.member!.updatedDate!.isAfter(DateTime.now().subtract(const Duration(days: 1)));
   }
 
   @override
@@ -30,7 +30,7 @@ class AuthService extends GetxService {
 
     await getCredential();
 
-    if (_user == null) {
+    if (_member == null) {
       return;
     } else if (isTokenExpired) {
       await Fluttertoast.showToast(
@@ -44,27 +44,27 @@ class AuthService extends GetxService {
   }
 
   Future<void> getCredential() async {
-    _user = await AuthLocalDataSource().getUser();
-    _userOAuth = await AuthLocalDataSource().getUserOAuth();
+    _member = await AuthLocalDataSource().getMember();
+    _memberOAuth = await AuthLocalDataSource().getMemberOAuth();
   }
 
-  Future<void> setUser(TicatsMember user) async {
-    _user = user;
+  Future<void> setMember(TicatsMember member) async {
+    _member = member;
 
-    AuthLocalDataSource().saveUser(user);
+    AuthLocalDataSource().saveMember(member);
   }
 
-  Future<void> setUserOAuth(UserOAuth userOAuth) async {
-    _userOAuth = userOAuth;
+  Future<void> setMemberOAuth(MemberOAuth memberOAuth) async {
+    _memberOAuth = memberOAuth;
 
-    AuthLocalDataSource().saveUserOAuth(userOAuth);
+    AuthLocalDataSource().saveMemberOAuth(memberOAuth);
   }
 
   Future<void> logout() async {
-    if (userOAuth?.socialType == 'KAKAO') {
+    if (memberOAuth?.socialType == 'KAKAO') {
       await UserApi.instance.logout();
     }
 
-    await AuthLocalDataSource().deleteUser();
+    await AuthLocalDataSource().deleteMember();
   }
 }

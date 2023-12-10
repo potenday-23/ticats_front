@@ -17,12 +17,11 @@ class TokenInterceptor extends QueuedInterceptorsWrapper {
     if (kDebugMode) print('onRequest TokenInterceptor ${options.uri}');
 
     try {
-      TicatsMember? user = AuthService.to.user;
+      TicatsMember? member = AuthService.to.member;
 
-      var localToken = user?.token?.accessToken;
-      final expiredTime = user?.member?.updatedDate;
-      final isExpired = expiredTime != null && user!.member!.updatedDate!.isAfter(DateTime.now().subtract(const Duration(days: 1)));
-      if (isExpired) {
+      var localToken = member?.token?.accessToken;
+
+      if (AuthService.to.isTokenExpired) {
         // TODO: Implement token refresh logic
       } else {
         options.headers[_authHeaderKey] = '$_bearer $localToken';
@@ -38,13 +37,14 @@ class TokenInterceptor extends QueuedInterceptorsWrapper {
     if (kDebugMode) print('onError TokenInterceptor ${err.requestOptions.uri}');
     if (err.response?.statusCode == HttpStatus.unauthorized || err.response?.statusCode == HttpStatus.forbidden) {
       try {
-        TicatsMember? user = AuthService.to.user;
+        TicatsMember? member = AuthService.to.member;
 
         // Check latest token
         final request = err.requestOptions;
         final requestToken = request.headers[_authHeaderKey] ?? '';
-        var localToken = user?.token?.accessToken;
+        var localToken = member?.token?.accessToken;
         var latestToken = '$_bearer $localToken';
+
         if ((requestToken == latestToken) || (requestToken.isEmpty && localToken!.isEmpty)) {
           // latestToken = '$_bearer ${await _refreshToken()}';
         }

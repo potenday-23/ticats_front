@@ -12,5 +12,5 @@ abstract class MemberAPI {
   Future<void> checkNickname(@Query('nickname') String nickname);
 
   @GET('/members')
-  Future<TicatsMemberModel> checkUser(@Query('socialId') String socialId, @Query('socialType') String socialType);
+  Future<TicatsMemberModel> checkMember(@Query('socialId') String socialId, @Query('socialType') String socialType);
 }

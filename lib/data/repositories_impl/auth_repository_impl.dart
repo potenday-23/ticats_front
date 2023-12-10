@@ -10,23 +10,23 @@ import 'package:ticats/domain/repositories/auth_repository.dart';
 
 import '../datasources/remote/auth_api.dart';
 import '../models/ticats_member_model.dart';
+import 'mapper/member_mapper.dart';
+
+final MemberMapper _memberMapper = MemberMapper();
 
 class AuthRepositoryImpl extends AuthRepository {
   final AuthAPI _api = Get.find();
 
   @override
   Future<TicatsMember> login(MemberOAuth memberOAuth) async {
-    TicatsMemberModel member = await _api.login({
+    TicatsMemberModel memberModel = await _api.login({
       'request': MultipartFile.fromString(
         jsonEncode({'socialId': memberOAuth.socialId, 'socialType': memberOAuth.socialType}),
         contentType: MediaType('application', 'json'),
       ),
     });
 
-    return TicatsMember(
-      member: Member.fromJson(member.member!.toJson()),
-      token: Token.fromJson(member.token!.toJson()),
-    );
+    return _memberMapper.convert<TicatsMemberModel, TicatsMember>(memberModel);
   }
 
   @override
@@ -57,11 +57,8 @@ class AuthRepositoryImpl extends AuthRepository {
       ]);
     }
 
-    TicatsMemberModel member = await _api.register(data);
+    TicatsMemberModel memberModel = await _api.register(data);
 
-    return TicatsMember(
-      member: Member.fromJson(member.member!.toJson()),
-      token: Token.fromJson(member.token!.toJson()),
-    );
+    return _memberMapper.convert<TicatsMemberModel, TicatsMember>(memberModel);
   }
 }

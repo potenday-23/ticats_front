@@ -8,7 +8,6 @@ import 'package:ticats/domain/entities/ticats_member.dart';
 class TokenInterceptor extends QueuedInterceptorsWrapper {
   final Dio _dio;
   final _authHeaderKey = 'Authorization';
-  final _bearer = 'Bearer';
 
   TokenInterceptor(this._dio);
 
@@ -24,7 +23,7 @@ class TokenInterceptor extends QueuedInterceptorsWrapper {
       if (AuthService.to.isTokenExpired) {
         // TODO: Implement token refresh logic
       } else {
-        options.headers[_authHeaderKey] = '$_bearer $localToken';
+        options.headers[_authHeaderKey] = localToken;
       }
       handler.next(options);
     } on DioException catch (e) {
@@ -43,7 +42,7 @@ class TokenInterceptor extends QueuedInterceptorsWrapper {
         final request = err.requestOptions;
         final requestToken = request.headers[_authHeaderKey] ?? '';
         var localToken = member?.token?.accessToken;
-        var latestToken = '$_bearer $localToken';
+        var latestToken = localToken;
 
         if ((requestToken == latestToken) || (requestToken.isEmpty && localToken!.isEmpty)) {
           // latestToken = '$_bearer ${await _refreshToken()}';

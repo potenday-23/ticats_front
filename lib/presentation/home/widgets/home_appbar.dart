@@ -48,6 +48,7 @@ class HomeAppBar extends GetView<HomeController> implements PreferredSizeWidget 
         indicatorColor: Colors.transparent,
 
         splashFactory: NoSplash.splashFactory,
+        overlayColor: MaterialStateColor.resolveWith((states) => Colors.transparent),
       ),
 
       // actions

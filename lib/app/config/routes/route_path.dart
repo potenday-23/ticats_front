@@ -2,8 +2,8 @@ class RoutePath {
   // Login
   static const String login = '/login';
 
-  // Home
-  static const String home = '/home';
+  // Main
+  static const String main = '/main';
 
   // Register
   static const String termAgree = '/termAgree';

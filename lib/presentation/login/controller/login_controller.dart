@@ -40,7 +40,7 @@ class LoginController extends GetxController {
           await AuthService.to.setMember(member);
           await AuthService.to.setMemberOAuth(memberOAuth);
 
-          Get.toNamed(RoutePath.home);
+          Get.toNamed(RoutePath.main);
         } catch (e) {
           if (kDebugMode) print(e);
         }

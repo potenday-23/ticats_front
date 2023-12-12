@@ -12,7 +12,10 @@ class MainPage extends GetView<MainController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Obx(() => controller.pages[controller.selectedIndex]),
+      body: Obx(() => IndexedStack(
+            index: controller.selectedIndex,
+            children: controller.pages,
+          )),
       bottomNavigationBar: const _TicatsBottomNavBar(),
     );
   }

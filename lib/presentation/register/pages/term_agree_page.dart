@@ -4,12 +4,12 @@ import 'package:get/get.dart';
 import 'package:ticats/app/config/app_color.dart';
 import 'package:ticats/app/config/app_typeface.dart';
 import 'package:ticats/app/config/routes/route_path.dart';
+import 'package:ticats/presentation/common/enum/term_type.dart';
 import 'package:ticats/presentation/common/widgets/ticats_appbar.dart';
 import 'package:ticats/presentation/common/widgets/ticats_button.dart';
 import 'package:ticats/presentation/common/widgets/ticats_checkbox.dart';
 
 import '../controller/register_controller.dart';
-import '../enum/term_type.dart';
 
 class TermAgreePage extends StatelessWidget {
   const TermAgreePage({super.key});

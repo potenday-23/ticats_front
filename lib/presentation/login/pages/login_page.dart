@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:ticats/app/config/app_color.dart';
 import 'package:ticats/app/config/app_typeface.dart';
+import 'package:ticats/app/config/routes/route_path.dart';
 import 'package:ticats/presentation/common/widgets/ticats_button.dart';
 import 'package:ticats/presentation/login/controller/login_controller.dart';
 
@@ -70,7 +71,7 @@ Widget _buildSSOLayout() {
         ],
         TicatsButton(
           color: AppColor.grayC7,
-          onPressed: () async {},
+          onPressed: () => Get.offAllNamed(RoutePath.main),
           child: Text("로그인 없이 둘러보기", style: AppTypeFace.smallSemiBold),
         ),
       ],

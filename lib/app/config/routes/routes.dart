@@ -1,7 +1,8 @@
 import 'package:get/get.dart';
-import 'package:ticats/presentation/home/pages/home_page.dart';
 import 'package:ticats/presentation/login/binding/login_binding.dart';
 import 'package:ticats/presentation/login/pages/login_page.dart';
+import 'package:ticats/presentation/main/controller/main_binding.dart';
+import 'package:ticats/presentation/main/pages/main_page.dart';
 import 'package:ticats/presentation/register/controller/register_binding.dart';
 import 'package:ticats/presentation/register/pages/register_profile_page.dart';
 import 'package:ticats/presentation/register/pages/request_permission_page.dart';
@@ -20,10 +21,11 @@ class Routes {
       binding: LoginBinding(),
     ),
 
-    // Home
+    // Main
     GetPage(
-      name: RoutePath.home,
-      page: () => const HomePage(),
+      name: RoutePath.main,
+      page: () => const MainPage(),
+      binding: MainBinding(),
     ),
 
     // Register

@@ -64,7 +64,7 @@ class RegisterController extends GetxController {
       await AuthService.to.setMember(member);
       await AuthService.to.setMemberOAuth(AuthService.to.tempMemberOAuth!);
 
-      Get.toNamed(RoutePath.home);
+      Get.toNamed(RoutePath.main);
     } catch (e) {
       if (kDebugMode) {
         print("ERROR: $e");

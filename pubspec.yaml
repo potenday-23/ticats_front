@@ -9,8 +9,10 @@ environment:
 dependencies:
   auto_mappr_annotation: ^2.1.0
   dio: ^5.4.0
+  flip_card: ^0.7.0
   flutter:
     sdk: flutter
+  flutter_cache_manager: ^3.3.1
   flutter_dotenv: ^5.1.0
   flutter_localizations:
     sdk: flutter
@@ -29,6 +31,7 @@ dependencies:
   permission_handler: ^11.1.0
   retrofit: ^4.0.3
   sign_in_with_apple: ^5.0.0
+  stacked_card_carousel: ^0.0.4
 
 dev_dependencies:
   auto_mappr: ^2.2.0
@@ -50,6 +53,7 @@ flutter:
     - assets/images/
     - assets/logos/
     - assets/terms/
+    - assets/tickets/
 
   fonts:
     - family: SUIT

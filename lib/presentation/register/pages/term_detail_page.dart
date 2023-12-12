@@ -3,9 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:ticats/presentation/common/enum/term_type.dart';
 import 'package:ticats/presentation/common/widgets/ticats_appbar.dart';
-
-import '../enum/term_type.dart';
 
 class TermDetailPage extends StatelessWidget {
   TermDetailPage({super.key});

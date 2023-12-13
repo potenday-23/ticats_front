@@ -19,10 +19,10 @@ class TicketRepositoryImpl extends TicketRepository {
     String? end,
     String? search,
   }) async {
-    List<TicketModel> totalTickets =
+    List<TicketModel> totalTicketList =
         await _api.getTotalTicket(categorys: categorys, period: period, start: start, end: end, search: search);
 
-    return _ticketMappr.convertList<TicketModel, Ticket>(totalTickets);
+    return _ticketMappr.convertList<TicketModel, Ticket>(totalTicketList);
   }
 
   @override
@@ -33,7 +33,9 @@ class TicketRepositoryImpl extends TicketRepository {
     String? end,
     String? search,
   }) async {
-    // TODO: implement getMyTicket
-    throw UnimplementedError();
+    List<TicketModel> myTicketList =
+        await _api.getMyTicket(categorys: categorys, period: period, start: start, end: end, search: search);
+
+    return _ticketMappr.convertList<TicketModel, Ticket>(myTicketList);
   }
 }

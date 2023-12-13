@@ -10,7 +10,13 @@ abstract class TicketAPI {
   factory TicketAPI(Dio dioBuilder) = _TicketAPI;
 
   @GET('/tickets/my')
-  Future<void> getMyTicket();
+  Future<List<TicketModel>> getMyTicket({
+    @Query('categorys') List<String>? categorys,
+    @Query('period') String? period,
+    @Query('start') String? start,
+    @Query('end') String? end,
+    @Query('search') String? search,
+  });
 
   @GET('/tickets/total')
   Future<List<TicketModel>> getTotalTicket({

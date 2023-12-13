@@ -25,7 +25,7 @@ class TermAgreePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 36.h),
-              Text("원활한 서비스 이용을 위해\n약관에 동의해주세요.", style: AppTypeFace.smallBold),
+              Text("원활한 서비스 이용을 위해\n약관에 동의해주세요.", style: AppTypeFace.small20Bold),
               SizedBox(height: 26.h),
               const _BuildTermCheckBox(),
               const Spacer(),
@@ -36,7 +36,7 @@ class TermAgreePage extends StatelessWidget {
                       if (controller.isRequiredAgree) Get.toNamed(RoutePath.requestPermssion);
                     },
                     color: controller.isRequiredAgree ? null : AppColor.grayC7,
-                    child: Text("다음", style: AppTypeFace.smallBold.copyWith(color: Colors.white)),
+                    child: Text("다음", style: AppTypeFace.small20Bold.copyWith(color: Colors.white)),
                   );
                 },
               ),
@@ -61,7 +61,7 @@ class _BuildTermCheckBox extends GetView<RegisterController> {
           child: Row(
             children: [
               TicatsCheckBox(value: controller.isAllAgree, onChanged: (value) => controller.setAllAgree()),
-              Text("모두 동의합니다.", style: AppTypeFace.smallSemiBold),
+              Text("모두 동의합니다.", style: AppTypeFace.small18SemiBold),
             ],
           ),
         ),
@@ -93,8 +93,8 @@ class _TermCheckBoxWidget extends GetView<RegisterController> {
               ),
               Row(
                 children: [
-                  Text(termType.isRequired ? "[필수] " : "[선택] ", style: AppTypeFace.xSmallMedium),
-                  Text(termType.termName, style: AppTypeFace.xSmallMedium),
+                  Text(termType.isRequired ? "[필수] " : "[선택] ", style: AppTypeFace.xSmall14Medium),
+                  Text(termType.termName, style: AppTypeFace.xSmall14Medium),
                 ],
               ),
             ],
@@ -103,7 +103,7 @@ class _TermCheckBoxWidget extends GetView<RegisterController> {
         SizedBox(width: 14.w),
         GestureDetector(
           onTap: () => Get.toNamed(RoutePath.termDetail, arguments: termType),
-          child: Text("보기", style: AppTypeFace.xSmallMedium.copyWith(color: AppColor.gray8E)),
+          child: Text("보기", style: AppTypeFace.xSmall14Medium.copyWith(color: AppColor.gray8E)),
         ),
       ],
     );

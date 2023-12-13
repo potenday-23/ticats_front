@@ -21,9 +21,9 @@ class LoginPage extends StatelessWidget {
             children: [
               SvgPicture.asset('assets/cats/cat_lick.svg'),
               SizedBox(height: 45.h),
-              Text("티캣츠에 오신 것을 환영합니다!", style: AppTypeFace.smallBold),
+              Text("티캣츠에 오신 것을 환영합니다!", style: AppTypeFace.small20Bold),
               SizedBox(height: 30.h),
-              Text("나만의 문화생활 티켓을 꾸며보세요", style: AppTypeFace.smallSemiBold.copyWith(color: AppColor.gray8E)),
+              Text("나만의 문화생활 티켓을 꾸며보세요", style: AppTypeFace.small18SemiBold.copyWith(color: AppColor.gray8E)),
               SizedBox(height: 74.h),
               _buildSSOLayout(),
             ],
@@ -49,7 +49,7 @@ Widget _buildSSOLayout() {
             children: [
               SvgPicture.asset('assets/logos/kakao_logo.svg'),
               SizedBox(width: 21.w),
-              Text("카카오로 시작하기", style: AppTypeFace.smallSemiBold),
+              Text("카카오로 시작하기", style: AppTypeFace.small18SemiBold),
             ],
           ),
         ),
@@ -63,7 +63,7 @@ Widget _buildSSOLayout() {
               children: [
                 SvgPicture.asset('assets/logos/apple_logo.svg'),
                 SizedBox(width: 21.w),
-                Text("Apple로 시작하기", style: AppTypeFace.smallSemiBold.copyWith(color: Colors.white)),
+                Text("Apple로 시작하기", style: AppTypeFace.small18SemiBold.copyWith(color: Colors.white)),
               ],
             ),
           ),
@@ -72,7 +72,7 @@ Widget _buildSSOLayout() {
         TicatsButton(
           color: AppColor.grayC7,
           onPressed: () => Get.offAllNamed(RoutePath.main),
-          child: Text("로그인 없이 둘러보기", style: AppTypeFace.smallSemiBold),
+          child: Text("로그인 없이 둘러보기", style: AppTypeFace.small18SemiBold),
         ),
       ],
     ),

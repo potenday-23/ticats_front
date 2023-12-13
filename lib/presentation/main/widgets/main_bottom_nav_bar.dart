@@ -55,7 +55,7 @@ class _NavBarItem extends GetView<MainController> {
             SizedBox(height: 8.h),
             Text(
               title,
-              style: AppTypeFace.xSmallBold.copyWith(
+              style: AppTypeFace.xSmall12Bold.copyWith(
                 color: controller.selectedIndex == index ? AppColor.primaryDark : AppColor.gray63,
               ),
             )

@@ -25,7 +25,7 @@ class RequestPermissionPage extends StatelessWidget {
               SizedBox(height: 36.h),
               Text(
                 "티캣츠에서 나만의 티켓을 꾸미기 위해\n접근 권한 동의를 받고있어요.",
-                style: AppTypeFace.smallBold,
+                style: AppTypeFace.small20Bold,
               ),
               SizedBox(height: 36.h),
               Center(
@@ -37,11 +37,11 @@ class RequestPermissionPage extends StatelessWidget {
                       height: 40.w,
                     ),
                     SizedBox(height: 8.h),
-                    Text("갤러리", style: AppTypeFace.smallSemiBold.copyWith(color: AppColor.gray48)),
+                    Text("갤러리", style: AppTypeFace.small18SemiBold.copyWith(color: AppColor.gray48)),
                     SizedBox(height: 8.h),
                     Text(
                       "티켓 이미지 등록 등 서비스 이용 시,\n이미지 등 콘텐츠 접근(필수 권한)",
-                      style: AppTypeFace.xSmallSemiBold.copyWith(color: AppColor.gray63),
+                      style: AppTypeFace.xSmall16SemiBold.copyWith(color: AppColor.gray63),
                       textAlign: TextAlign.center,
                     ),
                   ],
@@ -54,7 +54,7 @@ class RequestPermissionPage extends StatelessWidget {
 
                   Get.toNamed(RoutePath.registerProfile);
                 },
-                child: Text("다음", style: AppTypeFace.smallBold.copyWith(color: Colors.white)),
+                child: Text("다음", style: AppTypeFace.small20Bold.copyWith(color: Colors.white)),
               ),
               SizedBox(height: 86.h),
             ],

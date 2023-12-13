@@ -29,7 +29,7 @@ class RegisterProfilePage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(height: 36.h),
-                      Text("사용하실 닉네임과\n프로필을 등록해주세요!", style: AppTypeFace.smallBold),
+                      Text("사용하실 닉네임과\n프로필을 등록해주세요!", style: AppTypeFace.small20Bold),
                       SizedBox(height: 24.h),
                       const _ProfileImageWidget(),
                       SizedBox(height: 24.h),
@@ -43,7 +43,7 @@ class RegisterProfilePage extends StatelessWidget {
                 builder: (controller) {
                   return TicatsButton(
                     onPressed: controller.nickname.value.isNotEmpty ? () => Get.toNamed(RoutePath.selectCategory) : null,
-                    child: Text("다음", style: AppTypeFace.smallBold.copyWith(color: Colors.white)),
+                    child: Text("다음", style: AppTypeFace.small20Bold.copyWith(color: Colors.white)),
                   );
                 },
               ),
@@ -127,7 +127,7 @@ class _NickNameTextFieldState extends State<_NickNameTextField> {
             enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: hasNickError ? AppColor.systemError : AppColor.gray63)),
             focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: hasNickError ? AppColor.systemError : AppColor.gray63)),
             hintText: "티케팅하는 고양이",
-            hintStyle: AppTypeFace.smallSemiBold.copyWith(color: AppColor.gray8E),
+            hintStyle: AppTypeFace.small18SemiBold.copyWith(color: AppColor.gray8E),
           ),
           scrollPadding: const EdgeInsets.only(bottom: 200),
           onChanged: (value) async {
@@ -161,9 +161,9 @@ class _NickNameTextFieldState extends State<_NickNameTextField> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(nickErrorMessage, style: AppTypeFace.xSmallMedium.copyWith(color: AppColor.systemError)),
+            Text(nickErrorMessage, style: AppTypeFace.xSmall14Medium.copyWith(color: AppColor.systemError)),
             Text("${nickController.text.length}/10",
-                style: AppTypeFace.xSmallMedium.copyWith(
+                style: AppTypeFace.xSmall14Medium.copyWith(
                   color: hasNickError ? AppColor.systemError : AppColor.gray8E,
                 )),
           ],

@@ -37,7 +37,7 @@ class SelectCategoryPage extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(height: 36.h),
-                Text("관심 있는 카테고리를 선택해주세요.", style: AppTypeFace.smallBold),
+                Text("관심 있는 카테고리를 선택해주세요.", style: AppTypeFace.small20Bold),
                 SizedBox(height: 36.h),
                 Wrap(
                   spacing: 16.w,
@@ -49,7 +49,7 @@ class SelectCategoryPage extends StatelessWidget {
                   builder: (controller) {
                     return TicatsButton(
                       onPressed: controller.categoryList.isNotEmpty ? () async => await controller.register() : null,
-                      child: Text("티캣츠 시작하기", style: AppTypeFace.smallBold.copyWith(color: Colors.white)),
+                      child: Text("티캣츠 시작하기", style: AppTypeFace.small20Bold.copyWith(color: Colors.white)),
                     );
                   },
                 ),
@@ -86,7 +86,7 @@ class _CategorySelectWidget extends GetView<RegisterController> {
                   Positioned.fill(
                     child: Align(
                       alignment: Alignment.center,
-                      child: Text(category.name, style: AppTypeFace.smallBold.copyWith(color: Colors.white)),
+                      child: Text(category.name, style: AppTypeFace.small20Bold.copyWith(color: Colors.white)),
                     ),
                   ),
                 ],
@@ -97,7 +97,7 @@ class _CategorySelectWidget extends GetView<RegisterController> {
                   Positioned.fill(
                     child: Align(
                       alignment: Alignment.center,
-                      child: Text(category.name, style: AppTypeFace.smallBold),
+                      child: Text(category.name, style: AppTypeFace.small20Bold),
                     ),
                   ),
                 ],

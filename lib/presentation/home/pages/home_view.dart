@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ticats/app/config/app_color.dart';
+import 'package:ticats/presentation/common/views/ticats_card_view.dart';
 import 'package:ticats/presentation/main/controller/ticket_controller.dart';
 
 import '../controller/home_controller.dart';

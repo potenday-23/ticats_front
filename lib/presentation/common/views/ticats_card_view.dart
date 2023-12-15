@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stacked_card_carousel/stacked_card_carousel.dart';
 
 import 'package:ticats/domain/entities/ticket.dart';
-import 'package:ticats/presentation/common/widgets/masked_image.dart';
+import 'package:ticats/presentation/common/widgets/ticats_ticket.dart';
 
 class TicatsCardView extends StatefulWidget {
   const TicatsCardView({Key? key, required this.ticketList}) : super(key: key);
@@ -33,13 +33,10 @@ class _TicatsCardViewState extends State<TicatsCardView> with AutomaticKeepAlive
             width: 342.w,
             height: 564.h,
             child: FlipCard(
-              front: MaskedImage(
-                mask: 'assets/tickets/ticket_1.png',
-                imageUrl: ticket.imageUrl,
-              ),
-              back: Image.asset('assets/tickets/ticket_back.png'),
+              front: TicketFront(ticket),
+              back: TicketBack(ticket),
             ),
-          )
+          ),
       ],
     );
   }

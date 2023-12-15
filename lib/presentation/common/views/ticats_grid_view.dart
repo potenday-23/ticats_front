@@ -2,7 +2,7 @@ import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ticats/domain/entities/ticket.dart';
-import 'package:ticats/presentation/common/widgets/masked_image.dart';
+import 'package:ticats/presentation/common/widgets/ticats_ticket.dart';
 
 class TicatsGridView extends StatelessWidget {
   const TicatsGridView({super.key, required this.ticketList});
@@ -23,13 +23,10 @@ class TicatsGridView extends StatelessWidget {
                 width: 163.w,
                 height: 269.h,
                 child: FlipCard(
-                  front: MaskedImage(
-                    mask: 'assets/tickets/ticket_1.png',
-                    imageUrl: ticket.imageUrl,
-                  ),
-                  back: Image.asset('assets/tickets/ticket_back.png'),
+                  front: TicketFront(ticket),
+                  back: TicketBack(ticket),
                 ),
-              )
+              ),
           ],
         ),
       ),

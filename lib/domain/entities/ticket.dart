@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:ticats/data/models/ticats_member_model.dart';
+import 'package:ticats/presentation/common/enum/ticket_enum.dart';
 
 part 'ticket.freezed.dart';
 part 'ticket.g.dart';
@@ -19,8 +20,8 @@ class Ticket with _$Ticket {
     required int? price,
     required String? friend,
     required String color,
-    required String? ticketType,
-    required String? layoutType,
+    required TicketType ticketType,
+    required TicketLayoutType layoutType,
     bool? isLike,
     String? isPrivate,
     Category? category,

@@ -91,7 +91,7 @@ class TicketBack extends StatelessWidget {
                   Text(ticket.title, style: AppTypeFace.small18SemiBold),
                   SizedBox(height: 10.w),
                   _RatingStarWidget(ticket.rating),
-                  SizedBox(height: ticket.ticketType == TicketType.type1 ? 185.w : 224.w),
+                  SizedBox(height: ticket.ticketType == TicketType.type1 ? 195.w : 244.w),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -99,7 +99,7 @@ class TicketBack extends StatelessWidget {
                       Text(DateFormat('yyyy년 MM월 dd일 (E)').format(ticket.ticketDate), style: AppTypeFace.xSmall14Medium),
                     ],
                   ),
-                  SizedBox(height: ticket.ticketType == TicketType.type1 ? 89.w : 50.w),
+                  SizedBox(height: ticket.ticketType == TicketType.type1 ? 89.w : 45.w),
                   Text(
                     ticket.memo ?? "",
                     style: AppTypeFace.xSmall14Medium,
@@ -181,8 +181,11 @@ class TicketBack extends StatelessWidget {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        _RatingStarWidget(ticket.rating),
-                        SizedBox(width: 184.w),
+                        Padding(
+                          padding: EdgeInsets.only(left: ticket.ticketType == TicketType.type2 ? 10.w : 0.w),
+                          child: _RatingStarWidget(ticket.rating),
+                        ),
+                        const Spacer(),
                         SvgPicture.asset('assets/tickets/ticats_icon.svg', width: 20.w, height: 32.w),
                       ],
                     )

@@ -2,6 +2,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:ticats/data/models/ticats_member_model.dart';
 import 'package:ticats/presentation/common/enum/ticket_enum.dart';
 
+import 'category.dart';
+
 part 'ticket.freezed.dart';
 part 'ticket.g.dart';
 
@@ -29,14 +31,4 @@ class Ticket with _$Ticket {
   }) = _Ticket;
 
   factory Ticket.fromJson(Map<String, Object?> json) => _$TicketFromJson(json);
-}
-
-@freezed
-class Category with _$Category {
-  const factory Category({
-    required int id,
-    required String name,
-  }) = _Category;
-
-  factory Category.fromJson(Map<String, Object?> json) => _$CategoryFromJson(json);
 }

@@ -6,8 +6,18 @@ import '../repositories/ticket_repository.dart';
 class TicketUseCases {
   final TicketRepository _repository = Get.find<TicketRepository>();
 
+  DeleteTicketUseCase get deleteTicketUseCase => Get.put(DeleteTicketUseCase(_repository));
   GetMyTicketUseCase get getMyTicketUseCase => Get.put(GetMyTicketUseCase(_repository));
   GetTotalTicketUseCase get getTotalTicketUseCase => Get.put(GetTotalTicketUseCase(_repository));
+}
+
+class DeleteTicketUseCase {
+  final TicketRepository _repository;
+  DeleteTicketUseCase(this._repository);
+
+  Future<void> execute(int ticketId) async {
+    await _repository.deleteTicket(ticketId);
+  }
 }
 
 class GetMyTicketUseCase {

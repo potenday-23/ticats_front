@@ -1,4 +1,3 @@
-import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ticats/domain/entities/ticket.dart';
@@ -22,10 +21,7 @@ class TicatsGridView extends StatelessWidget {
               SizedBox(
                 width: 163.w,
                 height: 269.h,
-                child: FlipCard(
-                  front: TicketFront(ticket),
-                  back: TicketBack(ticket),
-                ),
+                child: TicketFront(ticket),
               ),
           ],
         ),

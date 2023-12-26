@@ -18,4 +18,6 @@ abstract class TicketRepository {
     String? end,
     String? search,
   });
+
+  Future<Ticket> postTicket(Ticket ticket, bool isPrivate);
 }

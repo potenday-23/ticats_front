@@ -9,6 +9,7 @@ class TicketUseCases {
   DeleteTicketUseCase get deleteTicketUseCase => Get.put(DeleteTicketUseCase(_repository));
   GetMyTicketUseCase get getMyTicketUseCase => Get.put(GetMyTicketUseCase(_repository));
   GetTotalTicketUseCase get getTotalTicketUseCase => Get.put(GetTotalTicketUseCase(_repository));
+  PostTicketUseCase get postTicketUseCase => Get.put(PostTicketUseCase(_repository));
 }
 
 class DeleteTicketUseCase {
@@ -49,6 +50,17 @@ class GetTotalTicketUseCase {
     String? search,
   }) async {
     List<Ticket> result = await _repository.getTotalTicket();
+
+    return result;
+  }
+}
+
+class PostTicketUseCase {
+  final TicketRepository _repository;
+  PostTicketUseCase(this._repository);
+
+  Future<Ticket> execute(Ticket ticket, bool isPrivate) async {
+    Ticket result = await _repository.postTicket(ticket, isPrivate);
 
     return result;
   }

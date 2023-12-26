@@ -17,11 +17,9 @@ import '../enum/ticket_enum.dart';
 import 'ticats_chip.dart';
 
 class TicketFront extends StatelessWidget {
-  const TicketFront(this.ticket, {super.key, this.imagePath});
+  const TicketFront(this.ticket, {super.key});
 
   final Ticket ticket;
-
-  final String? imagePath;
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +57,7 @@ class TicketFront extends StatelessWidget {
 
       data = file.readAsBytesSync().buffer.asUint8List();
     } else {
-      data = io.File(imagePath!).readAsBytesSync().buffer.asUint8List();
+      data = io.File(ticket.imagePath!).readAsBytesSync().buffer.asUint8List();
     }
 
     Codec codec = await instantiateImageCodec(data, targetWidth: w.toInt(), targetHeight: h.toInt());

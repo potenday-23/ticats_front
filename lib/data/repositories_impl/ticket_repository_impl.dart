@@ -12,6 +12,11 @@ class TicketRepositoryImpl extends TicketRepository {
   final TicketAPI _api = Get.find();
 
   @override
+  Future<void> deleteTicket(int ticketId) async {
+    await _api.deleteTicket(ticketId);
+  }
+
+  @override
   Future<List<Ticket>> getTotalTicket({
     List<String>? categorys,
     String? period,
@@ -33,8 +38,7 @@ class TicketRepositoryImpl extends TicketRepository {
     String? end,
     String? search,
   }) async {
-    List<TicketModel> myTicketList =
-        await _api.getMyTicket(categorys: categorys, period: period, start: start, end: end, search: search);
+    List<TicketModel> myTicketList = await _api.getMyTicket(categorys: categorys, period: period, start: start, end: end, search: search);
 
     return _ticketMappr.convertList<TicketModel, Ticket>(myTicketList);
   }

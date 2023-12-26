@@ -9,6 +9,9 @@ part 'ticket_api.g.dart';
 abstract class TicketAPI {
   factory TicketAPI(Dio dioBuilder) = _TicketAPI;
 
+  @DELETE('/tickets/{ticketId}')
+  Future<void> deleteTicket(@Path('ticketId') int ticketId);
+
   @GET('/tickets/my')
   Future<List<TicketModel>> getMyTicket({
     @Query('categorys') List<String>? categorys,

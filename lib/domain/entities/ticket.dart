@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:ticats/data/models/ticats_member_model.dart';
+import 'package:ticats/domain/entities/ticats_member.dart';
 import 'package:ticats/presentation/common/enum/ticket_enum.dart';
 
 import 'category.dart';
@@ -17,17 +17,17 @@ class Ticket with _$Ticket {
     required DateTime ticketDate,
     required double rating,
     required String? memo,
-    required String? seat,
-    required String? location,
-    required int? price,
-    required String? friend,
-    required String color,
+    String? seat,
+    String? location,
+    int? price,
+    String? friend,
+    String? color,
     required TicketType ticketType,
     required TicketLayoutType layoutType,
     bool? isLike,
     String? isPrivate,
     Category? category,
-    MemberModel? member,
+    Member? member,
   }) = _Ticket;
 
   factory Ticket.fromJson(Map<String, Object?> json) => _$TicketFromJson(json);

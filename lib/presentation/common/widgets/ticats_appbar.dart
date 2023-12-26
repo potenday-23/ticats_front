@@ -53,3 +53,22 @@ class CloseAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => Size.fromHeight(56.w);
 }
+
+class TicatsAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const TicatsAppBar({super.key, this.title, this.actions = const []});
+
+  final String? title;
+  final List<Widget> actions;
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      automaticallyImplyLeading: false,
+      actions: actions,
+      title: Text(title ?? "", style: AppTypeFace.small18SemiBold),
+    );
+  }
+
+  @override
+  Size get preferredSize => Size.fromHeight(56.w);
+}

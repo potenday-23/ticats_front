@@ -1,17 +1,30 @@
+import 'package:flutter/foundation.dart' hide Category;
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ticats/domain/entities/ticket.dart';
-import 'package:ticats/domain/usecases/ticket_use_cases.dart';
-import 'package:ticats/presentation/main/controller/ticket_controller.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:ticats/app/service/ticats_service.dart';
+import 'package:ticats/domain/entities/category.dart';
 
 class MakeTicketController extends GetxController {
-  TicketUseCases get ticketUseCases => Get.find<TicketUseCases>();
-  DeleteTicketUseCase get deleteTicketUseCase => ticketUseCases.deleteTicketUseCase;
+  // Make Ticket
+  final Rx<XFile?> ticketImage = XFile("").obs;
+  final TextEditingController titleController = TextEditingController();
+  final Rx<int> titleTextLength = 0.obs;
+  final Rx<Category> selectedCategory = TicatsService.to.ticatsCategories[0].obs;
+  final Rx<DateTime> selectedDate = DateTime.now().obs;
+  final Rx<double> selectedRating = 4.5.obs;
+  final TextEditingController memoController = TextEditingController();
+  final Rx<int> memoTextLength = 0.obs;
 
-  List<Ticket> get myTicketList => Get.find<TicketController>().myTicketList;
+  Future<void> getImage() async {
+    try {
+      final ImagePicker picker = ImagePicker();
 
-  final RxBool isEditing = false.obs;
-
-  void toggleEditing() {
-    isEditing.value = !isEditing.value;
+      ticketImage.value = await picker.pickImage(source: ImageSource.gallery);
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
   }
 }

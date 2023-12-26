@@ -13,6 +13,8 @@ class TicketController extends GetxController {
   RxList<Ticket> myTicketList = <Ticket>[].obs;
   RxList<Ticket> totalTicketList = <Ticket>[].obs;
 
+  final RxBool isEditing = false.obs;
+
   @override
   void onInit() async {
     super.onInit();
@@ -34,5 +36,9 @@ class TicketController extends GetxController {
   Future<void> getTickets() async {
     myTicketList.assignAll(await getMyTicketUseCase.execute());
     totalTicketList.assignAll(await getTotalTicketUseCase.execute());
+  }
+
+  void toggleEditing() {
+    isEditing.value = !isEditing.value;
   }
 }

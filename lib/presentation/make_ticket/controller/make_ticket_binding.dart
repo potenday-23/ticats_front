@@ -5,6 +5,6 @@ import 'make_ticket_controller.dart';
 class MakeTicketBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<MakeTicketController>(() => MakeTicketController());
+    Get.lazyPut<MakeTicketController>(() => MakeTicketController(), fenix: true);
   }
 }

@@ -14,9 +14,8 @@ import 'package:ticats/presentation/common/widgets/ticats_appbar.dart';
 import 'package:ticats/presentation/common/widgets/ticats_button.dart';
 import 'package:ticats/presentation/common/widgets/ticats_ticket.dart';
 import 'package:ticats/presentation/main/controller/ticket_controller.dart';
-import 'package:ticats/presentation/make_ticket/controller/make_ticket_controller.dart';
 
-class MyTicketView extends GetView<MakeTicketController> {
+class MyTicketView extends GetView<TicketController> {
   const MyTicketView({super.key});
 
   @override
@@ -75,7 +74,7 @@ class MyTicketView extends GetView<MakeTicketController> {
   }
 }
 
-class _CategoryListView extends GetView<MakeTicketController> {
+class _CategoryListView extends GetView<TicketController> {
   const _CategoryListView({required this.category});
 
   final Category category;

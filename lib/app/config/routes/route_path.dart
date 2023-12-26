@@ -5,6 +5,9 @@ class RoutePath {
   // Main
   static const String main = '/main';
 
+  // Make Ticket
+  static const String makeTicketInfo = '/makeTicket/info';
+
   // Register
   static const String termAgree = '/termAgree';
   static const String termDetail = '/termDetail';

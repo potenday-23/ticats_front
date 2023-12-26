@@ -29,4 +29,8 @@ abstract class TicketAPI {
     @Query('end') String? end,
     @Query('search') String? search,
   });
+
+  @POST('/tickets')
+  @MultiPart()
+  Future<TicketModel> postTicket(@Part(contentType: "application/json") Map<String, MultipartFile> request);
 }

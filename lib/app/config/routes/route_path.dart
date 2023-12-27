@@ -14,6 +14,7 @@ class RoutePath {
   static const String notice = '/myPage/notice';
   static const String noticeDetail = '/myPage/noticeDetail';
   static const String inquery = '/myPage/inquery';
+  static const String like = '/myPage/like';
   static const String statistics = '/myPage/statistics';
 
   // Register

@@ -8,6 +8,7 @@ class MemberUseCases {
 
   CheckNicknameUseCase get checkNicknameUseCase => Get.put(CheckNicknameUseCase(_repository));
   CheckMemberUseCase get checkMemberUseCase => Get.put(CheckMemberUseCase(_repository));
+  ResignMemberUseCase get resignMemberUseCase => Get.put(ResignMemberUseCase(_repository));
 }
 
 class CheckNicknameUseCase {
@@ -29,5 +30,14 @@ class CheckMemberUseCase {
     bool result = await _repository.checkMember(memberOAuth);
 
     return result;
+  }
+}
+
+class ResignMemberUseCase {
+  final MemberRepository _repository;
+  ResignMemberUseCase(this._repository);
+
+  Future<void> execute() async {
+    await _repository.resignMember();
   }
 }

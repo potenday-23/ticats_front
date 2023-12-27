@@ -23,6 +23,7 @@ class MakeTicketInfoPage extends GetView<MakeTicketController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: const BackAppBar(title: "티켓 만들기"),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.w),

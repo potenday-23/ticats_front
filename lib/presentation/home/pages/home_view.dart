@@ -16,7 +16,6 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.grayF9,
       appBar: const HomeAppBar(),
       body: GetX<TicketController>(
         builder: (ticketController) {

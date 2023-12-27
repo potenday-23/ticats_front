@@ -21,7 +21,6 @@ class MyTicketView extends GetView<TicketController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.grayF9,
       appBar: TicatsAppBar(
         title: "티켓 만들기",
         actions: [

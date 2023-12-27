@@ -58,7 +58,7 @@ class MainApp extends StatelessWidget {
               scrolledUnderElevation: 0,
               toolbarHeight: 56.w,
             ),
-            scaffoldBackgroundColor: Colors.white,
+            scaffoldBackgroundColor: AppColor.grayF9,
           ),
           builder: (context, child) {
             return MediaQuery(

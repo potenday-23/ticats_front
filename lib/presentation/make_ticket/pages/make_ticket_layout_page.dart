@@ -38,7 +38,6 @@ class MakeTicketLayoutPage extends GetView<MakeTicketController> {
           SizedBox(height: 16.h),
           Container(
             width: double.maxFinite,
-            color: AppColor.grayF9,
             child: Center(
               child: Obx(() {
                 return Padding(

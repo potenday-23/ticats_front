@@ -81,7 +81,7 @@ class _MyPageListView extends StatelessWidget {
         _MyPageTile(
           "탈퇴하기",
           icon: "quit",
-          onTap: () {},
+          onTap: () => Get.toNamed(RoutePath.resign),
         ),
       ],
     );

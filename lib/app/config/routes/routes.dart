@@ -10,6 +10,7 @@ import 'package:ticats/presentation/my_page/pages/inquery_page.dart';
 import 'package:ticats/presentation/my_page/pages/like_page.dart';
 import 'package:ticats/presentation/my_page/pages/my_statistics_page.dart';
 import 'package:ticats/presentation/my_page/pages/notice_page.dart';
+import 'package:ticats/presentation/my_page/pages/resign_page.dart';
 import 'package:ticats/presentation/register/controller/register_binding.dart';
 import 'package:ticats/presentation/register/pages/register_profile_page.dart';
 import 'package:ticats/presentation/register/pages/request_permission_page.dart';
@@ -66,7 +67,10 @@ class Routes {
       name: RoutePath.inquery,
       page: () => const InqueryPage(),
     ),
-
+    GetPage(
+      name: RoutePath.resign,
+      page: () => const ResignPage(),
+    ),
     GetPage(
       name: RoutePath.statistics,
       page: () => const StatisticsPage(),

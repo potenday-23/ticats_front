@@ -14,6 +14,7 @@ abstract class MemberAPI {
   @GET('/members')
   Future<TicatsMemberModel> checkMember(@Query('socialId') String socialId, @Query('socialType') String socialType);
 
-  @DELETE('/members')
-  Future<void> resignMember();
+  @POST('/quits/reasons')
+  @MultiPart()
+  Future<void> resignMember(@Part(contentType: "application/json") Map<String, MultipartFile> quits);
 }

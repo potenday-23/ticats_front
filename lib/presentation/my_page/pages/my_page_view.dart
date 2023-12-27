@@ -44,7 +44,7 @@ class _MyPageListView extends StatelessWidget {
         _MyPageTile(
           "문의하기",
           icon: "inquery",
-          onTap: () {},
+          onTap: () => Get.toNamed(RoutePath.inquery),
         ),
         _MyPageTile(
           "서비스 이용 약관",

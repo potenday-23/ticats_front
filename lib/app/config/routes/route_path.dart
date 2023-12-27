@@ -13,6 +13,7 @@ class RoutePath {
   // My Page
   static const String notice = '/myPage/notice';
   static const String noticeDetail = '/myPage/noticeDetail';
+  static const String inquery = '/myPage/inquery';
 
   // Register
   static const String termAgree = '/termAgree';

@@ -151,7 +151,7 @@ class _MyProfileWidget extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text("내 티켓", style: AppTypeFace.xSmall12Bold.copyWith(color: AppColor.gray63)),
-                            Text(Get.find<TicketController>().myTicketList.length.toString(), style: AppTypeFace.xSmall12Bold),
+                            Obx(() => Text(Get.find<TicketController>().myTicketList.length.toString(), style: AppTypeFace.xSmall12Bold)),
                           ],
                         ),
                       ),
@@ -173,12 +173,13 @@ class _MyProfileWidget extends StatelessWidget {
                       Expanded(
                         child: GestureDetector(
                           behavior: HitTestBehavior.translucent,
-                          // onTap: () => Get.toNamed(RoutePath.myLike),
+                          onTap: () => Get.toNamed(RoutePath.like),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text("좋아요한 티켓", style: AppTypeFace.xSmall12Bold.copyWith(color: AppColor.gray63)),
-                              // Text(Get.find<TicketController>().likeTicketList.length.toString(), style: AppTypeFace.xsmallBold),
+                              Obx(() =>
+                                  Text(Get.find<TicketController>().likeTicketList.length.toString(), style: AppTypeFace.xSmall12Bold)),
                             ],
                           ),
                         ),

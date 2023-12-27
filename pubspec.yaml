@@ -21,6 +21,7 @@ dependencies:
   flutter_screenutil: ^5.9.0
   flutter_secure_storage: ^9.0.0
   flutter_svg: ^2.0.9
+  flutter_toggle_tab: ^1.4.1
   fluttertoast: ^8.2.4
   freezed_annotation: ^2.4.1
   get: ^4.6.6
@@ -29,8 +30,11 @@ dependencies:
   intl: ^0.18.1
   json_annotation: ^4.8.1
   kakao_flutter_sdk: ^1.7.0
+  path_provider: ^2.1.1
   permission_handler: ^11.1.0
   retrofit: ^4.0.3
+  screenshot: ^2.1.0
+  share_plus: ^7.2.1
   sign_in_with_apple: ^5.0.0
   stacked_card_carousel: ^0.0.4
 

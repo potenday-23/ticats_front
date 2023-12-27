@@ -7,6 +7,8 @@ class RoutePath {
 
   // Make Ticket
   static const String makeTicketInfo = '/makeTicket/info';
+  static const String makeTicketLayout = '/makeTicket/layout';
+  static const String makeTicketResult = '/makeTicket/result';
 
   // Register
   static const String termAgree = '/termAgree';

@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:ticats/app/config/app_color.dart';
 import 'package:ticats/app/config/app_typeface.dart';
+import 'package:ticats/app/config/routes/route_path.dart';
 import 'package:ticats/app/service/ticats_service.dart';
 import 'package:ticats/domain/entities/category.dart';
 import 'package:ticats/presentation/common/widgets/ticats_appbar.dart';
@@ -43,7 +44,12 @@ class MakeTicketInfoPage extends GetView<MakeTicketController> {
               SizedBox(height: 24.w),
               Obx(
                 () => TicatsButton(
-                  onPressed: controller.titleTextLength.value != 0 ? () {} : null,
+                  onPressed: controller.isEnable
+                      ? () {
+                          controller.makeTicket();
+                          Get.toNamed(RoutePath.makeTicketLayout);
+                        }
+                      : null,
                   color: AppColor.primaryNormal,
                   child: Text("티켓 만들기", style: AppTypeFace.small20Bold.copyWith(color: Colors.white)),
                 ),

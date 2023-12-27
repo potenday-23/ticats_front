@@ -37,4 +37,9 @@ class MemberRepositoryImpl extends MemberRepository {
 
     return true;
   }
+
+  @override
+  Future<void> resignMember() async {
+    await _api.resignMember();
+  }
 }

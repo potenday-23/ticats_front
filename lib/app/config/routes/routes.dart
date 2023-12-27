@@ -6,6 +6,7 @@ import 'package:ticats/presentation/main/pages/main_page.dart';
 import 'package:ticats/presentation/make_ticket/pages/make_ticket_info_page.dart';
 import 'package:ticats/presentation/make_ticket/pages/make_ticket_layout_page.dart';
 import 'package:ticats/presentation/make_ticket/pages/make_ticket_result_page.dart';
+import 'package:ticats/presentation/my_page/pages/notice_page.dart';
 import 'package:ticats/presentation/register/controller/register_binding.dart';
 import 'package:ticats/presentation/register/pages/register_profile_page.dart';
 import 'package:ticats/presentation/register/pages/request_permission_page.dart';
@@ -43,6 +44,16 @@ class Routes {
     GetPage(
       name: RoutePath.makeTicketResult,
       page: () => MakeTicketResultPage(),
+    ),
+
+    // My Page
+    GetPage(
+      name: RoutePath.notice,
+      page: () => const NoticePage(),
+    ),
+    GetPage(
+      name: RoutePath.noticeDetail,
+      page: () => NoticeDetailPage(),
     ),
 
     // Register

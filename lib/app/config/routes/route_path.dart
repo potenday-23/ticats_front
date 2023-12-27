@@ -10,6 +10,10 @@ class RoutePath {
   static const String makeTicketLayout = '/makeTicket/layout';
   static const String makeTicketResult = '/makeTicket/result';
 
+  // My Page
+  static const String notice = '/myPage/notice';
+  static const String noticeDetail = '/myPage/noticeDetail';
+
   // Register
   static const String termAgree = '/termAgree';
   static const String termDetail = '/termDetail';

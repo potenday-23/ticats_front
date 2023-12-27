@@ -39,7 +39,7 @@ class _MyPageListView extends StatelessWidget {
         _MyPageTile(
           "공지사항",
           icon: "notice",
-          onTap: () {},
+          onTap: () => Get.toNamed(RoutePath.notice),
         ),
         _MyPageTile(
           "문의하기",

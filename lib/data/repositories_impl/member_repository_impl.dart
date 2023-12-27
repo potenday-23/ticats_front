@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide FormData, MultipartFile;
+import 'package:http_parser/http_parser.dart';
 import 'package:ticats/domain/entities/member_oauth.dart';
 import 'package:ticats/domain/repositories/member_repository.dart';
 
@@ -39,7 +42,14 @@ class MemberRepositoryImpl extends MemberRepository {
   }
 
   @override
-  Future<void> resignMember() async {
-    await _api.resignMember();
+  Future<void> resignMember(List<int> resignReason) async {
+    var data = {
+      'quits': MultipartFile.fromString(
+        jsonEncode(resignReason),
+        contentType: MediaType('application', 'json'),
+      ),
+    };
+
+    await _api.resignMember(data);
   }
 }

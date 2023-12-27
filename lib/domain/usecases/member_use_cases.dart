@@ -37,7 +37,7 @@ class ResignMemberUseCase {
   final MemberRepository _repository;
   ResignMemberUseCase(this._repository);
 
-  Future<void> execute() async {
-    await _repository.resignMember();
+  Future<void> execute(List<int> resignReason) async {
+    await _repository.resignMember(resignReason);
   }
 }

@@ -22,8 +22,8 @@ class MyPageRepositoryImpl extends MyPageRepository {
   }
 
   @override
-  Future<List<Statistics>> getStatistics() async {
-    List<StatisticsModel> statisticsList = await _api.getStatistics();
+  Future<List<Statistics>> getStatistics(String month) async {
+    List<StatisticsModel> statisticsList = await _api.getStatistics(month);
 
     return _myPageMappr.convertList<StatisticsModel, Statistics>(statisticsList);
   }

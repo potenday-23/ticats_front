@@ -27,8 +27,8 @@ class GetStatisticsUseCase {
   final MyPageRepository _repository;
   GetStatisticsUseCase(this._repository);
 
-  Future<List<Statistics>> execute() async {
-    List<Statistics> result = await _repository.getStatistics();
+  Future<List<Statistics>> execute(String month) async {
+    List<Statistics> result = await _repository.getStatistics(month);
 
     return result;
   }

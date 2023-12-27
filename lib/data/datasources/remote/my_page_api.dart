@@ -13,7 +13,7 @@ abstract class MyPageAPI {
   Future<List<NoticeModel>> getNotices();
 
   @GET('/members/statistics')
-  Future<List<StatisticsModel>> getStatistics();
+  Future<List<StatisticsModel>> getStatistics(@Query('month') String month);
 
   @GET('/members/year-statistics')
   Future<List<YearStatisticsModel>> getYearStatistics();

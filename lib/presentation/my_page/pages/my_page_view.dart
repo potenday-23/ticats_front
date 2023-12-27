@@ -162,7 +162,7 @@ class _MyProfileWidget extends StatelessWidget {
                       Expanded(
                         child: GestureDetector(
                           behavior: HitTestBehavior.translucent,
-                          // onTap: () => Get.toNamed(RoutePath.myStatistics),
+                          onTap: () => Get.toNamed(RoutePath.statistics),
                           child: Center(child: Text("통계 보기", style: AppTypeFace.xSmall12Bold.copyWith(color: AppColor.gray63))),
                         ),
                       ),

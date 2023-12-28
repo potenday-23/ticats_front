@@ -16,7 +16,6 @@ class RegisterController extends GetxController {
   RegisterUseCase get registerUseCase => authUseCases.registerUseCase;
 
   // Profile
-  RxList<String> categoryList = <String>[].obs;
   RxString nickname = "".obs;
   Rx<XFile?> profileImage = XFile("").obs;
 
@@ -55,7 +54,7 @@ class RegisterController extends GetxController {
       marketingAgree: isAgreeList[3] ? "AGREE" : "DISAGREE",
       nickname: nickname.value,
       profileImage: profileImage.value,
-      categorys: categoryList,
+      categorys: [],
     );
 
     try {

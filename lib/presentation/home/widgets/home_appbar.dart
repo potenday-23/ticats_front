@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ticats/app/config/app_color.dart';
 import 'package:ticats/app/config/app_typeface.dart';
+import 'package:ticats/app/config/routes/route_path.dart';
 
 import '../controller/home_controller.dart';
 
@@ -21,7 +22,10 @@ class HomeAppBar extends GetView<HomeController> implements PreferredSizeWidget 
       leadingWidth: 48.w,
       leading: Padding(
         padding: EdgeInsets.fromLTRB(24.w, 16.w, 0, 16.w),
-        child: SvgPicture.asset('assets/icons/category.svg', width: 24.w, height: 24.w),
+        child: GestureDetector(
+          onTap: () => Get.toNamed(RoutePath.selectCategory),
+          child: SvgPicture.asset('assets/icons/category.svg', width: 24.w, height: 24.w),
+        ),
       ),
 
       // title tabbar

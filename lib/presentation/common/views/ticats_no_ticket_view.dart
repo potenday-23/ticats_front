@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:ticats/app/config/app_color.dart';
 import 'package:ticats/app/config/app_typeface.dart';
+import 'package:ticats/app/config/routes/route_path.dart';
 
 class TicatsNoTicketView extends StatelessWidget {
   const TicatsNoTicketView({super.key});
@@ -14,10 +16,13 @@ class TicatsNoTicketView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SvgPicture.asset(
-            'assets/images/no_ticket.svg',
-            width: 163.w,
-            height: 269.w,
+          GestureDetector(
+            onTap: () => Get.toNamed(RoutePath.makeTicketInfo),
+            child: SvgPicture.asset(
+              'assets/images/no_ticket.svg',
+              width: 163.w,
+              height: 269.w,
+            ),
           ),
           SizedBox(height: 35.h),
           Center(

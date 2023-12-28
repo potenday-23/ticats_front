@@ -1,4 +1,7 @@
 class RoutePath {
+  // Home
+  static const String selectCategory = '/selectCategory';
+
   // Login
   static const String login = '/login';
   static const String alterLogin = '/alterLogin';
@@ -24,5 +27,4 @@ class RoutePath {
   static const String termDetail = '/termDetail';
   static const String requestPermssion = '/requestPermssion';
   static const String registerProfile = '/registerProfile';
-  static const String selectCategory = '/selectCategory';
 }

@@ -9,6 +9,7 @@ import 'package:ticats/app/config/routes/route_path.dart';
 import 'package:ticats/app/service/auth_service.dart';
 import 'package:ticats/presentation/common/enum/term_type.dart';
 import 'package:ticats/presentation/common/widgets/ticats_appbar.dart';
+import 'package:ticats/presentation/common/widgets/ticats_dialog.dart';
 import 'package:ticats/presentation/main/controller/ticket_controller.dart';
 
 class MyPageView extends StatelessWidget {
@@ -73,16 +74,18 @@ class _MyPageListView extends StatelessWidget {
             ),
           ),
         ),
-        _MyPageTile(
-          "로그아웃",
-          icon: "logout",
-          onTap: () {},
-        ),
-        _MyPageTile(
-          "탈퇴하기",
-          icon: "quit",
-          onTap: () => Get.toNamed(RoutePath.resign),
-        ),
+        if (AuthService.to.member != null) ...[
+          _MyPageTile(
+            "로그아웃",
+            icon: "logout",
+            onTap: () => showLogoutDialog(context),
+          ),
+          _MyPageTile(
+            "탈퇴하기",
+            icon: "quit",
+            onTap: () => Get.toNamed(RoutePath.resign),
+          ),
+        ],
       ],
     );
   }

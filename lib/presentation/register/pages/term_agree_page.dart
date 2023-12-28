@@ -17,6 +17,7 @@ class TermAgreePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: const BackAppBar(),
       body: SafeArea(
         child: Padding(

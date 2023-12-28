@@ -10,6 +10,8 @@ import 'package:ticats/app/service/auth_service.dart';
 import 'package:ticats/presentation/common/enum/term_type.dart';
 import 'package:ticats/presentation/common/widgets/ticats_appbar.dart';
 import 'package:ticats/presentation/common/widgets/ticats_dialog.dart';
+import 'package:ticats/presentation/home/controller/home_controller.dart';
+import 'package:ticats/presentation/main/controller/main_controller.dart';
 import 'package:ticats/presentation/main/controller/ticket_controller.dart';
 
 class MyPageView extends StatelessWidget {
@@ -150,12 +152,19 @@ class _MyProfileWidget extends StatelessWidget {
                   child: Row(
                     children: [
                       Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("내 티켓", style: AppTypeFace.xSmall12Bold.copyWith(color: AppColor.gray63)),
-                            Obx(() => Text(Get.find<TicketController>().myTicketList.length.toString(), style: AppTypeFace.xSmall12Bold)),
-                          ],
+                        child: GestureDetector(
+                          behavior: HitTestBehavior.translucent,
+                          onTap: () {
+                            Get.find<HomeController>().tabController.index = 1;
+                            Get.find<MainController>().changePage(0);
+                          },
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("내 티켓", style: AppTypeFace.xSmall12Bold.copyWith(color: AppColor.gray63)),
+                              Obx(() => Text(Get.find<TicketController>().myTicketList.length.toString(), style: AppTypeFace.xSmall12Bold)),
+                            ],
+                          ),
                         ),
                       ),
                       Padding(

@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:ticats/presentation/login/binding/login_binding.dart';
+import 'package:ticats/presentation/login/pages/alter_login_page.dart';
 import 'package:ticats/presentation/login/pages/login_page.dart';
 import 'package:ticats/presentation/main/controller/main_binding.dart';
 import 'package:ticats/presentation/main/pages/main_page.dart';
@@ -26,6 +27,11 @@ class Routes {
     GetPage(
       name: RoutePath.login,
       page: () => const LoginPage(),
+      binding: LoginBinding(),
+    ),
+    GetPage(
+      name: RoutePath.alterLogin,
+      page: () => const AlterLoginPage(),
       binding: LoginBinding(),
     ),
 

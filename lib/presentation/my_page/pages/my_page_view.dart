@@ -19,12 +19,16 @@ class MyPageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      appBar: TicatsAppBar(title: "마이페이지"),
+    return Scaffold(
+      appBar: const TicatsAppBar(title: "마이페이지"),
       body: Column(
         children: [
-          _MyProfileWidget(),
-          _MyPageListView(),
+          if (AuthService.to.member != null) ...[
+            const _MyProfileWidget(),
+          ] else ...[
+            const _GuestProfileWidget(),
+          ],
+          const _MyPageListView(),
         ],
       ),
     );
@@ -197,6 +201,94 @@ class _MyProfileWidget extends StatelessWidget {
                         ),
                       ),
                     ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const Divider(thickness: 1, color: AppColor.grayE5, height: 1),
+        ],
+      ),
+    );
+  }
+}
+
+class _GuestProfileWidget extends StatelessWidget {
+  const _GuestProfileWidget();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      child: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.all(24.w),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.translucent,
+                        onTap: () => Get.toNamed(RoutePath.alterLogin),
+                        child: Container(
+                          decoration: BoxDecoration(border: Border.all(color: AppColor.grayC7), borderRadius: BorderRadius.circular(16.r)),
+                          child: Center(
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(vertical: 12.w),
+                              child: Text("로그인", style: AppTypeFace.small20Bold),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 16.w),
+                    Expanded(
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.translucent,
+                        onTap: () => Get.toNamed(RoutePath.alterLogin),
+                        child: Container(
+                          decoration: BoxDecoration(border: Border.all(color: AppColor.grayC7), borderRadius: BorderRadius.circular(16.r)),
+                          child: Center(
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(vertical: 12.w),
+                              child: Text("회원가입", style: AppTypeFace.small20Bold),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20.w),
+                GestureDetector(
+                  behavior: HitTestBehavior.translucent,
+                  onTap: () => Get.toNamed(RoutePath.alterLogin),
+                  child: Container(
+                    height: 56.w,
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(12.r), color: AppColor.grayF2),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Center(child: Text("내 티켓", style: AppTypeFace.xSmall12Bold.copyWith(color: AppColor.gray63))),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: 12.h),
+                          child: const VerticalDivider(thickness: 1, color: AppColor.grayC7),
+                        ),
+                        Expanded(
+                          child: Center(child: Text("통계 보기", style: AppTypeFace.xSmall12Bold.copyWith(color: AppColor.gray63))),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: 12.h),
+                          child: const VerticalDivider(thickness: 1, color: AppColor.grayC7),
+                        ),
+                        Expanded(
+                          child: Center(child: Text("좋아요한 티켓", style: AppTypeFace.xSmall12Bold.copyWith(color: AppColor.gray63))),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],

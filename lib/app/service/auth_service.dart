@@ -65,6 +65,10 @@ class AuthService extends GetxService {
       await UserApi.instance.logout();
     }
 
+    _member = null;
+    _memberOAuth = null;
+    tempMemberOAuth = null;
+
     await AuthLocalDataSource().deleteMember();
   }
 }

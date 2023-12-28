@@ -1,6 +1,7 @@
 class RoutePath {
   // Login
   static const String login = '/login';
+  static const String alterLogin = '/alterLogin';
 
   // Main
   static const String main = '/main';

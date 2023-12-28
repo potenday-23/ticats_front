@@ -15,4 +15,8 @@ abstract class AuthAPI {
   @POST('/auth/login')
   @MultiPart()
   Future<TicatsMemberModel> register(@Part(contentType: "application/json") Map<String, MultipartFile> request);
+
+  @POST('/auth/login')
+  @MultiPart()
+  Future<TicatsMemberModel> saveCategory(@Part(contentType: "application/json") Map<String, MultipartFile> request);
 }

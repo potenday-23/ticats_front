@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart' hide FormData, MultipartFile;
 import 'package:http_parser/http_parser.dart';
+import 'package:ticats/app/service/auth_service.dart';
 import 'package:ticats/domain/entities/register_entity.dart';
 import 'package:ticats/domain/entities/ticats_member.dart';
 import 'package:ticats/domain/entities/member_oauth.dart';
@@ -58,6 +59,27 @@ class AuthRepositoryImpl extends AuthRepository {
     }
 
     TicatsMemberModel memberModel = await _api.register(data);
+
+    return _memberMapper.convert<TicatsMemberModel, TicatsMember>(memberModel);
+  }
+
+  @override
+  Future<TicatsMember> saveCategorys(List<String> categorys) async {
+    var data = {
+      'request': MultipartFile.fromString(
+        jsonEncode({
+          'socialId': AuthService.to.memberOAuth!.socialId,
+          'socialType': AuthService.to.memberOAuth!.socialType,
+        }),
+        contentType: MediaType('application', 'json'),
+      ),
+      'categorys': MultipartFile.fromString(
+        jsonEncode(categorys),
+        contentType: MediaType('application', 'json'),
+      ),
+    };
+
+    TicatsMemberModel memberModel = await _api.saveCategory(data);
 
     return _memberMapper.convert<TicatsMemberModel, TicatsMember>(memberModel);
   }

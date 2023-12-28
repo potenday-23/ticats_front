@@ -33,3 +33,14 @@ class RegisterUseCase {
     return member;
   }
 }
+
+class SaveCategorysUseCase {
+  final AuthRepository _repository;
+  SaveCategorysUseCase(this._repository);
+
+  Future<TicatsMember> execute(List<String> categorys) async {
+    TicatsMember member = await _repository.saveCategorys(categorys);
+
+    return member;
+  }
+}

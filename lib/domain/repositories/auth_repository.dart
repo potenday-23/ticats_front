@@ -5,4 +5,5 @@ import '../entities/member_oauth.dart';
 abstract class AuthRepository {
   Future<TicatsMember> login(MemberOAuth memberOAuth);
   Future<TicatsMember> register(RegisterEntity registerEntity);
+  Future<TicatsMember> saveCategorys(List<String> categorys);
 }

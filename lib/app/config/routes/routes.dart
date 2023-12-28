@@ -15,7 +15,7 @@ import 'package:ticats/presentation/my_page/pages/resign_page.dart';
 import 'package:ticats/presentation/register/controller/register_binding.dart';
 import 'package:ticats/presentation/register/pages/register_profile_page.dart';
 import 'package:ticats/presentation/register/pages/request_permission_page.dart';
-import 'package:ticats/presentation/register/pages/select_category_page.dart';
+import 'package:ticats/presentation/home/pages/select_category_page.dart';
 import 'package:ticats/presentation/register/pages/term_agree_page.dart';
 import 'package:ticats/presentation/register/pages/term_detail_page.dart';
 
@@ -23,6 +23,12 @@ import 'route_path.dart';
 
 class Routes {
   static List<GetPage> routes = [
+    // Home
+    GetPage(
+      name: RoutePath.selectCategory,
+      page: () => const SelectCategoryPage(),
+    ),
+
     // Login
     GetPage(
       name: RoutePath.login,
@@ -99,10 +105,6 @@ class Routes {
     GetPage(
       name: RoutePath.registerProfile,
       page: () => const RegisterProfilePage(),
-    ),
-    GetPage(
-      name: RoutePath.selectCategory,
-      page: () => const SelectCategoryPage(),
     ),
   ];
 }

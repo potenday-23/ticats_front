@@ -19,9 +19,9 @@ class HomeAppBar extends GetView<HomeController> implements PreferredSizeWidget 
       toolbarHeight: 56.w,
 
       // leading
-      leadingWidth: 48.w,
+      leadingWidth: 72.w,
       leading: Padding(
-        padding: EdgeInsets.fromLTRB(24.w, 16.w, 0, 16.w),
+        padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.w),
         child: GestureDetector(
           onTap: () => Get.toNamed(RoutePath.selectCategory),
           child: SvgPicture.asset('assets/icons/category.svg', width: 24.w, height: 24.w),
@@ -58,7 +58,7 @@ class HomeAppBar extends GetView<HomeController> implements PreferredSizeWidget 
       // actions
       actions: [
         Padding(
-          padding: EdgeInsets.fromLTRB(0, 16.w, 24.w, 16.w),
+          padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.w),
           child: GestureDetector(
             onTap: () => Get.toNamed(RoutePath.searchTicket),
             child: SvgPicture.asset('assets/icons/search.svg', width: 24.w, height: 24.w),

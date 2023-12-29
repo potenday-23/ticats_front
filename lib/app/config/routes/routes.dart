@@ -59,6 +59,7 @@ class Routes {
       name: RoutePath.main,
       page: () => const MainPage(),
       binding: MainBinding(),
+      transitionDuration: Duration.zero,
     ),
 
     // Make Ticket

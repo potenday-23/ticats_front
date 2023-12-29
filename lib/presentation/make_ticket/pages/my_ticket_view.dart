@@ -12,6 +12,7 @@ import 'package:ticats/domain/entities/ticket.dart';
 import 'package:ticats/presentation/common/views/ticats_no_ticket_view.dart';
 import 'package:ticats/presentation/common/widgets/ticats_appbar.dart';
 import 'package:ticats/presentation/common/widgets/ticats_button.dart';
+import 'package:ticats/presentation/common/widgets/ticats_dialog.dart';
 import 'package:ticats/presentation/common/widgets/ticats_ticket.dart';
 import 'package:ticats/presentation/main/controller/ticket_controller.dart';
 
@@ -109,7 +110,7 @@ class _CategoryListView extends GetView<TicketController> {
                             child: Align(
                               alignment: Alignment.topRight,
                               child: GestureDetector(
-                                onTap: () => Get.find<TicketController>().deleteTicket(ticket.id!),
+                                onTap: () async => showDeleteDialog(context, ticket.id!),
                                 child: SvgPicture.asset('assets/icons/delete.svg', width: 22.w, height: 22.w),
                               ),
                             ),

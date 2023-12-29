@@ -1,3 +1,4 @@
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
@@ -32,8 +33,7 @@ class AuthService extends GetxController {
 
     await getCredential();
 
-    if (_member == null) {
-      return;
+    if (_member?.value == null) {
     } else if (isTokenExpired) {
       await Fluttertoast.showToast(
         msg: '로그인이 만료되었습니다. 다시 로그인해주세요.',
@@ -41,8 +41,10 @@ class AuthService extends GetxController {
         gravity: ToastGravity.BOTTOM,
       );
     } else {
-      // Get.offAllNamed('/main');
+      Get.offAllNamed('/main');
     }
+
+    FlutterNativeSplash.remove();
   }
 
   Future<void> getCredential() async {

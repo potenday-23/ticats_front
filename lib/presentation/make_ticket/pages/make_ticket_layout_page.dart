@@ -8,7 +8,9 @@ import 'package:ticats/app/config/app_typeface.dart';
 import 'package:ticats/app/config/routes/route_path.dart';
 import 'package:ticats/presentation/common/widgets/ticats_appbar.dart';
 import 'package:ticats/presentation/common/widgets/ticats_button.dart';
+import 'package:ticats/presentation/common/widgets/ticats_dialog.dart';
 import 'package:ticats/presentation/common/widgets/ticats_ticket.dart';
+import 'package:ticats/presentation/main/controller/ticket_controller.dart';
 import 'package:ticats/presentation/make_ticket/controller/make_ticket_controller.dart';
 
 final ScrollController scrollController = ScrollController();
@@ -36,7 +38,7 @@ class MakeTicketLayoutPage extends GetView<MakeTicketController> {
             }
           }),
           SizedBox(height: 16.h),
-          Container(
+          SizedBox(
             width: double.maxFinite,
             child: Center(
               child: Obx(() {
@@ -77,8 +79,12 @@ class MakeTicketLayoutPage extends GetView<MakeTicketController> {
                           child: Text("완료", style: AppTypeFace.small20Bold.copyWith(color: Colors.white)),
                           onPressed: () async {
                             try {
-                              await controller.postTicket(true);
-                              Get.offNamedUntil(RoutePath.makeTicketResult, ModalRoute.withName(RoutePath.main));
+                              bool? postResult = await showPostTicketDialog(context);
+
+                              if (postResult == true) {
+                                await Get.find<TicketController>().getTickets();
+                                Get.offNamedUntil(RoutePath.makeTicketResult, ModalRoute.withName(RoutePath.main));
+                              }
                             } catch (e) {
                               debugPrint(e.toString());
                             }

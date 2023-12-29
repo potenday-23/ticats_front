@@ -60,8 +60,8 @@ class PostTicketUseCase {
   final TicketRepository _repository;
   PostTicketUseCase(this._repository);
 
-  Future<Ticket> execute(Ticket ticket, bool isPrivate) async {
-    Ticket result = await _repository.postTicket(ticket, isPrivate);
+  Future<Ticket> execute(Ticket ticket) async {
+    Ticket result = await _repository.postTicket(ticket);
 
     return result;
   }

@@ -44,6 +44,8 @@ class TicketController extends GetxController {
     myTicketList.assignAll(await getMyTicketUseCase.execute());
     likeTicketList.assignAll(await getLikesUseCase.execute());
     totalTicketList.assignAll(await getTotalTicketUseCase.execute());
+
+    update();
   }
 
   void toggleEditing() {

@@ -19,7 +19,7 @@ abstract class TicketRepository {
     String? search,
   });
 
-  Future<Ticket> postTicket(Ticket ticket, bool isPrivate);
+  Future<Ticket> postTicket(Ticket ticket);
 
   Future<List<Ticket>> searchTicket({
     String? categorys,

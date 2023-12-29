@@ -50,7 +50,7 @@ class TicketRepositoryImpl extends TicketRepository {
   }
 
   @override
-  Future<Ticket> postTicket(Ticket ticket, bool isPrivate) async {
+  Future<Ticket> postTicket(Ticket ticket) async {
     var data = {
       'request': MultipartFile.fromString(
         jsonEncode({
@@ -62,7 +62,7 @@ class TicketRepositoryImpl extends TicketRepository {
           'layoutType': ticket.layoutType.index,
           'color': ticket.color,
           'categoryName': ticket.category!.name,
-          'isPrivate': isPrivate ? 'PRIVATE' : 'PUBLIC',
+          'isPrivate': ticket.isPrivate,
         }),
         contentType: MediaType('application', 'json'),
       ),

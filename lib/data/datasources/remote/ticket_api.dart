@@ -33,4 +33,13 @@ abstract class TicketAPI {
   @POST('/tickets')
   @MultiPart()
   Future<TicketModel> postTicket(@Part(contentType: "application/json") Map<String, MultipartFile> request);
+
+  @GET('/tickets/my-total')
+  Future<List<TicketModel>> searchTicket({
+    @Query('categorys') String? categorys,
+    @Query('period') String? period,
+    @Query('start') String? start,
+    @Query('end') String? end,
+    @Query('search') String? search,
+  });
 }

@@ -1,5 +1,7 @@
 class RoutePath {
   // Home
+  static const String searchTicket = '/searchTicket';
+  static const String searchTicketResult = '/ticketSearchResult';
   static const String selectCategory = '/selectCategory';
 
   // Login

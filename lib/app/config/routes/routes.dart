@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:ticats/presentation/home/pages/search_ticket_page.dart';
+import 'package:ticats/presentation/home/pages/search_ticket_result_page.dart';
 import 'package:ticats/presentation/login/binding/login_binding.dart';
 import 'package:ticats/presentation/login/pages/alter_login_page.dart';
 import 'package:ticats/presentation/login/pages/login_page.dart';
@@ -24,6 +26,14 @@ import 'route_path.dart';
 class Routes {
   static List<GetPage> routes = [
     // Home
+    GetPage(
+      name: RoutePath.searchTicket,
+      page: () => const SearchTicketPage(),
+    ),
+    GetPage(
+      name: RoutePath.searchTicketResult,
+      page: () => const SearchTicketResultPage(),
+    ),
     GetPage(
       name: RoutePath.selectCategory,
       page: () => const SelectCategoryPage(),

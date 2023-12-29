@@ -59,7 +59,10 @@ class HomeAppBar extends GetView<HomeController> implements PreferredSizeWidget 
       actions: [
         Padding(
           padding: EdgeInsets.fromLTRB(0, 16.w, 24.w, 16.w),
-          child: GestureDetector(onTap: () {}, child: SvgPicture.asset('assets/icons/search.svg', width: 24.w, height: 24.w)),
+          child: GestureDetector(
+            onTap: () => Get.toNamed(RoutePath.searchTicket),
+            child: SvgPicture.asset('assets/icons/search.svg', width: 24.w, height: 24.w),
+          ),
         ),
       ],
     );

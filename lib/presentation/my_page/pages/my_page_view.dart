@@ -21,15 +21,17 @@ class MyPageView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const TicatsAppBar(title: "마이페이지"),
-      body: Column(
-        children: [
-          if (AuthService.to.member != null) ...[
-            const _MyProfileWidget(),
-          ] else ...[
-            const _GuestProfileWidget(),
+      body: Obx(
+        () => Column(
+          children: [
+            if (AuthService.to.member != null) ...[
+              const _MyProfileWidget(),
+            ] else ...[
+              const _GuestProfileWidget(),
+            ],
+            const _MyPageListView(),
           ],
-          const _MyPageListView(),
-        ],
+        ),
       ),
     );
   }

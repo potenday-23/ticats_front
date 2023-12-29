@@ -7,16 +7,18 @@ import 'package:ticats/domain/entities/member_oauth.dart';
 
 enum SSOType { apple, kakao }
 
-class AuthService extends GetxService {
+class AuthService extends GetxController {
   static AuthService get to => Get.find();
 
-  TicatsMember? _member;
-  TicatsMember? get member => _member;
+  Rx<TicatsMember?>? _member;
+  TicatsMember? get member => _member?.value;
 
   MemberOAuth? _memberOAuth;
   MemberOAuth? get memberOAuth => _memberOAuth;
 
   MemberOAuth? tempMemberOAuth;
+
+  bool get isLogin => member != null && !isTokenExpired;
 
   bool get isTokenExpired {
     if (member == null) return true;
@@ -44,12 +46,12 @@ class AuthService extends GetxService {
   }
 
   Future<void> getCredential() async {
-    _member = await AuthLocalDataSource().getMember();
+    _member = (await AuthLocalDataSource().getMember()).obs;
     _memberOAuth = await AuthLocalDataSource().getMemberOAuth();
   }
 
   Future<void> setMember(TicatsMember member) async {
-    _member = member;
+    _member = member.obs;
 
     AuthLocalDataSource().saveMember(member);
   }
@@ -65,7 +67,7 @@ class AuthService extends GetxService {
       await UserApi.instance.logout();
     }
 
-    _member = null;
+    _member!.value = null;
     _memberOAuth = null;
     tempMemberOAuth = null;
 

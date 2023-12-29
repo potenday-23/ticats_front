@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:ticats/app/middleware/auth_middleware.dart';
 import 'package:ticats/presentation/home/pages/search_ticket_page.dart';
 import 'package:ticats/presentation/home/pages/search_ticket_result_page.dart';
 import 'package:ticats/presentation/login/binding/login_binding.dart';
@@ -29,6 +30,7 @@ class Routes {
     GetPage(
       name: RoutePath.searchTicket,
       page: () => const SearchTicketPage(),
+      middlewares: [AuthMiddleware()],
     ),
     GetPage(
       name: RoutePath.searchTicketResult,
@@ -37,6 +39,7 @@ class Routes {
     GetPage(
       name: RoutePath.selectCategory,
       page: () => const SelectCategoryPage(),
+      middlewares: [AuthMiddleware()],
     ),
 
     // Login
@@ -62,6 +65,7 @@ class Routes {
     GetPage(
       name: RoutePath.makeTicketInfo,
       page: () => const MakeTicketInfoPage(),
+      middlewares: [AuthMiddleware()],
     ),
     GetPage(
       name: RoutePath.makeTicketLayout,

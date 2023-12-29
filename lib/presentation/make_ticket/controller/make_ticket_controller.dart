@@ -18,6 +18,8 @@ class MakeTicketController extends GetxController {
     layoutType: TicketLayoutType.layout0,
   ).obs;
 
+  RxBool isUploading = false.obs;
+
   // Ticket Information
   final Rx<XFile?> ticketImage = XFile("").obs;
   final TextEditingController titleController = TextEditingController();
@@ -27,6 +29,7 @@ class MakeTicketController extends GetxController {
   final Rx<double> selectedRating = 4.5.obs;
   final TextEditingController memoController = TextEditingController();
   final Rx<int> memoTextLength = 0.obs;
+  final RxBool isPrivate = false.obs;
 
   bool get isEnable => ticketImage.value!.path.isNotEmpty && titleTextLength.value != 0;
 
@@ -60,10 +63,13 @@ class MakeTicketController extends GetxController {
       memo: memoController.text,
       ticketType: TicketType.values[selectedTicketTypeIndex.value],
       layoutType: TicketLayoutType.values[selectedTicketLayoutIndex.value],
+      isPrivate: isPrivate.value ? "PRIVATE" : "PUBLIC",
     );
   }
 
-  Future<void> postTicket(bool isPrivate) async {
-    await Get.find<TicketUseCases>().postTicketUseCase.execute(ticket.value, isPrivate);
+  Future<void> postTicket() async {
+    isUploading.value = true;
+    await Get.find<TicketUseCases>().postTicketUseCase.execute(ticket.value);
+    isUploading.value = false;
   }
 }

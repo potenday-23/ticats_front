@@ -61,9 +61,9 @@ class InqueryPage extends StatelessWidget {
               onPressed: () async {
                 try {
                   EmailUtil().sendInqueryEmail();
-                  await _showErrorDialog(context);
                 } catch (e) {
-                  print(e);
+                  await _showErrorDialog(context);
+                  debugPrint(e.toString());
                 }
               },
             )),

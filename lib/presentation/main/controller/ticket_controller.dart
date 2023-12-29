@@ -19,6 +19,7 @@ class TicketController extends GetxController {
   RxList<Ticket> likeTicketList = <Ticket>[].obs;
   RxList<Ticket> totalTicketList = <Ticket>[].obs;
 
+  final RxBool isLoading = false.obs;
   final RxBool isEditing = false.obs;
 
   @override
@@ -41,9 +42,11 @@ class TicketController extends GetxController {
   }
 
   Future<void> getTickets() async {
+    isLoading.value = true;
     myTicketList.assignAll(await getMyTicketUseCase.execute());
     likeTicketList.assignAll(await getLikesUseCase.execute());
     totalTicketList.assignAll(await getTotalTicketUseCase.execute());
+    isLoading.value = false;
 
     update();
   }

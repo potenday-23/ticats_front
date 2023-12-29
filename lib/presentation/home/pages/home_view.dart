@@ -19,8 +19,10 @@ class HomeView extends GetView<HomeController> {
       appBar: const HomeAppBar(),
       body: GetX<TicketController>(
         builder: (ticketController) {
-          if (ticketController.totalTicketList.isEmpty) {
+          if (ticketController.isLoading.value) {
             return const Center(child: CircularProgressIndicator());
+          } else if (ticketController.totalTicketList.isEmpty) {
+            return const TicatsNoTicketView();
           } else {
             return TabBarView(
               controller: controller.tabController,

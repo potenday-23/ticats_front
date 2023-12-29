@@ -73,4 +73,18 @@ class TicketRepositoryImpl extends TicketRepository {
 
     return _ticketMappr.convert<TicketModel, Ticket>(ticketModel);
   }
+
+  @override
+  Future<List<Ticket>> searchTicket({
+    String? categorys,
+    String? period,
+    String? start,
+    String? end,
+    String? search,
+  }) async {
+    List<TicketModel> searchTicketList =
+        await _api.searchTicket(categorys: categorys, period: period, start: start, end: end, search: search);
+
+    return _ticketMappr.convertList<TicketModel, Ticket>(searchTicketList);
+  }
 }

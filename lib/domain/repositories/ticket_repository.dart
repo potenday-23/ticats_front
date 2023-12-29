@@ -20,4 +20,12 @@ abstract class TicketRepository {
   });
 
   Future<Ticket> postTicket(Ticket ticket, bool isPrivate);
+
+  Future<List<Ticket>> searchTicket({
+    String? categorys,
+    String? period,
+    String? start,
+    String? end,
+    String? search,
+  });
 }

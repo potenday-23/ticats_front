@@ -5,7 +5,8 @@ import 'package:get/get.dart';
 import 'package:ticats/app/config/app_color.dart';
 import 'package:ticats/app/config/app_typeface.dart';
 import 'package:ticats/app/service/auth_service.dart';
-import 'package:ticats/presentation/main/controller/main_controller.dart';
+import 'package:ticats/app/util/email_util.dart';
+import 'package:ticats/domain/entities/ticket.dart';
 import 'package:ticats/presentation/main/controller/ticket_controller.dart';
 import 'package:ticats/presentation/make_ticket/controller/make_ticket_controller.dart';
 
@@ -81,8 +82,15 @@ showDeleteDialog(BuildContext context, int ticketId) async {
           ),
           Positioned.fill(
             left: 50.w,
-            top: -210.w,
-            child: Align(alignment: Alignment.centerLeft, child: SvgPicture.asset('assets/cats/cat_eyes.svg')),
+            top: -180.w,
+            child: Align(
+                alignment: Alignment.centerLeft,
+                child: SvgPicture.asset(
+                  'assets/cats/cat_eyes.svg',
+                  width: 142.w,
+                  height: 87.w,
+                  fit: BoxFit.cover,
+                )),
           ),
         ],
       );
@@ -246,6 +254,95 @@ showPostTicketDialog(BuildContext context) async {
             left: 50.w,
             top: -310.w,
             child: Align(alignment: Alignment.center, child: SvgPicture.asset('assets/cats/cat_enjoy.svg')),
+          ),
+        ],
+      );
+    },
+  );
+}
+
+showReportDialog(BuildContext context, Ticket ticket) async {
+  return await showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Stack(
+        children: [
+          AlertDialog(
+            contentPadding: EdgeInsets.zero,
+            insetPadding: const EdgeInsets.symmetric(horizontal: 24.0),
+            scrollable: true,
+            backgroundColor: Colors.white,
+            surfaceTintColor: Colors.white,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.r)),
+            elevation: 0,
+            content: Padding(
+              padding: EdgeInsets.only(top: 60.h),
+              child: SizedBox(
+                width: double.maxFinite,
+                child: Column(
+                  children: [
+                    Text("티켓을 신고하시겠어요?\n불쾌감을 주는 이미지는 신고 사유에 해당됩니다.", style: AppTypeFace.xSmall16SemiBold, textAlign: TextAlign.center),
+                    SizedBox(height: 32.h),
+                    Row(
+                      children: [
+                        Flexible(
+                          flex: 4,
+                          child: GestureDetector(
+                            behavior: HitTestBehavior.translucent,
+                            onTap: () => Get.back(),
+                            child: Container(
+                              height: 56.h,
+                              decoration: BoxDecoration(
+                                color: AppColor.grayE5,
+                                borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(14.r),
+                                ),
+                              ),
+                              child: Center(
+                                child: Text("취소", style: AppTypeFace.small18SemiBold),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Flexible(
+                          flex: 6,
+                          child: GestureDetector(
+                            behavior: HitTestBehavior.translucent,
+                            onTap: () {
+                              EmailUtil().sendReportEmail('', '');
+                            },
+                            child: Container(
+                              height: 56.h,
+                              decoration: BoxDecoration(
+                                color: AppColor.systemPositiveBlue,
+                                borderRadius: BorderRadius.only(
+                                  bottomRight: Radius.circular(14.r),
+                                ),
+                              ),
+                              child: Center(
+                                child: Text("신고 메일 보내기", style: AppTypeFace.small18SemiBold.copyWith(color: Colors.white)),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Positioned.fill(
+            left: 50.w,
+            top: -180.w,
+            child: Align(
+                alignment: Alignment.centerLeft,
+                child: SvgPicture.asset(
+                  'assets/cats/cat_eyes.svg',
+                  width: 142.w,
+                  height: 87.w,
+                  fit: BoxFit.cover,
+                )),
           ),
         ],
       );

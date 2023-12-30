@@ -37,6 +37,18 @@ class TicketFront extends StatelessWidget {
                 child: Image.asset('assets/tickets/ticket_${ticket.ticketType.index}.png'),
               ),
               Positioned.fill(
+                child: Align(
+                  alignment: Alignment.topCenter,
+                  child: Image.asset('assets/tickets/ticket_${ticket.ticketType.index}_gradient.png'),
+                ),
+              ),
+              Positioned.fill(
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: RotatedBox(quarterTurns: 2, child: Image.asset('assets/tickets/ticket_${ticket.ticketType.index}_gradient.png')),
+                ),
+              ),
+              Positioned.fill(
                 bottom: 24.w,
                 child: Align(
                   alignment: Alignment.bottomCenter,

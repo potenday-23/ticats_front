@@ -36,6 +36,7 @@ class HomeAppBar extends GetView<HomeController> implements PreferredSizeWidget 
         tabs: controller.tabs,
         isScrollable: true,
         padding: EdgeInsets.zero,
+        tabAlignment: TabAlignment.center,
 
         // label Decoration
         labelColor: Colors.black,

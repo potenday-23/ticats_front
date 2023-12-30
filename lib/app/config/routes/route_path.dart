@@ -17,6 +17,7 @@ class RoutePath {
   static const String makeTicketResult = '/makeTicket/result';
 
   // My Page
+  static const String editProfile = '/myPage/editProfile';
   static const String notice = '/myPage/notice';
   static const String noticeDetail = '/myPage/noticeDetail';
   static const String inquery = '/myPage/inquery';

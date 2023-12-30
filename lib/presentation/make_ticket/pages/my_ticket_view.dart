@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:ticats/app/config/app_color.dart';
 import 'package:ticats/app/config/app_typeface.dart';
 import 'package:ticats/app/config/routes/route_path.dart';
-import 'package:ticats/app/service/ticats_service.dart';
 import 'package:ticats/domain/entities/category.dart';
 import 'package:ticats/domain/entities/ticket.dart';
 import 'package:ticats/presentation/common/views/ticats_no_ticket_view.dart';
@@ -42,14 +41,25 @@ class MyTicketView extends GetView<TicketController> {
         if (controller.myTicketList.isEmpty) {
           return const TicatsNoTicketView();
         } else {
+          Map<Category, List<Ticket>> ticketMap = {};
+
+          for (Ticket ticket in controller.myTicketList) {
+            if (ticketMap.containsKey(ticket.category)) {
+              ticketMap[ticket.category]!.add(ticket);
+            } else {
+              ticketMap[ticket.category!] = [ticket];
+            }
+          }
+
           return Stack(
             children: [
               ListView.builder(
                 shrinkWrap: true,
-                itemCount: TicatsService.to.ticatsCategories.length,
+                itemCount: ticketMap.keys.length,
                 itemBuilder: (context, index) {
                   return _CategoryListView(
-                    category: TicatsService.to.ticatsCategories[index],
+                    categoryName: ticketMap.keys.toList()[index].name,
+                    tickets: ticketMap.values.toList()[index],
                   );
                 },
               ),
@@ -75,9 +85,10 @@ class MyTicketView extends GetView<TicketController> {
 }
 
 class _CategoryListView extends GetView<TicketController> {
-  const _CategoryListView({required this.category});
+  const _CategoryListView({required this.categoryName, required this.tickets});
 
-  final Category category;
+  final String categoryName;
+  final List<Ticket> tickets;
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +98,7 @@ class _CategoryListView extends GetView<TicketController> {
         SizedBox(height: 36.w),
         Padding(
           padding: EdgeInsets.only(left: 24.w),
-          child: Text(category.name, style: AppTypeFace.small18SemiBold),
+          child: Text(categoryName, style: AppTypeFace.small18SemiBold),
         ),
         SizedBox(height: 12.w),
         SingleChildScrollView(
@@ -96,32 +107,29 @@ class _CategoryListView extends GetView<TicketController> {
             spacing: 16.w,
             children: [
               SizedBox(width: 8.w),
-              for (Ticket ticket in controller.myTicketList) ...[
-                if (ticket.category!.id == category.id) ...[
-                  Obx(
-                    () => Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        SizedBox(width: 163.w, height: 269.h, child: TicketFront(ticket)),
-                        if (controller.isEditing.value) ...[
-                          Positioned.fill(
-                            top: -2.w,
-                            right: -2.w,
-                            child: Align(
-                              alignment: Alignment.topRight,
-                              child: GestureDetector(
-                                onTap: () async => showDeleteDialog(context, ticket.id!),
-                                child: SvgPicture.asset('assets/icons/delete.svg', width: 22.w, height: 22.w),
-                              ),
+              for (Ticket ticket in tickets) ...[
+                Obx(
+                  () => Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      SizedBox(width: 163.w, height: 269.h, child: TicketFront(ticket)),
+                      if (controller.isEditing.value) ...[
+                        Positioned.fill(
+                          top: -2.w,
+                          right: -2.w,
+                          child: Align(
+                            alignment: Alignment.topRight,
+                            child: GestureDetector(
+                              onTap: () async => showDeleteDialog(context, ticket.id!),
+                              child: SvgPicture.asset('assets/icons/delete.svg', width: 22.w, height: 22.w),
                             ),
                           ),
-                        ]
-                      ],
-                    ),
+                        ),
+                      ]
+                    ],
                   ),
-                ]
-              ],
-              SizedBox(width: 8.w),
+                ),
+              ]
             ],
           ),
         ),

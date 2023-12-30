@@ -11,8 +11,8 @@ enum SSOType { apple, kakao }
 class AuthService extends GetxController {
   static AuthService get to => Get.find();
 
-  Rx<TicatsMember?>? _member;
-  TicatsMember? get member => _member?.value;
+  late Rx<TicatsMember> _member = const TicatsMember(member: null, token: null).obs;
+  TicatsMember? get member => _member.value;
 
   MemberOAuth? _memberOAuth;
   MemberOAuth? get memberOAuth => _memberOAuth;
@@ -22,7 +22,7 @@ class AuthService extends GetxController {
   bool get isLogin => member != null && !isTokenExpired;
 
   bool get isTokenExpired {
-    if (member == null) return true;
+    if (member!.member == null) return true;
 
     return !member!.member!.updatedDate!.isAfter(DateTime.now().subtract(const Duration(days: 1)));
   }
@@ -33,7 +33,7 @@ class AuthService extends GetxController {
 
     await getCredential();
 
-    if (_member?.value == null) {
+    if (member!.member == null) {
     } else if (isTokenExpired) {
       await Fluttertoast.showToast(
         msg: '로그인이 만료되었습니다. 다시 로그인해주세요.',
@@ -48,7 +48,12 @@ class AuthService extends GetxController {
   }
 
   Future<void> getCredential() async {
-    _member = (await AuthLocalDataSource().getMember()).obs;
+    var tempMember = await AuthLocalDataSource().getMember();
+
+    if (tempMember != null) {
+      _member = tempMember.obs;
+    }
+
     _memberOAuth = await AuthLocalDataSource().getMemberOAuth();
   }
 
@@ -69,10 +74,11 @@ class AuthService extends GetxController {
       await UserApi.instance.logout();
     }
 
-    _member!.value = null;
+    _member.value = const TicatsMember(member: null, token: null);
     _memberOAuth = null;
     tempMemberOAuth = null;
 
     await AuthLocalDataSource().deleteMember();
+    await AuthLocalDataSource().deleteMemberOAuth();
   }
 }

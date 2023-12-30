@@ -17,7 +17,7 @@ class ResignController extends GetxController {
     try {
       await resignMemberUseCase.execute(resignReasonList);
 
-      AuthService.to.logout();
+      await AuthService.to.logout();
       Get.offAllNamed(RoutePath.main);
 
       Fluttertoast.showToast(msg: "회원 탈퇴가 완료되었습니다 ㅜ.ㅜ");

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:ticats/app/service/auth_service.dart';
 import 'package:ticats/domain/entities/ticats_member.dart';
 import 'package:ticats/domain/repositories/auth_repository.dart';
+import 'package:ticats/presentation/common/widgets/ticats_tutorial.dart';
 import 'package:ticats/presentation/main/controller/ticket_controller.dart';
 
 enum HomeViewType { card, grid }
@@ -18,12 +19,19 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
   final RxList<String> categoryList = <String>[].obs;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     tabController = TabController(length: tabs.length, vsync: this);
     tabController.addListener(() {
       tabIndex.value = tabController.index;
     });
+  }
+
+  @override
+  void onReady() async {
+    super.onReady();
+
+    await showExampleDialog(Get.context!);
   }
 
   @override

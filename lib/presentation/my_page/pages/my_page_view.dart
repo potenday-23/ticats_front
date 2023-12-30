@@ -14,7 +14,7 @@ import 'package:ticats/presentation/home/controller/home_controller.dart';
 import 'package:ticats/presentation/main/controller/main_controller.dart';
 import 'package:ticats/presentation/main/controller/ticket_controller.dart';
 
-class MyPageView extends StatelessWidget {
+class MyPageView extends GetView<AuthService> {
   const MyPageView({super.key});
 
   @override
@@ -24,7 +24,7 @@ class MyPageView extends StatelessWidget {
       body: Obx(
         () => Column(
           children: [
-            if (AuthService.to.member != null) ...[
+            if (AuthService.to.member!.member != null) ...[
               const _MyProfileWidget(),
             ] else ...[
               const _GuestProfileWidget(),
@@ -82,18 +82,24 @@ class _MyPageListView extends StatelessWidget {
             ),
           ),
         ),
-        if (AuthService.to.member != null) ...[
-          _MyPageTile(
-            "로그아웃",
-            icon: "logout",
-            onTap: () => showLogoutDialog(context),
+        Obx(
+          () => Column(
+            children: [
+              if (AuthService.to.member!.member != null) ...[
+                _MyPageTile(
+                  "로그아웃",
+                  icon: "logout",
+                  onTap: () => showLogoutDialog(context),
+                ),
+                _MyPageTile(
+                  "탈퇴하기",
+                  icon: "quit",
+                  onTap: () => Get.toNamed(RoutePath.resign),
+                ),
+              ],
+            ],
           ),
-          _MyPageTile(
-            "탈퇴하기",
-            icon: "quit",
-            onTap: () => Get.toNamed(RoutePath.resign),
-          ),
-        ],
+        ),
       ],
     );
   }

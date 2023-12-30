@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:ticats/app/service/auth_service.dart';
 import 'package:ticats/domain/entities/ticket.dart';
 import 'package:ticats/domain/usecases/like_use_cases.dart';
 import 'package:ticats/domain/usecases/ticket_use_cases.dart';
@@ -43,8 +44,15 @@ class TicketController extends GetxController {
 
   Future<void> getTickets() async {
     isLoading.value = true;
-    myTicketList.assignAll(await getMyTicketUseCase.execute());
-    likeTicketList.assignAll(await getLikesUseCase.execute());
+
+    myTicketList.clear();
+    likeTicketList.clear();
+    totalTicketList.clear();
+
+    if (AuthService.to.isLogin) {
+      myTicketList.assignAll(await getMyTicketUseCase.execute());
+      likeTicketList.assignAll(await getLikesUseCase.execute());
+    }
     totalTicketList.assignAll(await getTotalTicketUseCase.execute());
     isLoading.value = false;
 

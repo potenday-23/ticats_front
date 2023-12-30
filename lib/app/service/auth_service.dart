@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -71,7 +72,11 @@ class AuthService extends GetxController {
 
   Future<void> logout() async {
     if (memberOAuth?.socialType == 'KAKAO') {
-      await UserApi.instance.logout();
+      try {
+        await UserApi.instance.logout();
+      } catch (e) {
+        debugPrint(e.toString());
+      }
     }
 
     _member.value = const TicatsMember(member: null, token: null);

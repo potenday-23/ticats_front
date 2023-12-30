@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:ticats/app/config/app_color.dart';
 import 'package:ticats/app/config/app_typeface.dart';
 import 'package:ticats/app/config/routes/route_path.dart';
+import 'package:ticats/presentation/common/enum/color_type.dart';
 import 'package:ticats/presentation/common/widgets/ticats_appbar.dart';
 import 'package:ticats/presentation/common/widgets/ticats_button.dart';
 import 'package:ticats/presentation/common/widgets/ticats_dialog.dart';
@@ -34,7 +35,7 @@ class MakeTicketLayoutPage extends GetView<MakeTicketController> {
             } else if (controller.selectedLayoutTabIndex.value == 1) {
               return const _SelectTicketLayoutWidget();
             } else {
-              return const SizedBox();
+              return const _SelectTicketColorWidget();
             }
           }),
           SizedBox(height: 16.h),
@@ -72,7 +73,7 @@ class MakeTicketLayoutPage extends GetView<MakeTicketController> {
                           },
                         ),
                       ] else ...[
-                        SizedBox(width: 342.w, height: 564.w, child: TicketBack(controller.ticket.value)),
+                        SizedBox(width: 342.w, height: 564.w, child: Obx(() => TicketBack(controller.ticket.value))),
                         SizedBox(height: 40.w),
                         TicatsButton(
                           color: AppColor.primaryNormal,
@@ -199,6 +200,37 @@ class _SelectTicketLayoutWidget extends GetView<MakeTicketController> {
                       width: 75.w,
                       height: 75.w,
                     ),
+                  ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _SelectTicketColorWidget extends GetView<MakeTicketController> {
+  const _SelectTicketColorWidget();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 55.w),
+          child: SizedBox(
+            width: double.maxFinite,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                for (ColorType color in ColorType.values)
+                  GestureDetector(
+                    onTap: () {
+                      controller.selectedColor.value = color.id;
+                      controller.ticket.value = controller.ticket.value.copyWith(color: color.id.toString());
+                    },
+                    child: Image.asset("assets/icons/color_${color.name}.png", width: 35.w, height: 35.w),
                   ),
               ],
             ),

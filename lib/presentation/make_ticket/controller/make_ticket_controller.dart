@@ -6,6 +6,7 @@ import 'package:ticats/app/service/ticats_service.dart';
 import 'package:ticats/domain/entities/category.dart';
 import 'package:ticats/domain/entities/ticket.dart';
 import 'package:ticats/domain/usecases/ticket_use_cases.dart';
+import 'package:ticats/presentation/common/enum/color_type.dart';
 import 'package:ticats/presentation/common/enum/ticket_enum.dart';
 
 class MakeTicketController extends GetxController {
@@ -29,6 +30,7 @@ class MakeTicketController extends GetxController {
   final Rx<double> selectedRating = 4.5.obs;
   final TextEditingController memoController = TextEditingController();
   final Rx<int> memoTextLength = 0.obs;
+  final RxInt selectedColor = 1.obs;
   final RxBool isPrivate = false.obs;
 
   bool get isEnable => ticketImage.value!.path.isNotEmpty && titleTextLength.value != 0;
@@ -63,6 +65,7 @@ class MakeTicketController extends GetxController {
       memo: memoController.text,
       ticketType: TicketType.values[selectedTicketTypeIndex.value],
       layoutType: TicketLayoutType.values[selectedTicketLayoutIndex.value],
+      color: ColorType.values[selectedColor.value].id.toString(),
       isPrivate: isPrivate.value ? "PRIVATE" : "PUBLIC",
     );
   }

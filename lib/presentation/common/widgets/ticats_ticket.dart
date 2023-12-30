@@ -12,6 +12,7 @@ import 'package:ticats/app/config/app_color.dart';
 import 'package:ticats/app/config/app_typeface.dart';
 import 'package:ticats/app/extension/datetime_to_ordinal.dart';
 import 'package:ticats/domain/entities/ticket.dart';
+import 'package:ticats/presentation/common/enum/color_type.dart';
 
 import '../enum/ticket_enum.dart';
 import 'ticats_chip.dart';
@@ -100,7 +101,7 @@ class TicketBack extends StatelessWidget {
                   SizedBox(height: ticket.ticketType == TicketType.type1 ? 89.w : 45.w),
                   Text(
                     ticket.memo ?? "",
-                    style: AppTypeFace.xSmall14Medium,
+                    style: AppTypeFace.xSmall14Medium.copyWith(color: ColorType.values[int.parse(ticket.color!)].color),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 5,
                   ),
@@ -136,7 +137,7 @@ class TicketBack extends StatelessWidget {
                     SizedBox(height: 10.w),
                     Text(
                       ticket.memo ?? "",
-                      style: AppTypeFace.xSmall14Medium,
+                      style: AppTypeFace.xSmall14Medium.copyWith(color: ColorType.values[int.parse(ticket.color!)].color),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 5,
                     ),
@@ -257,7 +258,7 @@ class TicketBack extends StatelessWidget {
                         Expanded(
                           child: Text(
                             ticket.memo ?? "",
-                            style: AppTypeFace.xSmall14Medium,
+                            style: AppTypeFace.xSmall14Medium.copyWith(color: ColorType.values[int.parse(ticket.color!)].color),
                             overflow: TextOverflow.ellipsis,
                             maxLines: 5,
                           ),

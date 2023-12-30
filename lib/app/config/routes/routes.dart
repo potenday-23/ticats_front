@@ -10,6 +10,7 @@ import 'package:ticats/presentation/main/pages/main_page.dart';
 import 'package:ticats/presentation/make_ticket/pages/make_ticket_info_page.dart';
 import 'package:ticats/presentation/make_ticket/pages/make_ticket_layout_page.dart';
 import 'package:ticats/presentation/make_ticket/pages/make_ticket_result_page.dart';
+import 'package:ticats/presentation/my_page/pages/edit_profile_page.dart';
 import 'package:ticats/presentation/my_page/pages/inquery_page.dart';
 import 'package:ticats/presentation/my_page/pages/like_page.dart';
 import 'package:ticats/presentation/my_page/pages/my_statistics_page.dart';
@@ -78,6 +79,10 @@ class Routes {
     ),
 
     // My Page
+    GetPage(
+      name: RoutePath.editProfile,
+      page: () => const EditProfilePage(),
+    ),
     GetPage(
       name: RoutePath.notice,
       page: () => const NoticePage(),

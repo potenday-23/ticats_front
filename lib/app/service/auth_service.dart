@@ -58,7 +58,7 @@ class AuthService extends GetxController {
   }
 
   Future<void> setMember(TicatsMember member) async {
-    _member = member.obs;
+    _member.value = member;
 
     AuthLocalDataSource().saveMember(member);
   }

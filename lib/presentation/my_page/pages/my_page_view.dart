@@ -118,44 +118,49 @@ class _MyProfileWidget extends StatelessWidget {
             padding: EdgeInsets.all(24.w),
             child: Column(
               children: [
-                Row(
-                  children: [
-                    if (AuthService.to.member!.member!.profileUrl != null) ...[
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(50),
-                        child: CachedNetworkImage(
-                          imageUrl: AuthService.to.member!.member!.profileUrl!,
-                          width: 56.w,
-                          height: 56.w,
-                          fit: BoxFit.cover,
-                          errorWidget: (context, url, error) {
-                            return SvgPicture.asset('assets/icons/profile.svg', width: 56.w, height: 56.w);
-                          },
+                Obx(
+                  () => Row(
+                    children: [
+                      if (AuthService.to.member!.member!.profileUrl != null) ...[
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child: CachedNetworkImage(
+                            imageUrl: AuthService.to.member!.member!.profileUrl!,
+                            width: 56.w,
+                            height: 56.w,
+                            fit: BoxFit.cover,
+                            errorWidget: (context, url, error) {
+                              return SvgPicture.asset('assets/icons/profile.svg', width: 56.w, height: 56.w);
+                            },
+                          ),
                         ),
-                      ),
-                    ] else ...[
-                      SvgPicture.asset('assets/icons/profile.svg', width: 56.w, height: 56.w)
+                      ] else ...[
+                        SvgPicture.asset('assets/icons/profile.svg', width: 56.w, height: 56.w)
+                      ],
+                      SizedBox(width: 18.w),
+                      Text(AuthService.to.member!.member!.nickname!, style: AppTypeFace.small18SemiBold),
+                      const Spacer(),
+                      GestureDetector(
+                        onTap: () => Get.toNamed(RoutePath.editProfile),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: AppColor.grayE5),
+                            borderRadius: BorderRadius.circular(8.r),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.fromLTRB(14.w, 4.w, 12.w, 4.w),
+                            child: Row(
+                              children: [
+                                Text("프로필 수정", style: AppTypeFace.xSmall14Medium.copyWith(color: AppColor.gray8E)),
+                                SizedBox(width: 8.w),
+                                SvgPicture.asset('assets/icons/edit.svg', width: 16.w, height: 16.w),
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
                     ],
-                    SizedBox(width: 18.w),
-                    Text(AuthService.to.member!.member!.nickname!, style: AppTypeFace.small18SemiBold),
-                    const Spacer(),
-                    Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: AppColor.grayE5),
-                        borderRadius: BorderRadius.circular(8.r),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.fromLTRB(14.w, 4.w, 12.w, 4.w),
-                        child: Row(
-                          children: [
-                            Text("프로필 수정", style: AppTypeFace.xSmall14Medium.copyWith(color: AppColor.gray8E)),
-                            SizedBox(width: 8.w),
-                            SvgPicture.asset('assets/icons/edit.svg', width: 16.w, height: 16.w),
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
+                  ),
                 ),
                 SizedBox(height: 20.w),
                 Container(

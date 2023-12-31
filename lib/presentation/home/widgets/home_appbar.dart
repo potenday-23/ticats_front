@@ -40,11 +40,11 @@ class HomeAppBar extends GetView<HomeController> implements PreferredSizeWidget 
 
         // label Decoration
         labelColor: Colors.black,
-        labelStyle: AppTypeFace.small20Bold,
+        labelStyle: AppTypeFace.small18Bold,
 
         // unselectedLabel Decoration
         unselectedLabelColor: AppColor.gray8E,
-        unselectedLabelStyle: AppTypeFace.small20Bold,
+        unselectedLabelStyle: AppTypeFace.small18Bold,
 
         // divider & indicator Decoration
         dividerColor: Colors.transparent,

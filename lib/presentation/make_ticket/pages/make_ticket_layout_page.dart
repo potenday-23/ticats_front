@@ -22,84 +22,89 @@ class MakeTicketLayoutPage extends GetView<MakeTicketController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       appBar: const BackAppBar(title: "티켓 만들기"),
       body: SingleChildScrollView(
         controller: scrollController,
         physics: const ClampingScrollPhysics(),
         child: Column(children: [
-          const _MakeTicketTabBarWidget(),
-          SizedBox(height: 16.h),
-          Obx(() {
-            if (controller.selectedLayoutTabIndex.value == 0) {
-              return const _SelectTicketTypeWidget();
-            } else if (controller.selectedLayoutTabIndex.value == 1) {
-              return const _SelectTicketLayoutWidget();
-            } else {
-              return const _SelectTicketColorWidget();
-            }
-          }),
-          SizedBox(height: 16.h),
+          Container(
+            color: Colors.white,
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 24.w),
+              child: Column(
+                children: [
+                  const _MakeTicketTabBarWidget(),
+                  SizedBox(height: 16.w),
+                  Obx(() {
+                    if (controller.selectedLayoutTabIndex.value == 0) {
+                      return const _SelectTicketTypeWidget();
+                    } else if (controller.selectedLayoutTabIndex.value == 1) {
+                      return const _SelectTicketLayoutWidget();
+                    } else {
+                      return const _SelectTicketColorWidget();
+                    }
+                  }),
+                ],
+              ),
+            ),
+          ),
           SizedBox(
             width: double.maxFinite,
             child: Center(
               child: Obx(() {
-                return Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.w),
-                  child: Column(
-                    children: [
-                      if (controller.selectedLayoutTabIndex.value == 0) ...[
-                        SizedBox(width: 342.w, height: 564.w, child: TicketFront(controller.ticket.value)),
-                        SizedBox(height: 40.w),
-                        TicatsButton(
-                          color: AppColor.primaryNormal,
-                          child: Text(
-                            "다음",
-                            style: AppTypeFace.small20Bold.copyWith(color: Colors.white),
-                          ),
-                          onPressed: () {
-                            controller.selectedLayoutTabIndex.value = 1;
-                            scrollController.animateTo(0, duration: const Duration(microseconds: 2000), curve: Curves.easeIn);
-                          },
-                        ),
-                      ] else if (controller.selectedLayoutTabIndex.value == 1) ...[
-                        SizedBox(width: 342.w, height: 564.w, child: TicketBack(controller.ticket.value)),
-                        SizedBox(height: 40.w),
-                        TicatsButton(
-                          color: AppColor.primaryNormal,
-                          child: Text("다음", style: AppTypeFace.small20Bold.copyWith(color: Colors.white)),
-                          onPressed: () {
-                            controller.selectedLayoutTabIndex.value = 2;
-                            scrollController.animateTo(0, duration: const Duration(microseconds: 2000), curve: Curves.easeIn);
-                          },
-                        ),
-                      ] else ...[
-                        SizedBox(width: 342.w, height: 564.w, child: Obx(() => TicketBack(controller.ticket.value))),
-                        SizedBox(height: 40.w),
-                        TicatsButton(
-                          color: AppColor.primaryNormal,
-                          child: Text("완료", style: AppTypeFace.small20Bold.copyWith(color: Colors.white)),
-                          onPressed: () async {
-                            try {
-                              bool? postResult = await showPostTicketDialog(context);
-
-                              if (postResult == true) {
-                                await Get.find<TicketController>().getTickets();
-                                Get.offNamedUntil(RoutePath.makeTicketResult, ModalRoute.withName(RoutePath.main));
-                              }
-                            } catch (e) {
-                              debugPrint(e.toString());
-                            }
-                          },
-                        ),
+                return SafeArea(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.w),
+                    child: Column(
+                      children: [
+                        if (controller.selectedLayoutTabIndex.value == 0) ...[
+                          SizedBox(width: 342.w, height: 564.w, child: TicketFront(controller.ticket.value)),
+                        ] else if (controller.selectedLayoutTabIndex.value == 1) ...[
+                          SizedBox(width: 342.w, height: 564.w, child: TicketBack(controller.ticket.value)),
+                        ] else ...[
+                          SizedBox(width: 342.w, height: 564.w, child: Obx(() => TicketBack(controller.ticket.value))),
+                        ],
                       ],
-                      SizedBox(height: 20.w),
-                    ],
+                    ),
                   ),
                 );
               }),
             ),
           ),
         ]),
+      ),
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(24.w, 0, 24.w, 20.w),
+          child: Obx(
+            () => TicatsButton(
+              color: AppColor.primaryNormal,
+              child: Text(controller.selectedLayoutTabIndex.value == 2 ? "완료" : "다음",
+                  style: AppTypeFace.small20Bold.copyWith(color: Colors.white)),
+              onPressed: () async {
+                if (controller.selectedLayoutTabIndex.value == 0) {
+                  controller.selectedLayoutTabIndex.value = 1;
+                  scrollController.animateTo(0, duration: const Duration(microseconds: 2000), curve: Curves.easeIn);
+                } else if (controller.selectedLayoutTabIndex.value == 1) {
+                  controller.selectedLayoutTabIndex.value = 2;
+                  scrollController.animateTo(0, duration: const Duration(microseconds: 2000), curve: Curves.easeIn);
+                } else {
+                  try {
+                    bool? postResult = await showPostTicketDialog(context);
+
+                    if (postResult == true) {
+                      await Get.find<TicketController>().getTickets();
+                      Get.offNamedUntil(RoutePath.makeTicketResult, ModalRoute.withName(RoutePath.main));
+                    }
+                  } catch (e) {
+                    debugPrint(e.toString());
+                  }
+                }
+              },
+            ),
+          ),
+        ),
       ),
     );
   }

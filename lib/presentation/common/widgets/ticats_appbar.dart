@@ -23,7 +23,7 @@ class BackAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ],
       ),
-      title: Text(title ?? "", style: AppTypeFace.small20Bold),
+      title: Text(title ?? "", style: AppTypeFace.small18SemiBold),
     );
   }
 
@@ -46,7 +46,7 @@ class CloseAppBar extends StatelessWidget implements PreferredSizeWidget {
           child: GestureDetector(onTap: () => Get.back(), child: Icon(Icons.close, size: 24.w)),
         ),
       ],
-      title: Text(title ?? "", style: AppTypeFace.small20Bold),
+      title: Text(title ?? "", style: AppTypeFace.small18SemiBold),
     );
   }
 

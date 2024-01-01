@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ticats/app/service/auth_service.dart';
 import 'package:ticats/domain/entities/ticats_member.dart';
 import 'package:ticats/domain/repositories/auth_repository.dart';
@@ -31,13 +32,22 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
   void onReady() async {
     super.onReady();
 
-    await showExampleDialog(Get.context!);
+    await showTutorial();
   }
 
   @override
   void onClose() {
     tabController.dispose();
     super.onClose();
+  }
+
+  Future<void> showTutorial() async {
+    SharedPreferences.getInstance().then((prefs) async {
+      if (prefs.getBool("isFinishTutorial") != true) {
+        await showExampleDialog(Get.context!);
+        prefs.setBool("isFinishTutorial", true);
+      }
+    });
   }
 
   Future<void> saveCategory() async {

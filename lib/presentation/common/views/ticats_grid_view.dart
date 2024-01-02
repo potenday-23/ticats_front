@@ -12,7 +12,7 @@ class TicatsGridView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 36.h),
+        padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
         child: Wrap(
           spacing: 16.w,
           runSpacing: 18.w,

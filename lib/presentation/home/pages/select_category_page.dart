@@ -23,9 +23,9 @@ class SelectCategoryPage extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 24.w),
           child: Column(
             children: [
-              SizedBox(height: 36.h),
+              SizedBox(height: 16.h),
               Text("관심 있는 카테고리를 선택해주세요.", style: AppTypeFace.small20Bold),
-              SizedBox(height: 36.h),
+              SizedBox(height: 16.h),
               Wrap(
                 spacing: 16.w,
                 runSpacing: 24.h,

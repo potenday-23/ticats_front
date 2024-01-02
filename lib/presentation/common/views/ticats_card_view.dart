@@ -25,8 +25,8 @@ class _TicatsCardViewState extends State<TicatsCardView> with AutomaticKeepAlive
     return StackedCardCarousel(
       type: StackedCardCarouselType.fadeOutStack,
       pageController: pageController,
-      initialOffset: 36.w,
-      spaceBetweenItems: 580.w,
+      initialOffset: 24.w,
+      spaceBetweenItems: 588.w,
       items: [
         for (final ticket in widget.ticketList)
           SizedBox(

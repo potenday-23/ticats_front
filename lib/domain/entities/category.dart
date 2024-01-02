@@ -8,6 +8,7 @@ class Category with _$Category {
   const factory Category({
     required int id,
     required String name,
+    required String engName,
     required String basicImage,
     required String clickImage,
   }) = _Category;

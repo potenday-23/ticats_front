@@ -106,7 +106,7 @@ class TicketBack extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      TicatsChip(ticket.category!.name, color: AppColor.grayF2),
+                      TicatsChip(ticket.category!.engName, color: AppColor.grayF2),
                       Text(DateFormat('yyyy년 MM월 dd일 (E)').format(ticket.ticketDate), style: AppTypeFace.xSmall14Medium),
                     ],
                   ),
@@ -145,7 +145,7 @@ class TicketBack extends StatelessWidget {
                   children: [
                     Text(ticket.title, style: AppTypeFace.medium24Bold),
                     SizedBox(height: 10.w),
-                    Text("/ ${ticket.category!.name}", style: AppTypeFace.xSmall12Bold),
+                    Text("/ ${ticket.category!.engName}", style: AppTypeFace.xSmall12Bold),
                     SizedBox(height: 10.w),
                     Text(
                       ticket.memo ?? "",
@@ -240,7 +240,7 @@ class TicketBack extends StatelessWidget {
               alignment: Alignment.topRight,
               child: RotatedBox(
                 quarterTurns: 1,
-                child: Text("/ ${ticket.category!.name}", style: AppTypeFace.xSmall12Bold),
+                child: Text("/ ${ticket.category!.engName}", style: AppTypeFace.xSmall12Bold),
               ),
             ),
           ),

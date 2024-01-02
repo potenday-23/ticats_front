@@ -27,11 +27,12 @@ class MyTicketView extends GetView<TicketController> {
           Obx(
             () => controller.myTicketList.isEmpty
                 ? Container()
-                : Padding(
-                    padding: EdgeInsets.only(right: 24.w),
-                    child: GestureDetector(
-                      onTap: () => controller.toggleEditing(),
-                      child: Text("편집", style: AppTypeFace.xSmall14Medium),
+                : GestureDetector(
+                    behavior: HitTestBehavior.translucent,
+                    onTap: () => controller.toggleEditing(),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 12.w),
+                      child: Text(!controller.isEditing.value ? "편집" : "취소", style: AppTypeFace.xSmall14Medium),
                     ),
                   ),
           ),
@@ -52,22 +53,31 @@ class MyTicketView extends GetView<TicketController> {
           }
 
           return Stack(
+            fit: StackFit.expand,
             children: [
-              ListView.builder(
-                shrinkWrap: true,
-                itemCount: ticketMap.keys.length,
-                itemBuilder: (context, index) {
-                  return _CategoryListView(
-                    categoryName: ticketMap.keys.toList()[index].name,
-                    tickets: ticketMap.values.toList()[index],
-                  );
-                },
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: ticketMap.keys.length,
+                      itemBuilder: (context, index) {
+                        return _CategoryListView(
+                          categoryName: ticketMap.keys.toList()[index].name,
+                          tickets: ticketMap.values.toList()[index],
+                        );
+                      },
+                    ),
+                    SizedBox(height: 88.w),
+                  ],
+                ),
               ),
               Positioned.fill(
                 child: Align(
                   alignment: Alignment.bottomCenter,
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.w),
+                    padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.w),
                     child: TicatsButton(
                       onPressed: () => Get.toNamed(RoutePath.makeTicketInfo),
                       color: AppColor.primaryNormal,
@@ -115,8 +125,8 @@ class _CategoryListView extends GetView<TicketController> {
                       SizedBox(width: 163.w, height: 269.h, child: TicketFront(ticket)),
                       if (controller.isEditing.value) ...[
                         Positioned.fill(
-                          top: -2.w,
-                          right: -2.w,
+                          top: -9,
+                          right: -9,
                           child: Align(
                             alignment: Alignment.topRight,
                             child: GestureDetector(

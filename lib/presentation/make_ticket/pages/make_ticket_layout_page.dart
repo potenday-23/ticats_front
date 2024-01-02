@@ -31,7 +31,7 @@ class MakeTicketLayoutPage extends GetView<MakeTicketController> {
           Container(
             color: Colors.white,
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 24.w),
+              padding: EdgeInsets.symmetric(vertical: 16.w),
               child: Column(
                 children: [
                   const _MakeTicketTabBarWidget(),
@@ -124,7 +124,7 @@ class _MakeTicketTabBarWidget extends GetView<MakeTicketController> {
             : controller.selectedLayoutTabIndex.value == 1
                 ? EdgeInsets.fromLTRB(0, 4.h, 0, 4.h)
                 : EdgeInsets.fromLTRB(0, 4.h, 4.w, 4.h),
-        labels: const ["티켓 모양", "레이아웃", "글자 색"],
+        labels: const ["티켓 모양", "티켓 뒷면", "글자 색"],
         icons: [
           controller.selectedLayoutTabIndex.value == 0 ? Icons.check : null,
           controller.selectedLayoutTabIndex.value == 1 ? Icons.check : null,

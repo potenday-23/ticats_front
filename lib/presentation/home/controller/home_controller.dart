@@ -32,6 +32,10 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
   void onReady() async {
     super.onReady();
 
+    if (AuthService.to.member != null) {
+      categoryList.assignAll(AuthService.to.member!.member!.categorys!);
+    }
+
     await showTutorial();
   }
 

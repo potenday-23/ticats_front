@@ -9,7 +9,6 @@ import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:ticats/app/config/app_color.dart';
 import 'package:ticats/app/config/app_typeface.dart';
 import 'package:ticats/presentation/common/widgets/ticats_appbar.dart';
 import 'package:ticats/presentation/common/widgets/ticats_ticket.dart';
@@ -24,16 +23,15 @@ class MakeTicketResultPage extends GetView<MakeTicketController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CloseAppBar(title: "티켓 만들기"),
-      body: Container(
-        width: double.maxFinite,
-        height: double.maxFinite,
-        color: AppColor.grayF9,
-        child: Center(
-          child: SizedBox(
-            width: 342.w,
-            height: 564.w,
-            child: Screenshot(
-              controller: _screenshotController,
+      body: Padding(
+        padding: EdgeInsets.only(top: 60.w),
+        child: Align(
+          alignment: Alignment.topCenter,
+          child: Screenshot(
+            controller: _screenshotController,
+            child: SizedBox(
+              width: 342.w,
+              height: 564.w,
               child: FlipCard(
                 front: TicketFront(controller.ticket.value),
                 back: TicketBack(controller.ticket.value),

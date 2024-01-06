@@ -24,14 +24,13 @@ class MakeTicketResultPage extends GetView<MakeTicketController> {
     return Scaffold(
       appBar: const CloseAppBar(title: "티켓 만들기"),
       body: Padding(
-        padding: EdgeInsets.only(top: 60.w),
+        padding: EdgeInsets.only(top: 60.h),
         child: Align(
           alignment: Alignment.topCenter,
           child: Screenshot(
             controller: _screenshotController,
             child: SizedBox(
-              width: 342.w,
-              height: 564.w,
+              height: 564.h,
               child: FlipCard(
                 front: TicketFront(controller.ticket.value),
                 back: TicketBack(controller.ticket.value),

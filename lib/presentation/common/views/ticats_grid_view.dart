@@ -20,7 +20,6 @@ class TicatsGridView extends StatelessWidget {
             for (final ticket in ticketList)
               SizedBox(
                 width: 163.w,
-                height: 269.h,
                 child: TicketFront(ticket),
               ),
           ],

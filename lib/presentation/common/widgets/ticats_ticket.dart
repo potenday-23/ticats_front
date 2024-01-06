@@ -92,7 +92,7 @@ class TicketBack extends StatelessWidget {
     if (ticket.layoutType == TicketLayoutType.layout0) {
       return Stack(
         children: [
-          Image.asset('assets/tickets/ticket_${ticket.ticketType.index}.png'),
+          Image.asset('assets/tickets/ticket_${ticket.ticketType.index}_${ticket.layoutType.index}_back.png'),
           Positioned.fill(
             child: Align(
               alignment: Alignment.topCenter,
@@ -126,7 +126,7 @@ class TicketBack extends StatelessWidget {
     } else if (ticket.layoutType == TicketLayoutType.layout1) {
       return Stack(
         children: [
-          Image.asset('assets/tickets/ticket_${ticket.ticketType.index}.png'),
+          Image.asset('assets/tickets/ticket_${ticket.ticketType.index}_${ticket.layoutType.index}_back.png'),
           Positioned.fill(
             child: Align(
               alignment: Alignment.topCenter,
@@ -210,7 +210,7 @@ class TicketBack extends StatelessWidget {
     } else {
       return Stack(
         children: [
-          Image.asset('assets/tickets/ticket_${ticket.ticketType.index}_back.png'),
+          Image.asset('assets/tickets/ticket_${ticket.ticketType.index}_${ticket.layoutType.index}_back.png'),
           Positioned.fill(
             top: ticket.ticketType == TicketType.type2 ? 60.w : 40.w,
             left: 24.w,

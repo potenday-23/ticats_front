@@ -59,11 +59,11 @@ class MakeTicketLayoutPage extends GetView<MakeTicketController> {
                     child: Column(
                       children: [
                         if (controller.selectedLayoutTabIndex.value == 0) ...[
-                          SizedBox(width: 342.w, height: 564.w, child: TicketFront(controller.ticket.value)),
+                          TicketFront(controller.ticket.value),
                         ] else if (controller.selectedLayoutTabIndex.value == 1) ...[
-                          SizedBox(width: 342.w, height: 564.w, child: TicketBack(controller.ticket.value)),
+                          TicketBack(controller.ticket.value),
                         ] else ...[
-                          SizedBox(width: 342.w, height: 564.w, child: Obx(() => TicketBack(controller.ticket.value))),
+                          Obx(() => TicketBack(controller.ticket.value)),
                         ],
                       ],
                     ),

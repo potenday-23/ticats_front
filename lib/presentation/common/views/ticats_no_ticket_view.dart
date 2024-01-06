@@ -12,7 +12,7 @@ class TicatsNoTicketView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 36.h),
+      padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

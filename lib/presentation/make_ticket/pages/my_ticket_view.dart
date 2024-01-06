@@ -105,7 +105,7 @@ class _CategoryListView extends GetView<TicketController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(height: 36.w),
+        SizedBox(height: 24.w),
         Padding(
           padding: EdgeInsets.only(left: 24.w),
           child: Text(categoryName, style: AppTypeFace.small18SemiBold),

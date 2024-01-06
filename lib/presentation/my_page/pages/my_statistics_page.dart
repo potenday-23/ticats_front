@@ -41,9 +41,9 @@ class StatisticsPage extends GetView<StatisticController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 28.h),
+                    SizedBox(height: 24.h),
                     Text("이번 달엔 ${controller.statisticsList[0].category}를 가장 많이 봤어요", style: AppTypeFace.small18SemiBold),
-                    SizedBox(height: 18.h),
+                    SizedBox(height: 36.h),
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(14.r),
@@ -102,7 +102,7 @@ class _ChartWidget extends GetView<StatisticController> {
               underline: const SizedBox(),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 13.h),
+              padding: EdgeInsets.symmetric(vertical: 15.h),
               child: SizedBox(
                 width: 250.w,
                 height: 250.w,
@@ -127,6 +127,7 @@ class _ChartWidget extends GetView<StatisticController> {
                 ),
               ),
             ),
+            SizedBox(height: 26.h),
             const Divider(thickness: 1, height: 1, color: AppColor.grayE5),
           ],
         ),
@@ -137,7 +138,7 @@ class _ChartWidget extends GetView<StatisticController> {
   List<PieChartSectionData> _showingSections() {
     return List.generate(controller.statisticsList.length, (i) {
       final isTouched = i == controller.touchedIndex.value;
-      final radius = isTouched ? 100.w : 87.5.w;
+      final radius = isTouched ? 100.w : 92.5.w;
 
       return PieChartSectionData(
         color: pieColors[i],

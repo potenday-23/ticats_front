@@ -60,9 +60,9 @@ class InqueryPage extends StatelessWidget {
               child: Text("이메일 보내기", style: AppTypeFace.small20Bold.copyWith(color: Colors.white)),
               onPressed: () async {
                 try {
-                  EmailUtil().sendInqueryEmail();
+                  await EmailUtil().sendInqueryEmail();
                 } catch (e) {
-                  await _showErrorDialog(context);
+                  if (context.mounted) await _showErrorDialog(context);
                   debugPrint(e.toString());
                 }
               },

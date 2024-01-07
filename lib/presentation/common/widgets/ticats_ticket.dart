@@ -54,10 +54,10 @@ class TicketFront extends StatelessWidget {
                     ),
                   ),
                   Positioned.fill(
-                    bottom: 24,
+                    bottom: 24 * 1.5,
                     child: Align(
                       alignment: Alignment.bottomCenter,
-                      child: SvgPicture.asset('assets/tickets/ticats_logo.svg', width: 46, height: 14),
+                      child: SvgPicture.asset('assets/tickets/ticats_logo.svg', width: 46 * 1.5, height: 14 * 1.5),
                     ),
                   ),
                 ],

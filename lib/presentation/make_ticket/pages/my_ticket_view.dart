@@ -112,6 +112,7 @@ class _CategoryListView extends GetView<TicketController> {
         ),
         SizedBox(height: 12.w),
         SingleChildScrollView(
+          clipBehavior: Clip.none,
           scrollDirection: Axis.horizontal,
           child: Wrap(
             spacing: 16.w,

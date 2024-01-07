@@ -49,28 +49,22 @@ class MakeTicketLayoutPage extends GetView<MakeTicketController> {
               ),
             ),
           ),
-          SizedBox(
-            width: double.maxFinite,
-            child: Center(
-              child: Obx(() {
-                return SafeArea(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.w),
-                    child: Column(
-                      children: [
-                        if (controller.selectedLayoutTabIndex.value == 0) ...[
-                          TicketFront(controller.ticket.value),
-                        ] else if (controller.selectedLayoutTabIndex.value == 1) ...[
-                          TicketBack(controller.ticket.value),
-                        ] else ...[
-                          Obx(() => TicketBack(controller.ticket.value)),
-                        ],
-                      ],
-                    ),
+          Center(
+            child: Obx(() {
+              return SafeArea(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.w),
+                  child: IndexedStack(
+                    index: controller.selectedLayoutTabIndex.value,
+                    children: [
+                      TicketFront(controller.ticket.value),
+                      SizedBox(width: double.maxFinite, child: TicketBack(controller.ticket.value)),
+                      SizedBox(width: double.maxFinite, child: TicketBack(controller.ticket.value)),
+                    ],
                   ),
-                );
-              }),
-            ),
+                ),
+              );
+            }),
           ),
         ]),
       ),

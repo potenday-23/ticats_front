@@ -20,12 +20,18 @@ class StatisticController extends GetxController {
   void onInit() async {
     super.onInit();
 
-    await getYearStatistics().then(
-      (_) async => getStatistics("${yearStatisticsList[0].year}-${yearStatisticsList[0].month.toString().padLeft(2, '0')}"),
-    );
-    selectedMonth = yearStatisticsList[0].obs;
-
-    isStatisticLoading.value = false;
+    try {
+      await getYearStatistics().then(
+        (_) async => getStatistics("${yearStatisticsList[0].year}-${yearStatisticsList[0].month.toString().padLeft(2, '0')}"),
+      );
+      selectedMonth = yearStatisticsList[0].obs;
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    } finally {
+      isStatisticLoading.value = false;
+    }
   }
 
   Future<void> getStatistics(String month) async {

@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:ticats/app/config/app_color.dart';
 import 'package:ticats/app/config/app_typeface.dart';
@@ -32,7 +33,14 @@ class EditProfilePage extends StatelessWidget {
                   builder: (controller) {
                     return TicatsButton(
                       onPressed: controller.nickname.value.isNotEmpty || controller.profileImage.value!.path.isNotEmpty
-                          ? () async => await controller.editProfile()
+                          ? () async {
+                              try {
+                                await controller.editProfile();
+                                Fluttertoast.showToast(msg: "PM님 수정 성공 텍스트 주세용");
+                              } catch (e) {
+                                Fluttertoast.showToast(msg: "프로필 수정에 실패했습니다.");
+                              }
+                            }
                           : null,
                       child: Text("확인", style: AppTypeFace.small20Bold.copyWith(color: Colors.white)),
                     );

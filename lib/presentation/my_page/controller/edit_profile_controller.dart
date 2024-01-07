@@ -39,6 +39,7 @@ class EditProfileController extends GetxController {
       if (kDebugMode) {
         print("ERROR: $e");
       }
+      rethrow;
     }
   }
 }

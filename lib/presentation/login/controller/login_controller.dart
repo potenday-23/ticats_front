@@ -41,10 +41,11 @@ class LoginController extends GetxController {
           await AuthService.to.setMember(member);
           await AuthService.to.setMemberOAuth(memberOAuth);
 
-          Get.toNamed(RoutePath.main);
-
           if (Get.isRegistered<TicketController>()) {
+            Get.back();
             await Get.find<TicketController>().getTickets();
+          } else {
+            Get.offAllNamed(RoutePath.main);
           }
         } catch (e) {
           if (kDebugMode) print(e);

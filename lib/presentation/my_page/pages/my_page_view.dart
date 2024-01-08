@@ -206,7 +206,7 @@ class _MyProfileWidget extends StatelessWidget {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text("좋아요한 티켓", style: AppTypeFace.xSmall12Bold.copyWith(color: AppColor.gray63)),
+                              Text("좋아요 한 티켓", style: AppTypeFace.xSmall12Bold.copyWith(color: AppColor.gray63)),
                               Obx(() =>
                                   Text(Get.find<TicketController>().likeTicketList.length.toString(), style: AppTypeFace.xSmall12Bold)),
                             ],
@@ -298,7 +298,7 @@ class _GuestProfileWidget extends StatelessWidget {
                           child: const VerticalDivider(thickness: 1, color: AppColor.grayC7),
                         ),
                         Expanded(
-                          child: Center(child: Text("좋아요한 티켓", style: AppTypeFace.xSmall12Bold.copyWith(color: AppColor.gray63))),
+                          child: Center(child: Text("좋아요 한 티켓", style: AppTypeFace.xSmall12Bold.copyWith(color: AppColor.gray63))),
                         ),
                       ],
                     ),

@@ -31,7 +31,6 @@ class Routes {
     GetPage(
       name: RoutePath.searchTicket,
       page: () => const SearchTicketPage(),
-      middlewares: [AuthMiddleware()],
     ),
     GetPage(
       name: RoutePath.searchTicketResult,

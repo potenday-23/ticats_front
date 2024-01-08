@@ -24,7 +24,7 @@ class TicketRepositoryImpl extends TicketRepository {
 
   @override
   Future<List<Ticket>> getTotalTicket({
-    List<String>? categorys,
+    String? categorys,
     String? period,
     String? start,
     String? end,
@@ -38,7 +38,7 @@ class TicketRepositoryImpl extends TicketRepository {
 
   @override
   Future<List<Ticket>> getMyTicket({
-    List<String>? categorys,
+    String? categorys,
     String? period,
     String? start,
     String? end,

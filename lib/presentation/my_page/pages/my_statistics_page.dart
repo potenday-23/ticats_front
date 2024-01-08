@@ -123,6 +123,7 @@ class _ChartWidget extends GetView<StatisticController> {
                     sectionsSpace: 0,
                     centerSpaceRadius: 37.5.w,
                     sections: _showingSections(),
+                    startDegreeOffset: 270,
                   ),
                 ),
               ),

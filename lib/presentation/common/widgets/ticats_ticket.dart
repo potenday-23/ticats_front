@@ -12,6 +12,7 @@ import 'package:intl/intl.dart';
 import 'package:ticats/app/config/app_color.dart';
 import 'package:ticats/app/config/app_typeface.dart';
 import 'package:ticats/app/extension/datetime_to_ordinal.dart';
+import 'package:ticats/app/service/auth_service.dart';
 import 'package:ticats/domain/entities/ticket.dart';
 import 'package:ticats/presentation/common/enum/color_type.dart';
 import 'package:ticats/presentation/common/widgets/ticats_dialog.dart';
@@ -65,7 +66,7 @@ class TicketFront extends StatelessWidget {
                       child: SvgPicture.asset('assets/tickets/ticats_logo.svg', width: 46 * 1.5, height: 14 * 1.5),
                     ),
                   ),
-                  if (hasLike) ...[
+                  if (hasLike && AuthService.to.isLogin) ...[
                     Positioned.fill(
                       top: 40,
                       right: 40,

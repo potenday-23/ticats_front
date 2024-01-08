@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:ticats/app/config/app_const.dart';
 
 import 'package:ticats/app/config/app_typeface.dart';
 import 'package:ticats/app/util/email_util.dart';
@@ -22,7 +23,7 @@ class InqueryPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(height: 150.h),
-            Text('"wonhee0619@gmail.com"', style: AppTypeFace.small20Bold),
+            Text('"${AppConst.ticatsEmail}"', style: AppTypeFace.small20Bold),
             SizedBox(height: 24.h),
             Text("앱에 대한 문의 및 건의사항을\n보내주세요 :)", style: AppTypeFace.small20Bold, textAlign: TextAlign.center),
             SizedBox(height: 117.h),

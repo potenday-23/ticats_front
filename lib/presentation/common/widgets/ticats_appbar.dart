@@ -32,9 +32,10 @@ class BackAppBar extends StatelessWidget implements PreferredSizeWidget {
 }
 
 class CloseAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CloseAppBar({super.key, this.title});
+  const CloseAppBar({super.key, this.title, this.onTap});
 
   final String? title;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +44,7 @@ class CloseAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
-          child: GestureDetector(onTap: () => Get.back(), child: Icon(Icons.close, size: 24.w)),
+          child: GestureDetector(onTap: onTap ?? () => Get.back(), child: Icon(Icons.close, size: 24.w)),
         ),
       ],
       title: Text(title ?? "", style: AppTypeFace.small18SemiBold),

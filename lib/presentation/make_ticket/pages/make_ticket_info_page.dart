@@ -30,7 +30,6 @@ class MakeTicketInfoPage extends GetView<MakeTicketController> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(height: 32.w),
               const _SelectImageWidget(),
               SizedBox(height: 50.w),
               const _TicketNameWidget(),
@@ -74,10 +73,11 @@ class _SelectImageWidget extends GetView<MakeTicketController> {
       child: Obx(
         () => Column(
           children: [
-            SizedBox(height: 11.w),
             if (controller.ticketImage.value!.path.isNotEmpty) ...[
-              Image.file(File(controller.ticketImage.value!.path))
+              SizedBox(height: 16.w),
+              Image.file(File(controller.ticketImage.value!.path), width: 310.w, fit: BoxFit.fitWidth)
             ] else ...[
+              SizedBox(height: 32.w),
               Text("이미지를 필수로 등록해주세요!", style: AppTypeFace.xSmall16SemiBold.copyWith(color: AppColor.gray98)),
               SvgPicture.asset('assets/images/image.svg'),
             ],

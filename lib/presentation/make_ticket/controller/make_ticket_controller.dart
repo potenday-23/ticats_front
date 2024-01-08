@@ -8,6 +8,7 @@ import 'package:ticats/domain/entities/ticket.dart';
 import 'package:ticats/domain/usecases/ticket_use_cases.dart';
 import 'package:ticats/presentation/common/enum/color_type.dart';
 import 'package:ticats/presentation/common/enum/ticket_enum.dart';
+import 'package:ticats/presentation/make_ticket/pages/crop_image_page.dart';
 
 class MakeTicketController extends GetxController {
   final Rx<Ticket> ticket = Ticket(
@@ -19,6 +20,7 @@ class MakeTicketController extends GetxController {
     layoutType: TicketLayoutType.layout0,
   ).obs;
 
+  RxBool isCropping = false.obs;
   RxBool isUploading = false.obs;
 
   // Ticket Information
@@ -39,7 +41,11 @@ class MakeTicketController extends GetxController {
     try {
       final ImagePicker picker = ImagePicker();
 
-      ticketImage.value = await picker.pickImage(source: ImageSource.gallery);
+      XFile? image = await picker.pickImage(source: ImageSource.gallery);
+
+      if (image != null) {
+        Get.to(() => CropImagePage(image: image));
+      }
     } catch (e) {
       if (kDebugMode) {
         print(e);

@@ -12,6 +12,8 @@ import 'package:share_plus/share_plus.dart';
 import 'package:ticats/app/config/app_typeface.dart';
 import 'package:ticats/presentation/common/widgets/ticats_appbar.dart';
 import 'package:ticats/presentation/common/widgets/ticats_ticket.dart';
+import 'package:ticats/presentation/home/controller/home_controller.dart';
+import 'package:ticats/presentation/main/controller/main_controller.dart';
 import 'package:ticats/presentation/make_ticket/controller/make_ticket_controller.dart';
 
 class MakeTicketResultPage extends GetView<MakeTicketController> {
@@ -22,7 +24,13 @@ class MakeTicketResultPage extends GetView<MakeTicketController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CloseAppBar(title: "티켓 만들기"),
+      appBar: CloseAppBar(
+        title: "티켓 만들기",
+        onTap: () {
+          Get.find<MainController>().changePage(0);
+          Get.back();
+        },
+      ),
       body: Padding(
         padding: EdgeInsets.only(top: 60.h),
         child: Align(

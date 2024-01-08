@@ -11,6 +11,6 @@ abstract class LikeAPI {
   @GET('/likes')
   Future<List<TicketModel>> getLikes();
 
-  @POST('/likes')
+  @POST('/likes/{ticketId}')
   Future<void> postLike(@Path('ticketId') int ticketId);
 }

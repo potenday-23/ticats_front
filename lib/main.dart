@@ -58,6 +58,7 @@ class MainApp extends StatelessWidget {
             colorSchemeSeed: AppColor.primaryNormal,
             appBarTheme: AppBarTheme(
               backgroundColor: Colors.white,
+              centerTitle: true,
               elevation: 0,
               scrolledUnderElevation: 0,
               toolbarHeight: 56.w,

@@ -57,7 +57,7 @@ class MakeTicketLayoutPage extends GetView<MakeTicketController> {
                   child: IndexedStack(
                     index: controller.selectedLayoutTabIndex.value,
                     children: [
-                      TicketFront(controller.ticket.value),
+                      TicketFront(controller.ticket.value, hasLike: false),
                       SizedBox(width: double.maxFinite, child: TicketBack(controller.ticket.value)),
                       SizedBox(width: double.maxFinite, child: TicketBack(controller.ticket.value)),
                     ],

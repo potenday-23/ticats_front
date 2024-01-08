@@ -7,9 +7,10 @@ import 'package:ticats/domain/entities/ticket.dart';
 import 'package:ticats/presentation/common/widgets/ticats_ticket.dart';
 
 class TicatsCardView extends StatefulWidget {
-  const TicatsCardView({Key? key, required this.ticketList}) : super(key: key);
+  const TicatsCardView({Key? key, required this.ticketList, this.hasLike = true}) : super(key: key);
 
   final List<Ticket> ticketList;
+  final bool hasLike;
 
   @override
   State<TicatsCardView> createState() => _TicatsCardViewState();
@@ -32,7 +33,7 @@ class _TicatsCardViewState extends State<TicatsCardView> with AutomaticKeepAlive
           SizedBox(
             height: 564.h,
             child: FlipCard(
-              front: TicketFront(ticket),
+              front: TicketFront(ticket, hasLike: widget.hasLike, isSmall: true),
               back: TicketBack(ticket),
             ),
           ),

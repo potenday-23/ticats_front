@@ -32,7 +32,7 @@ class MakeTicketResultPage extends GetView<MakeTicketController> {
             child: SizedBox(
               height: 564.h,
               child: FlipCard(
-                front: TicketFront(controller.ticket.value),
+                front: TicketFront(controller.ticket.value, hasLike: false),
                 back: TicketBack(controller.ticket.value),
               ),
             ),

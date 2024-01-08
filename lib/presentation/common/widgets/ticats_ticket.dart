@@ -7,20 +7,25 @@ import 'package:flutter_cache_manager/file.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:ticats/app/config/app_color.dart';
 import 'package:ticats/app/config/app_typeface.dart';
 import 'package:ticats/app/extension/datetime_to_ordinal.dart';
 import 'package:ticats/domain/entities/ticket.dart';
 import 'package:ticats/presentation/common/enum/color_type.dart';
+import 'package:ticats/presentation/common/widgets/ticats_dialog.dart';
+import 'package:ticats/presentation/main/controller/ticket_controller.dart';
 
 import '../enum/ticket_enum.dart';
 import 'ticats_chip.dart';
 
 class TicketFront extends StatelessWidget {
-  const TicketFront(this.ticket, {super.key});
+  const TicketFront(this.ticket, {super.key, this.hasLike = true, this.isSmall = false});
 
   final Ticket ticket;
+  final bool hasLike;
+  final bool isSmall;
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +65,46 @@ class TicketFront extends StatelessWidget {
                       child: SvgPicture.asset('assets/tickets/ticats_logo.svg', width: 46 * 1.5, height: 14 * 1.5),
                     ),
                   ),
+                  if (hasLike) ...[
+                    Positioned.fill(
+                      top: 40,
+                      right: 40,
+                      child: Align(
+                        alignment: Alignment.topRight,
+                        child: GestureDetector(
+                          onTap: () async {
+                            await Get.find<TicketController>().likeTicket(ticket);
+                          },
+                          child: GetX<TicketController>(
+                            builder: (controller) {
+                              return SvgPicture.asset(
+                                controller.likeTicketList.contains(ticket) ? 'assets/icons/like.svg' : 'assets/icons/unlike.svg',
+                                width: !isSmall ? 72 : 48,
+                                height: !isSmall ? 72 : 48,
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned.fill(
+                      left: 40,
+                      bottom: 40,
+                      child: Align(
+                        alignment: Alignment.bottomLeft,
+                        child: GestureDetector(
+                          onTap: () async {
+                            await showReportDialog(context, ticket);
+                          },
+                          child: SvgPicture.asset(
+                            'assets/icons/report.svg',
+                            width: !isSmall ? 54 : 36,
+                            height: !isSmall ? 54 : 36,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ],
               );
             },

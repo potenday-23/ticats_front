@@ -24,6 +24,11 @@ class CropImagePage extends GetView<MakeTicketController> {
         controller: _cropController,
         image: File(image.path).readAsBytesSync(),
         aspectRatio: 324 / 564,
+        cornerDotBuilder: (size, edgeAlignment) => const DotControl(color: Colors.transparent),
+        fixArea: true,
+        interactive: true,
+        progressIndicator: const CircularProgressIndicator(),
+        initialAreaBuilder: (rect) => Rect.fromLTRB(rect.left + 48, rect.top + 64, rect.right - 48, rect.bottom - 64),
         onCropped: (croppedImage) async {
           final String tempPath = (await getTemporaryDirectory()).path;
 

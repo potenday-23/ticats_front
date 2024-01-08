@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -65,8 +67,8 @@ class _ProfileImageWidget extends GetView<EditProfileController> {
           children: [
             if (controller.profileImage.value!.path.isNotEmpty) ...[
               ClipRRect(
-                borderRadius: BorderRadius.circular(60.r),
-                child: Image.asset(controller.profileImage.value!.path, width: 120.w, height: 120.w, fit: BoxFit.cover),
+                borderRadius: BorderRadius.circular(600.r),
+                child: Image.file(File(controller.profileImage.value!.path), width: 120.w, height: 120.w, fit: BoxFit.cover),
               )
             ] else ...[
               if (AuthService.to.member!.member!.profileUrl != null) ...[

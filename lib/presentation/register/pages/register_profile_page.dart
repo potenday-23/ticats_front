@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -69,7 +71,7 @@ class _ProfileImageWidget extends GetView<RegisterController> {
             if (controller.profileImage.value!.path.isNotEmpty) ...[
               ClipRRect(
                 borderRadius: BorderRadius.circular(60.w),
-                child: Image.asset(controller.profileImage.value!.path, width: 120.w, height: 120.w, fit: BoxFit.cover),
+                child: Image.file(File(controller.profileImage.value!.path), width: 120.w, height: 120.w, fit: BoxFit.cover),
               )
             ] else ...[
               SvgPicture.asset('assets/icons/profile.svg', width: 120.w, height: 120.w)

@@ -53,7 +53,7 @@ class TicketController extends GetxController {
     totalTicketList.clear();
 
     if (AuthService.to.isLogin) {
-      myTicketList.assignAll(await getMyTicketUseCase.execute());
+      myTicketList.assignAll(await getMyTicketUseCase.execute(categorys: AuthService.to.member!.member!.categorys));
       likeTicketList.assignAll(await getLikesUseCase.execute());
 
       // HACK : 좋아요한 티켓의 isLike가 null로 옴
@@ -61,7 +61,7 @@ class TicketController extends GetxController {
         likeTicketList[i] = likeTicketList[i].copyWith(isLike: true);
       }
     }
-    totalTicketList.assignAll(await getTotalTicketUseCase.execute());
+    totalTicketList.assignAll(await getTotalTicketUseCase.execute(categorys: AuthService.to.member?.member?.categorys ?? []));
     isLoading.value = false;
 
     update();

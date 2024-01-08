@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:ticats/app/config/app_color.dart';
 import 'package:ticats/app/config/app_typeface.dart';
 import 'package:ticats/app/config/routes/route_path.dart';
+import 'package:ticats/app/service/auth_service.dart';
 import 'package:ticats/app/service/ticats_service.dart';
 import 'package:ticats/domain/entities/category.dart';
 import 'package:ticats/presentation/common/widgets/ticats_button.dart';
@@ -48,20 +49,22 @@ class SearchTicketPage extends GetView<SearchTicketController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 32.h),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("내 티켓만 보기", style: AppTypeFace.small18SemiBold),
-                Obx(
-                  () => CupertinoSwitch(
-                    activeColor: AppColor.primaryDark,
-                    value: controller.isMyTicket.value,
-                    onChanged: (value) => controller.isMyTicket.value = value,
+            if (AuthService.to.isLogin) ...[
+              SizedBox(height: 32.h),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("내 티켓만 보기", style: AppTypeFace.small18SemiBold),
+                  Obx(
+                    () => CupertinoSwitch(
+                      activeColor: AppColor.primaryDark,
+                      value: controller.isMyTicket.value,
+                      onChanged: (value) => controller.isMyTicket.value = value,
+                    ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
+            ],
             SizedBox(height: 28.h),
             Text("기간", style: AppTypeFace.small18SemiBold),
             SizedBox(height: 12.h),

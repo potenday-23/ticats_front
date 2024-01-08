@@ -14,7 +14,7 @@ abstract class TicketAPI {
 
   @GET('/tickets/my')
   Future<List<TicketModel>> getMyTicket({
-    @Query('categorys') List<String>? categorys,
+    @Query('categorys') String? categorys,
     @Query('period') String? period,
     @Query('start') String? start,
     @Query('end') String? end,
@@ -23,7 +23,7 @@ abstract class TicketAPI {
 
   @GET('/tickets/total')
   Future<List<TicketModel>> getTotalTicket({
-    @Query('categorys') List<String>? categorys,
+    @Query('categorys') String? categorys,
     @Query('period') String? period,
     @Query('start') String? start,
     @Query('end') String? end,

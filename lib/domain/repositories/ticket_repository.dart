@@ -4,7 +4,7 @@ abstract class TicketRepository {
   Future<void> deleteTicket(int ticketId);
 
   Future<List<Ticket>> getTotalTicket({
-    List<String>? categorys,
+    String? categorys,
     String? period,
     String? start,
     String? end,
@@ -12,7 +12,7 @@ abstract class TicketRepository {
   });
 
   Future<List<Ticket>> getMyTicket({
-    List<String>? categorys,
+    String? categorys,
     String? period,
     String? start,
     String? end,

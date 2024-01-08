@@ -33,7 +33,15 @@ class GetMyTicketUseCase {
     String? end,
     String? search,
   }) async {
-    List<Ticket> result = await _repository.getMyTicket();
+    String categorysString = categorys!.join(',');
+
+    List<Ticket> result = await _repository.getMyTicket(
+      categorys: categorysString,
+      period: period,
+      start: start,
+      end: end,
+      search: search,
+    );
 
     return result;
   }
@@ -50,7 +58,15 @@ class GetTotalTicketUseCase {
     String? end,
     String? search,
   }) async {
-    List<Ticket> result = await _repository.getTotalTicket();
+    String categorysString = categorys!.join(',');
+
+    List<Ticket> result = await _repository.getTotalTicket(
+      categorys: categorysString,
+      period: period,
+      start: start,
+      end: end,
+      search: search,
+    );
 
     return result;
   }

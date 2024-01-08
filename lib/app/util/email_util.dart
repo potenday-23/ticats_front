@@ -1,7 +1,8 @@
 import 'package:flutter_email_sender/flutter_email_sender.dart';
+import 'package:ticats/app/config/app_const.dart';
 
 class EmailUtil {
-  final List<String> _recipients = ['wonhee0619@gmail.com'];
+  final List<String> _recipients = [AppConst.ticatsEmail];
 
   Future<void> sendInqueryEmail() async {
     await _sendEmail('[티캣츠 문의하기]', '');

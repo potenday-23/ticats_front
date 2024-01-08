@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ticats/app/config/app_color.dart';
+import 'package:ticats/app/config/app_const.dart';
 import 'package:ticats/app/config/app_typeface.dart';
 import 'package:ticats/app/service/auth_service.dart';
 import 'package:ticats/app/util/email_util.dart';
@@ -104,7 +105,7 @@ Future<void> showErrorDialog(BuildContext context) async {
     builder: (BuildContext context) {
       return AlertDialog.adaptive(
         title: const Text('이메일 전송 실패'),
-        content: const Text('기본 메일 앱을 사용할 수 없어요.\n\n아래 이메일로 연락주시면 친절하게 답변해드릴게요.\n\nwonhee0619@gmail.com'),
+        content: const Text('기본 메일 앱을 사용할 수 없어요.\n\n아래 이메일로 연락주시면 친절하게 답변해드릴게요.\n\n${AppConst.ticatsEmail}'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),

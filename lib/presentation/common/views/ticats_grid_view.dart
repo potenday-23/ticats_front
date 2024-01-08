@@ -4,9 +4,10 @@ import 'package:ticats/domain/entities/ticket.dart';
 import 'package:ticats/presentation/common/widgets/ticats_ticket.dart';
 
 class TicatsGridView extends StatelessWidget {
-  const TicatsGridView({super.key, required this.ticketList});
+  const TicatsGridView({super.key, required this.ticketList, this.hasLike = true});
 
   final List<Ticket> ticketList;
+  final bool hasLike;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,7 @@ class TicatsGridView extends StatelessWidget {
             for (final ticket in ticketList)
               SizedBox(
                 width: 163.w,
-                child: TicketFront(ticket),
+                child: TicketFront(ticket, hasLike: hasLike),
               ),
           ],
         ),

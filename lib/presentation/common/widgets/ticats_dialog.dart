@@ -98,6 +98,24 @@ showDeleteDialog(BuildContext context, int ticketId) async {
   );
 }
 
+Future<void> showErrorDialog(BuildContext context) async {
+  await showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog.adaptive(
+        title: const Text('이메일 전송 실패'),
+        content: const Text('기본 메일 앱을 사용할 수 없어요.\n\n아래 이메일로 연락주시면 친절하게 답변해드릴게요.\n\nwonhee0619@gmail.com'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('확인'),
+          ),
+        ],
+      );
+    },
+  );
+}
+
 showLogoutDialog(BuildContext context) async {
   return await showDialog(
     context: context,
@@ -308,8 +326,14 @@ showReportDialog(BuildContext context, Ticket ticket) async {
                           flex: 6,
                           child: GestureDetector(
                             behavior: HitTestBehavior.translucent,
-                            onTap: () {
-                              EmailUtil().sendReportEmail('', '');
+                            onTap: () async {
+                              try {
+                                Get.back();
+                                await EmailUtil().sendReportEmail('', '');
+                              } catch (e) {
+                                debugPrint(e.toString());
+                                if (context.mounted) await showErrorDialog(context);
+                              }
                             },
                             child: Container(
                               height: 56.h,

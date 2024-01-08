@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:ticats/app/service/auth_service.dart';
 import 'package:ticats/domain/entities/ticket.dart';
@@ -37,6 +38,8 @@ class TicketController extends GetxController {
       myTicketList.removeWhere((element) => element.id == ticketId);
       likeTicketList.removeWhere((element) => element.id == ticketId);
       totalTicketList.removeWhere((element) => element.id == ticketId);
+
+      update();
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -52,11 +55,34 @@ class TicketController extends GetxController {
     if (AuthService.to.isLogin) {
       myTicketList.assignAll(await getMyTicketUseCase.execute());
       likeTicketList.assignAll(await getLikesUseCase.execute());
+
+      // HACK : 좋아요한 티켓의 isLike가 null로 옴
+      for (int i = 0; i < likeTicketList.length; i++) {
+        likeTicketList[i] = likeTicketList[i].copyWith(isLike: true);
+      }
     }
     totalTicketList.assignAll(await getTotalTicketUseCase.execute());
     isLoading.value = false;
 
     update();
+  }
+
+  Future<void> likeTicket(Ticket ticket) async {
+    try {
+      await postLikeUseCase.execute(ticket.id!);
+
+      if (likeTicketList.contains(ticket)) {
+        likeTicketList.remove(ticket);
+        Fluttertoast.showToast(msg: "좋아요 한 티켓에서 삭제되었습니다!");
+      } else {
+        likeTicketList.add(ticket);
+        Fluttertoast.showToast(msg: "좋아요 한 티켓에 저장되었습니다!");
+      }
+
+      update();
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 
   void toggleEditing() {

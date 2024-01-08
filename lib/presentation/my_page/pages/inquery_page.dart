@@ -7,27 +7,10 @@ import 'package:ticats/app/config/app_typeface.dart';
 import 'package:ticats/app/util/email_util.dart';
 import 'package:ticats/presentation/common/widgets/ticats_appbar.dart';
 import 'package:ticats/presentation/common/widgets/ticats_button.dart';
+import 'package:ticats/presentation/common/widgets/ticats_dialog.dart';
 
 class InqueryPage extends StatelessWidget {
   const InqueryPage({super.key});
-
-  Future<void> _showErrorDialog(BuildContext context) async {
-    await showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog.adaptive(
-          title: const Text('이메일 전송 실패'),
-          content: const Text('기본 메일 앱을 사용할 수 없어요.\n\n아래 이메일로 연락주시면 친절하게 답변해드릴게요.\n\nwonhee0619@gmail.com'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('확인'),
-            ),
-          ],
-        );
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +45,7 @@ class InqueryPage extends StatelessWidget {
                 try {
                   await EmailUtil().sendInqueryEmail();
                 } catch (e) {
-                  if (context.mounted) await _showErrorDialog(context);
+                  if (context.mounted) await showErrorDialog(context);
                   debugPrint(e.toString());
                 }
               },

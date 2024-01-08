@@ -32,9 +32,11 @@ class _TicatsCardViewState extends State<TicatsCardView> with AutomaticKeepAlive
         for (final ticket in widget.ticketList)
           SizedBox(
             height: 564.h,
-            child: FlipCard(
-              front: TicketFront(ticket, hasLike: widget.hasLike, isSmall: true),
-              back: TicketBack(ticket),
+            child: RepaintBoundary(
+              child: FlipCard(
+                front: TicketFront(ticket, hasLike: widget.hasLike, isSmall: true),
+                back: TicketBack(ticket),
+              ),
             ),
           ),
       ],

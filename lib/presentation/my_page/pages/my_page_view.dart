@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:ticats/app/config/app_color.dart';
 import 'package:ticats/app/config/app_typeface.dart';
 import 'package:ticats/app/config/routes/route_path.dart';
 import 'package:ticats/app/service/auth_service.dart';
+import 'package:ticats/domain/entities/version.dart';
+import 'package:ticats/domain/usecases/my_page_use_cases.dart';
 import 'package:ticats/presentation/common/enum/term_type.dart';
 import 'package:ticats/presentation/common/widgets/ticats_appbar.dart';
 import 'package:ticats/presentation/common/widgets/ticats_dialog.dart';
@@ -39,6 +42,26 @@ class MyPageView extends GetView<AuthService> {
 
 class _MyPageListView extends StatelessWidget {
   const _MyPageListView();
+
+  Future<Map<String, String>> _getVersion() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+    try {
+      String packageVersion = packageInfo.version;
+      Version latestVersion = await Get.find<MyPageUseCases>().getVersionUseCase.execute();
+
+      return {
+        "packageVersion": packageVersion,
+        "latestVersion": latestVersion.version,
+      };
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    return {
+      "packageVersion": 'unknown',
+      "latestVersion": 'unknown',
+    };
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,9 +98,28 @@ class _MyPageListView extends StatelessWidget {
                 SizedBox(width: 12.w),
                 Text("버전 정보", style: AppTypeFace.xSmall14Medium),
                 SizedBox(width: 14.w),
-                Text("1.0.0", style: AppTypeFace.xSmall16SemiBold.copyWith(color: AppColor.gray63)),
-                const Spacer(),
-                Text("최신 버전입니다.", style: AppTypeFace.xSmall14Medium.copyWith(color: AppColor.gray98)),
+                FutureBuilder<Map<String, String>>(
+                  future: _getVersion(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.hasData) {
+                      String packageVersion = snapshot.data['packageVersion'];
+                      String latestVersion = snapshot.data['latestVersion'];
+
+                      return Expanded(
+                        child: Row(
+                          children: [
+                            Text(packageVersion, style: AppTypeFace.xSmall16SemiBold.copyWith(color: AppColor.gray63)),
+                            const Spacer(),
+                            Text(packageVersion == latestVersion ? "최신 버전입니다." : "업데이트가 필요합니다($latestVersion).",
+                                style: AppTypeFace.xSmall14Medium.copyWith(color: AppColor.gray98)),
+                          ],
+                        ),
+                      );
+                    } else {
+                      return const SizedBox();
+                    }
+                  },
+                ),
               ],
             ),
           ),
@@ -298,7 +340,7 @@ class _GuestProfileWidget extends StatelessWidget {
                           child: const VerticalDivider(thickness: 1, color: AppColor.grayC7),
                         ),
                         Expanded(
-                          child: Center(child: Text("좋아요 한 티켓", style: AppTypeFace.xSmall12Bold.copyWith(color: AppColor.gray63))),
+                          child: Center(child: Text("좋아요한 티켓", style: AppTypeFace.xSmall12Bold.copyWith(color: AppColor.gray63))),
                         ),
                       ],
                     ),

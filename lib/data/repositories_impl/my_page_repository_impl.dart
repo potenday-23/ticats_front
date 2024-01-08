@@ -2,11 +2,13 @@ import 'package:get/get.dart';
 
 import 'package:ticats/domain/entities/notice.dart';
 import 'package:ticats/domain/entities/statistics.dart';
+import 'package:ticats/domain/entities/version.dart';
 import 'package:ticats/domain/repositories/my_page_repository.dart';
 
 import '../datasources/remote/my_page_api.dart';
 import '../models/notice_model.dart';
 import '../models/statistics_model.dart';
+import '../models/version_model.dart';
 import 'mapper/my_page_mapper.dart';
 
 final MyPageMappr _myPageMappr = MyPageMappr();
@@ -26,6 +28,13 @@ class MyPageRepositoryImpl extends MyPageRepository {
     List<StatisticsModel> statisticsList = await _api.getStatistics(month);
 
     return _myPageMappr.convertList<StatisticsModel, Statistics>(statisticsList);
+  }
+
+  @override
+  Future<Version> getVersions() async {
+    VersionModel version = await _api.getVersions();
+
+    return _myPageMappr.convert<VersionModel, Version>(version);
   }
 
   @override

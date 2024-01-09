@@ -1,3 +1,4 @@
+import 'package:flash/flash_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -29,11 +30,13 @@ void main() async {
   // Initialize Flutter Native Splash and freeze the splash screen
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
-  runApp(const MainApp());
+  runApp(MainApp());
 }
 
 class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+  MainApp({super.key});
+
+  final navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   Widget build(BuildContext context) {
@@ -66,13 +69,16 @@ class MainApp extends StatelessWidget {
             scaffoldBackgroundColor: AppColor.grayF9,
           ),
           builder: (context, child) {
+            child = Toast(navigatorKey: navigatorKey, child: child!);
+
             return MediaQuery(
               data: MediaQuery.of(context).copyWith(textScaler: const TextScaler.linear(1.0)),
-              child: child!,
+              child: child,
             );
           },
           initialBinding: AppBinding(),
           initialRoute: RoutePath.login,
+          navigatorKey: navigatorKey,
           getPages: Routes.routes,
         );
       },

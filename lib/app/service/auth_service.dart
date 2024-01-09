@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:ticats/data/datasources/local/auth_local_datasource.dart';
 import 'package:ticats/domain/entities/ticats_member.dart';
 import 'package:ticats/domain/entities/member_oauth.dart';
+import 'package:ticats/presentation/common/widgets/ticats_dialog.dart';
 
 enum SSOType { apple, kakao }
 
@@ -36,11 +36,7 @@ class AuthService extends GetxController {
 
     if (member!.member == null) {
     } else if (isTokenExpired) {
-      await Fluttertoast.showToast(
-        msg: '로그인이 만료되었습니다. 다시 로그인해주세요.',
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.BOTTOM,
-      );
+      await showTextDialog(Get.context!, "로그인이 만료되었습니다. 다시 로그인해주세요.");
     } else {
       Get.offAllNamed('/main');
     }

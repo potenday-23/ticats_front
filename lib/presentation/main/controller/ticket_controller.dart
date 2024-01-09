@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:ticats/app/service/auth_service.dart';
 import 'package:ticats/domain/entities/ticket.dart';
 import 'package:ticats/domain/usecases/like_use_cases.dart';
 import 'package:ticats/domain/usecases/ticket_use_cases.dart';
+import 'package:ticats/presentation/common/widgets/ticats_dialog.dart';
 
 class TicketController extends GetxController {
   final LikeUseCases likeUseCases = Get.find<LikeUseCases>();
@@ -73,10 +73,10 @@ class TicketController extends GetxController {
 
       if (likeTicketList.contains(ticket)) {
         likeTicketList.remove(ticket);
-        Fluttertoast.showToast(msg: "좋아요 한 티켓에서 삭제되었습니다!");
+        await showTextDialog(Get.context!, "좋아요 한 티켓에서 삭제 되었습니다!");
       } else {
         likeTicketList.add(ticket);
-        Fluttertoast.showToast(msg: "좋아요 한 티켓에 저장되었습니다!");
+        await showTextDialog(Get.context!, "좋아요 한 티켓에 저장 되었습니다!");
       }
 
       update();

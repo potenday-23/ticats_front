@@ -1,3 +1,4 @@
+import 'package:flash/flash_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -380,5 +381,18 @@ showReportDialog(BuildContext context, Ticket ticket) async {
         ],
       );
     },
+  );
+}
+
+showTextDialog(BuildContext context, String text) async {
+  return await context.showToast(
+    Text(text),
+    shape: const StadiumBorder(),
+    queue: true,
+    backgroundColor: Colors.black,
+    textStyle: AppTypeFace.xSmall12Bold.copyWith(color: Colors.white),
+    padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 11.h),
+    alignment: Alignment.bottomCenter,
+    margin: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom + 82.h),
   );
 }

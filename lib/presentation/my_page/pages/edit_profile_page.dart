@@ -4,7 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:ticats/app/config/app_color.dart';
 import 'package:ticats/app/config/app_typeface.dart';
@@ -12,6 +11,7 @@ import 'package:ticats/app/extension/input_validate.dart';
 import 'package:ticats/app/service/auth_service.dart';
 import 'package:ticats/presentation/common/widgets/ticats_appbar.dart';
 import 'package:ticats/presentation/common/widgets/ticats_button.dart';
+import 'package:ticats/presentation/common/widgets/ticats_dialog.dart';
 import 'package:ticats/presentation/my_page/controller/edit_profile_controller.dart';
 
 class EditProfilePage extends StatelessWidget {
@@ -38,9 +38,9 @@ class EditProfilePage extends StatelessWidget {
                           ? () async {
                               try {
                                 await controller.editProfile();
-                                Fluttertoast.showToast(msg: "PM님 수정 성공 텍스트 주세용");
+                                await showTextDialog(Get.context!, "프로필이 변경 되었습니다!");
                               } catch (e) {
-                                Fluttertoast.showToast(msg: "프로필 수정에 실패했습니다.");
+                                await showTextDialog(Get.context!, "프로필 수정에 실패했습니다.");
                               }
                             }
                           : null,

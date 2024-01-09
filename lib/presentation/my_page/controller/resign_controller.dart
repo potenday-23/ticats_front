@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:ticats/app/config/routes/route_path.dart';
 import 'package:ticats/app/service/auth_service.dart';
 import 'package:ticats/domain/usecases/member_use_cases.dart';
+import 'package:ticats/presentation/common/widgets/ticats_dialog.dart';
 
 class ResignController extends GetxController {
   final MemberUseCases memberUseCases = Get.find<MemberUseCases>();
@@ -20,10 +20,10 @@ class ResignController extends GetxController {
       await AuthService.to.logout();
       Get.offAllNamed(RoutePath.main);
 
-      Fluttertoast.showToast(msg: "회원 탈퇴가 완료되었습니다 ㅜ.ㅜ");
+      await showTextDialog(Get.context!, "회원 탈퇴가 완료되었습니다 ㅜ.ㅜ");
     } catch (e) {
       debugPrint(e.toString());
-      Fluttertoast.showToast(msg: "회원 탈퇴 중 문제가 발생하였습니다.");
+      await showTextDialog(Get.context!, "회원 탈퇴 중 문제가 발생하였습니다.");
     }
   }
 }

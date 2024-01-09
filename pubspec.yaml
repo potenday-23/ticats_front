@@ -13,6 +13,7 @@ dependencies:
   crop_your_image: ^0.7.5
   dio: ^5.4.0
   fl_chart: ^0.66.0
+  flash: ^3.1.0
   flip_card: ^0.7.0
   flutter:
     sdk: flutter

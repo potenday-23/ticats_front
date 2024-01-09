@@ -77,9 +77,7 @@ class MakeTicketController extends GetxController {
   }
 
   Future<void> postTicket() async {
-    isUploading.value = true;
     makeTicket();
     await Get.find<TicketUseCases>().postTicketUseCase.execute(ticket.value);
-    isUploading.value = false;
   }
 }

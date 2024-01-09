@@ -243,8 +243,16 @@ showPostTicketDialog(BuildContext context) async {
                     GetX<MakeTicketController>(builder: (controller) {
                       return GestureDetector(
                         onTap: () async {
-                          await controller.postTicket();
-                          Get.back(result: true);
+                          try {
+                            controller.isUploading.value = true;
+                            await controller.postTicket();
+                            await Get.find<TicketController>().getTickets();
+                            controller.isUploading.value = false;
+
+                            Get.back(result: true);
+                          } catch (e) {
+                            debugPrint(e.toString());
+                          }
                         },
                         child: Container(
                           width: double.maxFinite,

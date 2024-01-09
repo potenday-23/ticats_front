@@ -11,7 +11,6 @@ import 'package:ticats/presentation/common/widgets/ticats_appbar.dart';
 import 'package:ticats/presentation/common/widgets/ticats_button.dart';
 import 'package:ticats/presentation/common/widgets/ticats_dialog.dart';
 import 'package:ticats/presentation/common/widgets/ticats_ticket.dart';
-import 'package:ticats/presentation/main/controller/ticket_controller.dart';
 import 'package:ticats/presentation/make_ticket/controller/make_ticket_controller.dart';
 
 final ScrollController scrollController = ScrollController();

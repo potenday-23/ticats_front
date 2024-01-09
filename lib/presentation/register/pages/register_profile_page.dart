@@ -45,7 +45,7 @@ class RegisterProfilePage extends StatelessWidget {
                 builder: (controller) {
                   return TicatsButton(
                     onPressed: controller.nickname.value.isNotEmpty ? () async => await controller.register() : null,
-                    child: Text("티캣츠 시작하기", style: AppTypeFace.small20Bold.copyWith(color: Colors.white)),
+                    child: Text("티캣츠 시작하기", style: AppTypeFace.small18Bold.copyWith(color: Colors.white)),
                   );
                 },
               ),

@@ -44,7 +44,7 @@ class EditProfilePage extends StatelessWidget {
                               }
                             }
                           : null,
-                      child: Text("확인", style: AppTypeFace.small20Bold.copyWith(color: Colors.white)),
+                      child: Text("확인", style: AppTypeFace.small18Bold.copyWith(color: Colors.white)),
                     );
                   },
                 ),

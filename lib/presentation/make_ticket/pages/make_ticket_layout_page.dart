@@ -75,7 +75,7 @@ class MakeTicketLayoutPage extends GetView<MakeTicketController> {
             () => TicatsButton(
               color: AppColor.primaryNormal,
               child: Text(controller.selectedLayoutTabIndex.value == 2 ? "완료" : "다음",
-                  style: AppTypeFace.small20Bold.copyWith(color: Colors.white)),
+                  style: AppTypeFace.small18Bold.copyWith(color: Colors.white)),
               onPressed: () async {
                 if (controller.selectedLayoutTabIndex.value == 0) {
                   controller.selectedLayoutTabIndex.value = 1;
@@ -88,7 +88,6 @@ class MakeTicketLayoutPage extends GetView<MakeTicketController> {
                     bool? postResult = await showPostTicketDialog(context);
 
                     if (postResult == true) {
-                      await Get.find<TicketController>().getTickets();
                       Get.offNamedUntil(RoutePath.makeTicketResult, ModalRoute.withName(RoutePath.main));
                     }
                   } catch (e) {

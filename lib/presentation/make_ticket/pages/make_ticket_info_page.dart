@@ -51,7 +51,7 @@ class MakeTicketInfoPage extends GetView<MakeTicketController> {
                         }
                       : null,
                   color: AppColor.primaryNormal,
-                  child: Text("티켓 만들기", style: AppTypeFace.small20Bold.copyWith(color: Colors.white)),
+                  child: Text("티켓 만들기", style: AppTypeFace.small18Bold.copyWith(color: Colors.white)),
                 ),
               ),
               SizedBox(height: MediaQuery.of(context).padding.bottom + 16.w),

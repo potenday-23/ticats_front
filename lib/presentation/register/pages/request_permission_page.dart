@@ -55,7 +55,7 @@ class RequestPermissionPage extends StatelessWidget {
 
                   Get.toNamed(RoutePath.registerProfile);
                 },
-                child: Text("다음", style: AppTypeFace.small20Bold.copyWith(color: Colors.white)),
+                child: Text("다음", style: AppTypeFace.small18Bold.copyWith(color: Colors.white)),
               ),
               SizedBox(height: 86.h),
             ],

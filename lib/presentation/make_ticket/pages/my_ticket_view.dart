@@ -81,7 +81,7 @@ class MyTicketView extends GetView<TicketController> {
                     child: TicatsButton(
                       onPressed: () => Get.toNamed(RoutePath.makeTicketInfo),
                       color: AppColor.primaryNormal,
-                      child: Text("티켓 만들기", style: AppTypeFace.small20Bold.copyWith(color: Colors.white)),
+                      child: Text("티켓 만들기", style: AppTypeFace.small18Bold.copyWith(color: Colors.white)),
                     ),
                   ),
                 ),

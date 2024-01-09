@@ -75,7 +75,7 @@ class ResignPage extends GetView<ResignController> {
                   color: controller.isResignAgree.value && controller.resignReasonList.isNotEmpty
                       ? AppColor.systemPositiveBlue
                       : AppColor.grayE5,
-                  child: Text("탈퇴하기", style: AppTypeFace.small20Bold.copyWith(color: Colors.white)),
+                  child: Text("탈퇴하기", style: AppTypeFace.small18Bold.copyWith(color: Colors.white)),
                 ),
               ),
             ],

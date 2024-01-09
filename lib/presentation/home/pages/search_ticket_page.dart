@@ -159,7 +159,7 @@ class SearchTicketPage extends GetView<SearchTicketController> {
               },
               child: Text(
                 "검색하기",
-                style: AppTypeFace.small20Bold.copyWith(color: Colors.white),
+                style: AppTypeFace.small18Bold.copyWith(color: Colors.white),
               ),
             ),
             SizedBox(height: MediaQuery.of(context).padding.bottom + 16.h),

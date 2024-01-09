@@ -41,7 +41,7 @@ class InqueryPage extends StatelessWidget {
         child: Padding(
             padding: EdgeInsets.fromLTRB(24.w, 0, 24.w, 16.w),
             child: TicatsButton(
-              child: Text("이메일 보내기", style: AppTypeFace.small20Bold.copyWith(color: Colors.white)),
+              child: Text("이메일 보내기", style: AppTypeFace.small18Bold.copyWith(color: Colors.white)),
               onPressed: () async {
                 try {
                   await EmailUtil().sendInqueryEmail();

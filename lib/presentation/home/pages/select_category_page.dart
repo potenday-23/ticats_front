@@ -33,7 +33,7 @@ class SelectCategoryPage extends StatelessWidget {
               ),
               SizedBox(height: 23.h),
               TicatsButton(
-                child: Text("저장하기", style: AppTypeFace.small20Bold.copyWith(color: Colors.white)),
+                child: Text("저장하기", style: AppTypeFace.small18Bold.copyWith(color: Colors.white)),
                 onPressed: () async => await Get.find<HomeController>().saveCategory(),
               ),
               SizedBox(height: MediaQuery.of(context).padding.bottom + 29.h),

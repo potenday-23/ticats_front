@@ -37,7 +37,7 @@ class TermAgreePage extends StatelessWidget {
                       if (controller.isRequiredAgree) Get.toNamed(RoutePath.requestPermssion);
                     },
                     color: controller.isRequiredAgree ? null : AppColor.grayC7,
-                    child: Text("다음", style: AppTypeFace.small20Bold.copyWith(color: Colors.white)),
+                    child: Text("다음", style: AppTypeFace.small18Bold.copyWith(color: Colors.white)),
                   );
                 },
               ),

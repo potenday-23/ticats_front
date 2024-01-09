@@ -30,7 +30,7 @@ class HomeView extends GetView<HomeController> {
                 IndexedStack(
                   index: controller.totalHomeViewType.value.index,
                   children: [
-                    TicatsCardView(ticketList: ticketController.totalTicketList),
+                    TicatsCardView(controller: controller.totalPageController, ticketList: ticketController.totalTicketList),
                     TicatsGridView(ticketList: ticketController.totalTicketList),
                   ],
                 ),
@@ -38,7 +38,7 @@ class HomeView extends GetView<HomeController> {
                   IndexedStack(
                     index: controller.myHomeViewType.value.index,
                     children: [
-                      TicatsCardView(ticketList: ticketController.myTicketList, hasLike: false),
+                      TicatsCardView(controller: controller.myPageController, ticketList: ticketController.myTicketList, hasLike: false),
                       TicatsGridView(ticketList: ticketController.myTicketList, hasLike: false),
                     ],
                   ),

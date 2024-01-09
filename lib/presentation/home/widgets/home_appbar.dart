@@ -31,6 +31,13 @@ class HomeAppBar extends GetView<HomeController> implements PreferredSizeWidget 
       // title tabbar
       centerTitle: true,
       title: TabBar(
+        onTap: (value) {
+          if (value == 0) {
+            controller.totalPageController.animateToPage(0, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+          } else {
+            controller.myPageController.animateToPage(0, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+          }
+        },
         // Misc
         controller: controller.tabController,
         tabs: controller.tabs,

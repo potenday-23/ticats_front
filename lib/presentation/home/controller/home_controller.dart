@@ -14,8 +14,12 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
 
   final List<Tab> tabs = [const Tab(text: '전체'), const Tab(text: '내 티켓')];
   final RxInt tabIndex = 0.obs;
+
   final Rx<HomeViewType> myHomeViewType = HomeViewType.card.obs;
   final Rx<HomeViewType> totalHomeViewType = HomeViewType.card.obs;
+
+  final PageController myPageController = PageController();
+  final PageController totalPageController = PageController();
 
   final RxList<String> categoryList = <String>[].obs;
 

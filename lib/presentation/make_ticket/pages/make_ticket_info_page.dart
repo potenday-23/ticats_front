@@ -31,7 +31,7 @@ class MakeTicketInfoPage extends GetView<MakeTicketController> {
           child: Column(
             children: [
               const _SelectImageWidget(),
-              SizedBox(height: 50.w),
+              SizedBox(height: 20.w),
               const _TicketNameWidget(),
               SizedBox(height: 46.w),
               const _SelectCategoryWidget(),
@@ -75,11 +75,14 @@ class _SelectImageWidget extends GetView<MakeTicketController> {
           children: [
             if (controller.ticketImage.value!.path.isNotEmpty) ...[
               SizedBox(height: 16.w),
-              Image.file(File(controller.ticketImage.value!.path), width: 310.w, fit: BoxFit.fitWidth)
+              ClipRRect(
+                  borderRadius: BorderRadius.circular(20.r),
+                  child: Image.file(File(controller.ticketImage.value!.path), width: 310.w, fit: BoxFit.fitWidth))
             ] else ...[
               SizedBox(height: 32.w),
               Text("이미지를 필수로 등록해주세요!", style: AppTypeFace.xSmall16SemiBold.copyWith(color: AppColor.gray98)),
               SvgPicture.asset('assets/images/image.svg'),
+              SizedBox(height: 20.w),
             ],
           ],
         ),

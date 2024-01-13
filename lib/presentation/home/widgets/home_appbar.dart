@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:ticats/app/config/app_color.dart';
 import 'package:ticats/app/config/app_typeface.dart';
 import 'package:ticats/app/config/routes/route_path.dart';
+import 'package:ticats/presentation/main/controller/ticket_controller.dart';
 
 import '../controller/home_controller.dart';
 
@@ -32,9 +33,11 @@ class HomeAppBar extends GetView<HomeController> implements PreferredSizeWidget 
       centerTitle: true,
       title: TabBar(
         onTap: (value) {
-          if (value == 0) {
+          TicketController ticketController = Get.find<TicketController>();
+
+          if (value == 0 && controller.oldTabIndex.value == 0 && ticketController.totalTicketList.isNotEmpty) {
             controller.totalPageController.animateToPage(0, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
-          } else {
+          } else if (value == 1 && controller.oldTabIndex.value == 1 && ticketController.myTicketList.isNotEmpty) {
             controller.myPageController.animateToPage(0, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
           }
         },

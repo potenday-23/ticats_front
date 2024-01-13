@@ -24,29 +24,7 @@ class HomeView extends GetView<HomeController> {
           } else if (ticketController.totalTicketList.isEmpty) {
             return const TicatsNoTicketView();
           } else {
-            return TabBarView(
-              controller: controller.tabController,
-              children: [
-                IndexedStack(
-                  index: controller.totalHomeViewType.value.index,
-                  children: [
-                    TicatsCardView(controller: controller.totalPageController, ticketList: ticketController.totalTicketList),
-                    TicatsGridView(ticketList: ticketController.totalTicketList),
-                  ],
-                ),
-                if (ticketController.myTicketList.isNotEmpty) ...[
-                  IndexedStack(
-                    index: controller.myHomeViewType.value.index,
-                    children: [
-                      TicatsCardView(controller: controller.myPageController, ticketList: ticketController.myTicketList, hasLike: false),
-                      TicatsGridView(ticketList: ticketController.myTicketList, hasLike: false),
-                    ],
-                  ),
-                ] else ...[
-                  const TicatsNoTicketView(),
-                ],
-              ],
-            );
+            return const _BuildTabBarView();
           }
         },
       ),
@@ -80,4 +58,51 @@ class HomeView extends GetView<HomeController> {
       ),
     );
   }
+}
+
+class _BuildTabBarView extends StatefulWidget {
+  const _BuildTabBarView();
+
+  @override
+  State<_BuildTabBarView> createState() => _BuildTabBarViewState();
+}
+
+class _BuildTabBarViewState extends State<_BuildTabBarView> with AutomaticKeepAliveClientMixin {
+  final HomeController homeController = Get.find();
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+
+    return GetX<TicketController>(
+      builder: (ticketController) {
+        return TabBarView(
+          controller: homeController.tabController,
+          children: [
+            IndexedStack(
+              index: homeController.totalHomeViewType.value.index,
+              children: [
+                TicatsCardView(controller: homeController.totalPageController, ticketList: ticketController.totalTicketList),
+                TicatsGridView(ticketList: ticketController.totalTicketList),
+              ],
+            ),
+            if (ticketController.myTicketList.isNotEmpty) ...[
+              IndexedStack(
+                index: homeController.myHomeViewType.value.index,
+                children: [
+                  TicatsCardView(controller: homeController.myPageController, ticketList: ticketController.myTicketList, hasLike: false),
+                  TicatsGridView(ticketList: ticketController.myTicketList, hasLike: false),
+                ],
+              ),
+            ] else ...[
+              const TicatsNoTicketView(),
+            ],
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  bool get wantKeepAlive => true;
 }

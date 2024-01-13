@@ -390,7 +390,7 @@ showTextDialog(BuildContext context, String text) async {
     shape: const StadiumBorder(),
     queue: true,
     backgroundColor: Colors.black,
-    textStyle: AppTypeFace.xSmall12Bold.copyWith(color: Colors.white),
+    textStyle: AppTypeFace.xSmall14Medium.copyWith(color: Colors.white),
     padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 11.h),
     alignment: Alignment.bottomCenter,
     margin: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom + 82.h),

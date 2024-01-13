@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart' hide Category;
 import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ticats/app/service/ticats_service.dart';
@@ -44,7 +45,9 @@ class MakeTicketController extends GetxController {
       XFile? image = await picker.pickImage(source: ImageSource.gallery);
 
       if (image != null) {
-        Get.to(() => CropImagePage(image: image));
+        Uint8List? compressedImage = await FlutterImageCompress.compressWithFile(image.path, quality: 75);
+
+        Get.to(() => CropImagePage(image: compressedImage!));
       }
     } catch (e) {
       if (kDebugMode) {

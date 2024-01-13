@@ -387,7 +387,8 @@ showReportDialog(BuildContext context, Ticket ticket) async {
 showTextDialog(BuildContext context, String text) async {
   return await context.showToast(
     Text(text),
-    shape: const StadiumBorder(),
+    duration: const Duration(milliseconds: 3500),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40.r)),
     queue: true,
     backgroundColor: Colors.black,
     textStyle: AppTypeFace.xSmall14Medium.copyWith(color: Colors.white),

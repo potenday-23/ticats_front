@@ -239,8 +239,8 @@ class TicketBack extends StatelessWidget {
                                   color: AppColor.primaryNormal,
                                 )),
                             Text(DateFormat('E', 'en_US').format(ticket.ticketDate).toUpperCase(),
-                                style: TextStyle(
-                                  fontSize: 18.sp,
+                                style: const TextStyle(
+                                  fontSize: 18,
                                   fontWeight: FontWeight.w900,
                                   color: AppColor.primaryNormal,
                                 )),

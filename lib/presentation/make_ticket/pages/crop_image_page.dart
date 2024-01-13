@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:custom_image_crop/custom_image_crop.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:ticats/app/config/app_typeface.dart';
 import 'package:ticats/presentation/common/widgets/ticats_appbar.dart';
-
 import 'package:ticats/presentation/make_ticket/controller/make_ticket_controller.dart';
 
 class CropImagePage extends GetView<MakeTicketController> {
@@ -17,7 +17,7 @@ class CropImagePage extends GetView<MakeTicketController> {
 
   final CustomImageCropController _cropController = CustomImageCropController();
 
-  final XFile image;
+  final Uint8List image;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class CropImagePage extends GetView<MakeTicketController> {
       body: SafeArea(
         child: CustomImageCrop(
           cropController: _cropController,
-          image: FileImage(File(image.path)),
+          image: MemoryImage(image),
           shape: CustomCropShape.Ratio,
           ratio: Ratio(width: 57, height: 94),
           forceInsideCropArea: true,
@@ -65,8 +65,7 @@ class CropImagePage extends GetView<MakeTicketController> {
 
                     if (croppedImage != null) {
                       final directory = (await getTemporaryDirectory()).path;
-                      final newImage =
-                          await File('$directory/${DateTime.now().millisecondsSinceEpoch}.${image.path.split(".").last}').create();
+                      final newImage = await File('$directory/${DateTime.now().millisecondsSinceEpoch}').create();
                       await newImage.writeAsBytes(croppedImage.bytes);
 
                       controller.ticketImage.value = XFile(newImage.path);

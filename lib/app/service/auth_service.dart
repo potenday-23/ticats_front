@@ -36,6 +36,7 @@ class AuthService extends GetxController {
 
     if (member!.member == null) {
     } else if (isTokenExpired) {
+      await logout();
       await showTextDialog(Get.context!, "로그인이 만료되었습니다. 다시 로그인해주세요.");
     } else {
       Get.offAllNamed('/main');

@@ -65,7 +65,7 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
       TicatsMember member = await Get.find<AuthRepository>().saveCategorys(categoryList);
 
       AuthService.to.setMember(member);
-      await Get.find<TicketController>().getTickets();
+      await Get.find<TicketController>().getTotalTicket();
       Get.back();
     } catch (e) {
       debugPrint(e.toString());

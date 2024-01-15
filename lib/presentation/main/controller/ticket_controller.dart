@@ -67,6 +67,17 @@ class TicketController extends GetxController {
     update();
   }
 
+  Future<void> getTotalTicket() async {
+    isLoading.value = true;
+
+    totalTicketList.clear();
+    totalTicketList.assignAll(await getTotalTicketUseCase.execute(categorys: AuthService.to.member?.member?.categorys ?? []));
+
+    isLoading.value = false;
+
+    update();
+  }
+
   Future<void> likeTicket(Ticket ticket) async {
     try {
       await postLikeUseCase.execute(ticket.id!);

@@ -4,7 +4,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:ticats/app/config/app_color.dart';
 import 'package:ticats/app/config/app_typeface.dart';
-import 'package:ticats/app/config/routes/route_path.dart';
 import 'package:ticats/presentation/common/views/ticats_grid_view.dart';
 import 'package:ticats/presentation/home/controller/search_ticket_controller.dart';
 
@@ -36,7 +35,10 @@ class SearchTicketResultPage extends GetView<SearchTicketController> {
           Padding(
             padding: EdgeInsets.fromLTRB(16.w, 16.h, 24.w, 16.h),
             child: GestureDetector(
-              onTap: () => Get.offNamed(RoutePath.main),
+              onTap: () {
+                Get.back();
+                Get.back();
+              },
               child: Icon(Icons.close, size: 24.w),
             ),
           ),

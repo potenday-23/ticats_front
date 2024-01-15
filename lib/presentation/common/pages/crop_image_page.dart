@@ -11,6 +11,20 @@ import 'package:path_provider/path_provider.dart';
 import 'package:ticats/app/config/app_typeface.dart';
 import 'package:ticats/presentation/common/widgets/ticats_appbar.dart';
 
+enum Rotation { Rot0, Rot90, Rot180, Rot270 }
+
+extension Rotate on Rotation {
+  Rotation get cw {
+    const values = Rotation.values;
+    return values.elementAt((index + 1) % values.length);
+  }
+
+  Rotation get ccw {
+    const values = Rotation.values;
+    return values.elementAt((index - 1) % values.length);
+  }
+}
+
 class CropImagePage extends StatefulWidget {
   const CropImagePage({super.key, required this.image, this.isProfile = false});
 
@@ -25,6 +39,7 @@ class _CropImagePageState extends State<CropImagePage> {
   final GlobalKey<ExtendedImageEditorState> editorKey = GlobalKey<ExtendedImageEditorState>();
 
   bool isCropping = false;
+  Rotation rotation = Rotation.Rot0;
 
   @override
   void initState() {
@@ -43,11 +58,23 @@ class _CropImagePageState extends State<CropImagePage> {
           mode: ExtendedImageMode.editor,
           extendedImageEditorKey: editorKey,
           initEditorConfigHandler: (state) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              editorKey.currentState?.setState(() {
+                for (var i = 0; i < rotation.index; ++i) {
+                  editorKey.currentState?.rotate();
+                }
+              });
+            });
+
             return EditorConfig(
               maxScale: 4,
               cropRectPadding: const EdgeInsets.all(20.0),
               editorMaskColorHandler: (context, pointerDown) => Colors.black.withOpacity(0.4),
-              cropAspectRatio: widget.isProfile ? 1 / 1 : 57 / 94,
+              cropAspectRatio: widget.isProfile
+                  ? 1 / 1
+                  : rotation.index % 2 == 0
+                      ? 57 / 94
+                      : 94 / 57,
               cropLayerPainter: widget.isProfile ? const CircleEditorCropLayerPainter() : const EditorCropLayerPainter(),
               hitTestSize: widget.isProfile ? 0 : 20,
             );
@@ -66,9 +93,7 @@ class _CropImagePageState extends State<CropImagePage> {
                 children: [
                   GestureDetector(
                     behavior: HitTestBehavior.translucent,
-                    onTap: () {
-                      editorKey.currentState!.rotate(right: false);
-                    },
+                    onTap: () => setState(() => rotation = rotation.ccw),
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.w),
                       child: SvgPicture.asset('assets/icons/rotate.svg', width: 17.5.w, height: 21.w),

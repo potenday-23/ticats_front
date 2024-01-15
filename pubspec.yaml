@@ -46,6 +46,7 @@ dependencies:
   screenshot: ^2.1.0
   share_plus: ^7.2.1
   shared_preferences: ^2.2.2
+  shimmer: ^3.0.0
   sign_in_with_apple: ^5.0.0
   stacked_card_carousel: ^0.0.4
 

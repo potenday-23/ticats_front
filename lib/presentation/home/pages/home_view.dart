@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:stacked_card_carousel/stacked_card_carousel.dart';
 import 'package:ticats/app/config/app_color.dart';
 import 'package:ticats/presentation/common/views/ticats_card_view.dart';
 import 'package:ticats/presentation/common/views/ticats_grid_view.dart';
@@ -20,7 +23,7 @@ class HomeView extends GetView<HomeController> {
       body: GetX<TicketController>(
         builder: (ticketController) {
           if (ticketController.isLoading.value) {
-            return const Center(child: CircularProgressIndicator());
+            return const _BuildTicketLoadingView();
           } else if (ticketController.totalTicketList.isEmpty) {
             return const TicatsNoTicketView();
           } else {
@@ -60,6 +63,47 @@ class HomeView extends GetView<HomeController> {
   }
 }
 
+class _BuildTicketLoadingView extends StatelessWidget {
+  const _BuildTicketLoadingView();
+
+  @override
+  Widget build(BuildContext context) {
+    return StackedCardCarousel(
+      type: StackedCardCarouselType.fadeOutStack,
+      initialOffset: 24.h,
+      spaceBetweenItems: 588.h,
+      items: [
+        SizedBox(
+          height: 564.h,
+          child: Shimmer.fromColors(
+            baseColor: Colors.grey.shade300,
+            highlightColor: Colors.grey.shade100,
+            enabled: true,
+            child: Image.asset('assets/tickets/ticket_0.png'),
+          ),
+        ),
+        SizedBox(
+          height: 564.h,
+          child: Shimmer.fromColors(
+            baseColor: Colors.grey.shade300,
+            highlightColor: Colors.grey.shade100,
+            enabled: true,
+            child: Image.asset('assets/tickets/ticket_1.png'),
+          ),
+        ),
+        SizedBox(
+          child: Shimmer.fromColors(
+            baseColor: Colors.grey.shade300,
+            highlightColor: Colors.grey.shade100,
+            enabled: true,
+            child: Image.asset('assets/tickets/ticket_2.png'),
+          ),
+        )
+      ],
+    );
+  }
+}
+
 class _BuildTabBarView extends StatefulWidget {
   const _BuildTabBarView();
 
@@ -82,7 +126,7 @@ class _BuildTabBarViewState extends State<_BuildTabBarView> with AutomaticKeepAl
             IndexedStack(
               index: homeController.totalHomeViewType.value.index,
               children: [
-                TicatsCardView(controller: homeController.totalPageController, ticketList: ticketController.totalTicketList),
+                TicatsCardView(controller: homeController.totalPageController, ticketList: ticketController.totalTicketList, isMain: true),
                 TicatsGridView(ticketList: ticketController.totalTicketList),
               ],
             ),

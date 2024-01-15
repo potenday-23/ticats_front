@@ -11,6 +11,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:ticats/app/config/app_color.dart';
 import 'package:ticats/app/config/app_typeface.dart';
 import 'package:ticats/app/extension/datetime_to_ordinal.dart';
@@ -24,9 +25,16 @@ import '../enum/ticket_enum.dart';
 import 'ticats_chip.dart';
 
 class TicketCardFront extends StatelessWidget {
-  const TicketCardFront(this.ticket, {super.key, this.hasHeart = true, this.hasReport = true});
+  const TicketCardFront(
+    this.ticket, {
+    super.key,
+    this.hasHeart = true,
+    this.hasReport = true,
+    this.isMain = false,
+  });
 
   final Ticket ticket;
+  final bool isMain;
   final bool hasHeart;
   final bool hasReport;
 
@@ -39,13 +47,22 @@ class TicketCardFront extends StatelessWidget {
         child: FutureBuilder<ImageShader>(
           future: _createShaderAndImage(513, 846),
           builder: (context, snapshot) {
-            if (!snapshot.hasData) return const SizedBox.shrink();
             return Stack(
               children: [
-                ShaderMask(
-                  blendMode: BlendMode.srcATop,
-                  shaderCallback: (rect) => snapshot.data!,
-                  child: Image.asset('assets/tickets/ticket_${ticket.ticketType.index}.png'),
+                AnimatedSwitcher(
+                  duration: Duration(milliseconds: isMain ? 500 : 0),
+                  child: !snapshot.hasData
+                      ? Shimmer.fromColors(
+                          baseColor: Colors.grey.shade300,
+                          highlightColor: Colors.grey.shade100,
+                          enabled: true,
+                          child: Image.asset('assets/tickets/ticket_${ticket.ticketType.index}.png'),
+                        )
+                      : ShaderMask(
+                          blendMode: BlendMode.srcATop,
+                          shaderCallback: (rect) => snapshot.data!,
+                          child: Image.asset('assets/tickets/ticket_${ticket.ticketType.index}.png'),
+                        ),
                 ),
                 Positioned.fill(
                   child: Align(

@@ -41,7 +41,7 @@ class MakeTicketResultPage extends GetView<MakeTicketController> {
               height: 564.h,
               child: RepaintBoundary(
                 child: FlipCard(
-                  front: TicketCardFront(controller.ticket.value, hasReport: false),
+                  front: TicketCardFront(controller.ticket.value, hasHeart: false, hasReport: false),
                   back: TicketBack(controller.ticket.value),
                 ),
               ),

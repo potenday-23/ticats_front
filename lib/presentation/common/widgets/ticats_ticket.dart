@@ -24,9 +24,10 @@ import '../enum/ticket_enum.dart';
 import 'ticats_chip.dart';
 
 class TicketCardFront extends StatelessWidget {
-  const TicketCardFront(this.ticket, {super.key, this.hasReport = true});
+  const TicketCardFront(this.ticket, {super.key, this.hasHeart = true, this.hasReport = true});
 
   final Ticket ticket;
+  final bool hasHeart;
   final bool hasReport;
 
   @override
@@ -58,7 +59,7 @@ class TicketCardFront extends StatelessWidget {
                     child: RotatedBox(quarterTurns: 2, child: Image.asset('assets/tickets/ticket_${ticket.ticketType.index}_gradient.png')),
                   ),
                 ),
-                if (AuthService.to.isLogin) ...[
+                if (hasHeart && AuthService.to.isLogin) ...[
                   Positioned.fill(
                     top: 40,
                     right: 40,

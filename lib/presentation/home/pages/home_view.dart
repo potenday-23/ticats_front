@@ -134,8 +134,8 @@ class _BuildTabBarViewState extends State<_BuildTabBarView> with AutomaticKeepAl
               IndexedStack(
                 index: homeController.myHomeViewType.value.index,
                 children: [
-                  TicatsCardView(controller: homeController.myPageController, ticketList: ticketController.myTicketList, hasLike: false),
-                  TicatsGridView(ticketList: ticketController.myTicketList, hasLike: false),
+                  TicatsCardView(controller: homeController.myPageController, ticketList: ticketController.myTicketList),
+                  TicatsGridView(ticketList: ticketController.myTicketList),
                 ],
               ),
             ] else ...[

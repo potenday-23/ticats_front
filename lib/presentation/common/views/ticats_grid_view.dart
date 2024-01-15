@@ -4,10 +4,10 @@ import 'package:ticats/domain/entities/ticket.dart';
 import 'package:ticats/presentation/common/widgets/ticats_ticket.dart';
 
 class TicatsGridView extends StatelessWidget {
-  const TicatsGridView({super.key, required this.ticketList, this.hasLike = true});
+  const TicatsGridView({super.key, required this.ticketList, this.isSearch = false});
 
   final List<Ticket> ticketList;
-  final bool hasLike;
+  final bool isSearch;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class TicatsGridView extends StatelessWidget {
           spacing: 16.w,
           runSpacing: 18.w,
           children: [
-            for (final ticket in ticketList) TicketGridFront(ticket, hasReport: hasLike),
+            for (final ticket in ticketList) TicketGridFront(ticket, isSearch: isSearch),
           ],
         ),
       ),

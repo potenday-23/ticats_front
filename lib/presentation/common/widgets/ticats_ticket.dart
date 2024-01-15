@@ -2,6 +2,7 @@ import 'dart:io' as io;
 import 'dart:ui';
 
 import 'package:flip_card/flip_card.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/file.dart';
@@ -130,15 +131,16 @@ class TicketCardFront extends StatelessWidget {
 }
 
 class TicketGridFront extends StatelessWidget {
-  const TicketGridFront(this.ticket, {super.key, this.hasReport = true});
+  const TicketGridFront(this.ticket, {super.key, this.isMyTicket = false, this.hasReport = true});
 
   final Ticket ticket;
+  final bool isMyTicket;
   final bool hasReport;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () async => _showTicketDialog(context, ticket, hasReport),
+      onTap: () async => _showTicketDialog(context, ticket, isMyTicket, hasReport),
       child: SizedBox(
         width: 163.w,
         child: FittedBox(
@@ -538,7 +540,7 @@ class _RatingStarWidget extends StatelessWidget {
   }
 }
 
-Future<void> _showTicketDialog(BuildContext context, Ticket ticket, bool hasLike) async {
+Future<void> _showTicketDialog(BuildContext context, Ticket ticket, bool isMyTicket, bool hasLike) async {
   await showDialog(
     context: context,
     barrierColor: Colors.black.withOpacity(0.40),
@@ -547,7 +549,65 @@ Future<void> _showTicketDialog(BuildContext context, Ticket ticket, bool hasLike
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         insetPadding: EdgeInsets.zero,
-        content: FlipCard(front: TicketCardFront(ticket, hasReport: hasLike), back: TicketBack(ticket)),
+        content: GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: () => Navigator.pop(context),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (isMyTicket) ...[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TicatsChip(
+                      '삭제',
+                      color: AppColor.grayE5,
+                      radius: 16.r,
+                      onTap: () async => await showDeleteDialog(context, ticket.id!),
+                    ),
+                    TicatsChip(
+                      '완료',
+                      color: const Color(0xFFFFE34F),
+                      radius: 16.r,
+                      onTap: () => Get.back(),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 35.w),
+              ],
+              SizedBox(width: 342.w, child: FlipCard(front: TicketCardFront(ticket, hasReport: hasLike), back: TicketBack(ticket))),
+              if (isMyTicket) ...[
+                SizedBox(height: 10.w),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TicatsChip(
+                    '',
+                    padding: EdgeInsets.fromLTRB(12.w, 4.5.w, 6.w, 4.5.w),
+                    radius: 16.r,
+                    color: AppColor.grayF2,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text('나만 보기', style: AppTypeFace.xSmall14Medium),
+                        SizedBox(width: 6.w),
+                        SizedBox(
+                          width: 51.w,
+                          height: 31.w,
+                          child: CupertinoSwitch(
+                            activeColor: AppColor.primaryDark,
+                            value: true,
+                            onChanged: (value) {},
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const Spacer(),
+              ],
+            ],
+          ),
+        ),
       );
     },
   );

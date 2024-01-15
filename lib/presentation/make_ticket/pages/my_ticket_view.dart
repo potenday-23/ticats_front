@@ -1,7 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:ticats/app/config/app_color.dart';
 import 'package:ticats/app/config/app_typeface.dart';
@@ -11,6 +11,7 @@ import 'package:ticats/domain/entities/ticket.dart';
 import 'package:ticats/presentation/common/views/ticats_no_ticket_view.dart';
 import 'package:ticats/presentation/common/widgets/ticats_appbar.dart';
 import 'package:ticats/presentation/common/widgets/ticats_button.dart';
+import 'package:ticats/presentation/common/widgets/ticats_chip.dart';
 import 'package:ticats/presentation/common/widgets/ticats_dialog.dart';
 import 'package:ticats/presentation/common/widgets/ticats_ticket.dart';
 import 'package:ticats/presentation/main/controller/ticket_controller.dart';
@@ -123,19 +124,48 @@ class _CategoryListView extends GetView<TicketController> {
                   () => Stack(
                     clipBehavior: Clip.none,
                     children: [
-                      SizedBox(width: 163.w, child: TicketGridFront(ticket, hasReport: false)),
+                      SizedBox(width: 163.w, child: TicketGridFront(ticket, hasReport: false, isMyTicket: true)),
                       if (controller.isEditing.value) ...[
+                        Positioned.fill(child: Image.asset('assets/tickets/ticket_${ticket.ticketType.index}_gradient_full.png')),
                         Positioned.fill(
-                          top: -9,
-                          right: -9,
+                          top: 54.w,
                           child: Align(
-                            alignment: Alignment.topRight,
-                            child: GestureDetector(
-                              onTap: () async => showDeleteDialog(context, ticket.id!),
-                              child: SvgPicture.asset('assets/icons/delete.svg', width: 22.w, height: 22.w),
+                            child: Column(
+                              children: [
+                                TicatsChip(
+                                  '삭제',
+                                  padding: EdgeInsets.symmetric(horizontal: 51.5.w, vertical: 9.w),
+                                  radius: 16.r,
+                                  onTap: () async => await showDeleteDialog(context, ticket.id!),
+                                  color: AppColor.grayF2,
+                                ),
+                                SizedBox(height: 20.w),
+                                TicatsChip(
+                                  '',
+                                  padding: EdgeInsets.fromLTRB(12.w, 4.5.w, 6.w, 4.5.w),
+                                  radius: 16.r,
+                                  color: AppColor.grayF2,
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text('나만 보기', style: AppTypeFace.xSmall14Medium),
+                                      SizedBox(width: 6.w),
+                                      SizedBox(
+                                        width: 51.w,
+                                        height: 31.w,
+                                        child: CupertinoSwitch(
+                                          activeColor: AppColor.primaryDark,
+                                          value: true,
+                                          onChanged: (value) {},
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ),
+                        )
                       ]
                     ],
                   ),

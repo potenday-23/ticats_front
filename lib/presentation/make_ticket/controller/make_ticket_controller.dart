@@ -21,7 +21,6 @@ class MakeTicketController extends GetxController {
     layoutType: TicketLayoutType.layout0,
   ).obs;
 
-  RxBool isCropping = false.obs;
   RxBool isUploading = false.obs;
 
   // Ticket Information

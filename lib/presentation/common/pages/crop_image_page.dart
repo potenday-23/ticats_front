@@ -1,11 +1,12 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:custom_image_crop/custom_image_crop.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:image_editor/image_editor.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:ticats/app/config/app_typeface.dart';
 import 'package:ticats/presentation/common/widgets/ticats_appbar.dart';
@@ -21,23 +22,13 @@ class CropImagePage extends StatefulWidget {
 }
 
 class _CropImagePageState extends State<CropImagePage> {
-  final CustomImageCropController _cropController = CustomImageCropController();
+  final GlobalKey<ExtendedImageEditorState> editorKey = GlobalKey<ExtendedImageEditorState>();
 
   bool isCropping = false;
 
   @override
   void initState() {
     super.initState();
-
-    Future.delayed(const Duration(milliseconds: 100), () {
-      _cropController.addTransition(CropImageData(scale: 1.00001));
-    });
-  }
-
-  @override
-  void dispose() {
-    _cropController.dispose();
-    super.dispose();
   }
 
   @override
@@ -46,76 +37,138 @@ class _CropImagePageState extends State<CropImagePage> {
       backgroundColor: Colors.white,
       appBar: const BackAppBar(title: "이미지 자르기"),
       body: SafeArea(
-        child: CustomImageCrop(
-          cropController: _cropController,
-          image: MemoryImage(widget.image),
-          shape: widget.isProfile ? CustomCropShape.Circle : CustomCropShape.Ratio,
-          ratio: widget.isProfile ? null : Ratio(width: 57, height: 94),
-          forceInsideCropArea: true,
-          imageFit: CustomImageFit.fitVisibleSpace,
-          canRotate: false,
+        child: ExtendedImage.memory(
+          widget.image,
+          fit: BoxFit.contain,
+          mode: ExtendedImageMode.editor,
+          extendedImageEditorKey: editorKey,
+          initEditorConfigHandler: (state) {
+            return EditorConfig(
+              maxScale: 4,
+              cropRectPadding: const EdgeInsets.all(20.0),
+              editorMaskColorHandler: (context, pointerDown) => Colors.black.withOpacity(0.4),
+              cropAspectRatio: widget.isProfile ? 1 / 1 : 57 / 94,
+              cropLayerPainter: widget.isProfile ? const CircleEditorCropLayerPainter() : const EditorCropLayerPainter(),
+              hitTestSize: widget.isProfile ? 0 : 20,
+            );
+          },
         ),
       ),
-      bottomNavigationBar: SafeArea(
-        child: SizedBox(
-          height: 74.w,
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24.w),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                GestureDetector(
-                  behavior: HitTestBehavior.translucent,
-                  onTap: () {
-                    _cropController.addTransition(CropImageData(angle: -3.14 / 2));
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.w),
-                    child: SvgPicture.asset('assets/icons/rotate.svg', width: 17.5.w, height: 21.w),
+      bottomNavigationBar: Container(
+        color: Colors.white,
+        child: SafeArea(
+          child: SizedBox(
+            height: 74.w,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24.w),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                    behavior: HitTestBehavior.translucent,
+                    onTap: () {
+                      editorKey.currentState!.rotate(right: false);
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.w),
+                      child: SvgPicture.asset('assets/icons/rotate.svg', width: 17.5.w, height: 21.w),
+                    ),
                   ),
-                ),
-                GestureDetector(
-                  behavior: HitTestBehavior.translucent,
-                  onTap: () async {
-                    if (isCropping) return;
+                  GestureDetector(
+                    behavior: HitTestBehavior.translucent,
+                    onTap: () async {
+                      if (isCropping) return;
 
-                    setState(() {
-                      isCropping = true;
-                    });
+                      setState(() {
+                        isCropping = true;
+                      });
 
-                    final MemoryImage? croppedImage = await _cropController.onCropImage();
-                    _cropController.dispose();
+                      final Uint8List img = editorKey.currentState!.rawImageData;
+                      final EditActionDetails action = editorKey.currentState!.editAction!;
+                      final ImageEditorOption option = ImageEditorOption();
 
-                    if (croppedImage != null) {
-                      final directory = (await getTemporaryDirectory()).path;
-                      final newImage = await File('$directory/${DateTime.now().millisecondsSinceEpoch}').create();
-                      await newImage.writeAsBytes(croppedImage.bytes);
+                      Rect cropRect = editorKey.currentState!.getCropRect()!;
+                      if (action.needCrop) {
+                        option.addOption(ClipOption.fromRect(cropRect));
+                      }
 
-                      Get.back(result: newImage.path);
-                    }
+                      final int rotateAngle = action.rotateAngle.toInt();
 
-                    setState(() {
-                      isCropping = false;
-                    });
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.w),
-                    child: isCropping
-                        ? SizedBox(width: 21.w, height: 21.w, child: const CircularProgressIndicator())
-                        : Row(
-                            children: [
-                              SvgPicture.asset('assets/icons/rotate.svg', width: 17.5.w, height: 21.w),
-                              SizedBox(width: 10.w),
-                              Text("자르기 완료", style: AppTypeFace.xSmall16SemiBold),
-                            ],
-                          ),
+                      if (action.hasRotateAngle) {
+                        option.addOption(RotateOption(rotateAngle));
+                      }
+
+                      final Uint8List? croppedImage = await ImageEditor.editImage(
+                        image: img,
+                        imageEditorOption: option,
+                      );
+
+                      if (croppedImage != null) {
+                        final directory = (await getTemporaryDirectory()).path;
+                        final newImage = await File('$directory/${DateTime.now().millisecondsSinceEpoch}').create();
+                        await newImage.writeAsBytes(croppedImage);
+
+                        Get.back(result: newImage.path);
+                      }
+
+                      setState(() {
+                        isCropping = false;
+                      });
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.w),
+                      child: isCropping
+                          ? SizedBox(width: 21.w, height: 21.w, child: const CircularProgressIndicator())
+                          : Row(
+                              children: [
+                                SvgPicture.asset('assets/icons/rotate.svg', width: 17.5.w, height: 21.w),
+                                SizedBox(width: 10.w),
+                                Text("자르기 완료", style: AppTypeFace.xSmall16SemiBold),
+                              ],
+                            ),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
       ),
     );
+  }
+}
+
+class CircleEditorCropLayerPainter extends EditorCropLayerPainter {
+  const CircleEditorCropLayerPainter();
+
+  @override
+  void paintCorners(Canvas canvas, Size size, ExtendedImageCropLayerPainter painter) {
+    // do nothing
+  }
+
+  @override
+  void paintMask(Canvas canvas, Size size, ExtendedImageCropLayerPainter painter) {
+    final Rect rect = Offset.zero & size;
+    final Rect cropRect = painter.cropRect;
+    final Color maskColor = painter.maskColor;
+    canvas.saveLayer(rect, Paint());
+    canvas.drawRect(
+        rect,
+        Paint()
+          ..style = PaintingStyle.fill
+          ..color = maskColor);
+    canvas.drawCircle(cropRect.center, cropRect.width / 2.0, Paint()..blendMode = BlendMode.clear);
+    canvas.restore();
+  }
+
+  @override
+  void paintLines(Canvas canvas, Size size, ExtendedImageCropLayerPainter painter) {
+    final Rect cropRect = painter.cropRect;
+    if (painter.pointerDown) {
+      canvas.save();
+      canvas.clipPath(Path()..addOval(cropRect));
+      super.paintLines(canvas, size, painter);
+      canvas.restore();
+    }
   }
 }

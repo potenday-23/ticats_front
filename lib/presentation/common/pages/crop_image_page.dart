@@ -146,7 +146,7 @@ class _CropImagePageState extends State<CropImagePage> {
                           ? SizedBox(width: 21.w, height: 21.w, child: const CircularProgressIndicator())
                           : Row(
                               children: [
-                                SvgPicture.asset('assets/icons/rotate.svg', width: 17.5.w, height: 21.w),
+                                SvgPicture.asset('assets/icons/crop.svg', width: 17.5.w, height: 21.w),
                                 SizedBox(width: 10.w),
                                 Text("자르기 완료", style: AppTypeFace.xSmall16SemiBold),
                               ],

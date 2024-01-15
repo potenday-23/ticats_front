@@ -124,7 +124,7 @@ class _CategoryListView extends GetView<TicketController> {
                   () => Stack(
                     clipBehavior: Clip.none,
                     children: [
-                      SizedBox(width: 163.w, child: TicketGridFront(ticket, hasReport: false, isMyTicket: true)),
+                      SizedBox(width: 163.w, child: TicketGridFront(ticket, isMyTicket: true)),
                       if (controller.isEditing.value) ...[
                         Positioned.fill(child: Image.asset('assets/tickets/ticket_${ticket.ticketType.index}_gradient_full.png')),
                         Positioned.fill(

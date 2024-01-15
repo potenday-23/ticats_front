@@ -7,18 +7,11 @@ import 'package:ticats/domain/entities/ticket.dart';
 import 'package:ticats/presentation/common/widgets/ticats_ticket.dart';
 
 class TicatsCardView extends StatefulWidget {
-  const TicatsCardView({
-    Key? key,
-    required this.controller,
-    required this.ticketList,
-    this.isMain = false,
-    this.hasLike = true,
-  }) : super(key: key);
+  const TicatsCardView({Key? key, required this.controller, required this.ticketList, this.isMain = false}) : super(key: key);
 
   final PageController controller;
   final List<Ticket> ticketList;
   final bool isMain;
-  final bool hasLike;
 
   @override
   State<TicatsCardView> createState() => _TicatsCardViewState();
@@ -40,7 +33,7 @@ class _TicatsCardViewState extends State<TicatsCardView> with AutomaticKeepAlive
             height: 564.h,
             child: RepaintBoundary(
               child: FlipCard(
-                front: TicketCardFront(ticket, hasReport: widget.hasLike, isMain: widget.isMain),
+                front: TicketCardFront(ticket, isMain: widget.isMain),
                 back: TicketBack(ticket),
               ),
             ),

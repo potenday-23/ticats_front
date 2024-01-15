@@ -25,18 +25,11 @@ import '../enum/ticket_enum.dart';
 import 'ticats_chip.dart';
 
 class TicketCardFront extends StatelessWidget {
-  const TicketCardFront(
-    this.ticket, {
-    super.key,
-    this.hasHeart = true,
-    this.hasReport = true,
-    this.isMain = false,
-  });
+  const TicketCardFront(this.ticket, {super.key, this.hasHeart = true, this.isMain = false});
 
   final Ticket ticket;
   final bool isMain;
   final bool hasHeart;
-  final bool hasReport;
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +91,7 @@ class TicketCardFront extends StatelessWidget {
                       ),
                     ),
                   ),
-                  if (hasReport)
+                  if (AuthService.to.member != null && AuthService.to.member!.member!.id != ticket.member!.id)
                     Positioned.fill(
                       left: 40,
                       bottom: 40,
@@ -149,16 +142,16 @@ class TicketCardFront extends StatelessWidget {
 }
 
 class TicketGridFront extends StatelessWidget {
-  const TicketGridFront(this.ticket, {super.key, this.isMyTicket = false, this.hasReport = true});
+  const TicketGridFront(this.ticket, {super.key, this.isMyTicket = false, this.isSearch = false});
 
   final Ticket ticket;
   final bool isMyTicket;
-  final bool hasReport;
+  final bool isSearch;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () async => _showTicketDialog(context, ticket, isMyTicket, hasReport),
+      onTap: () async => _showTicketDialog(context, ticket, isMyTicket),
       child: SizedBox(
         width: 163.w,
         child: FittedBox(
@@ -168,17 +161,26 @@ class TicketGridFront extends StatelessWidget {
             child: FutureBuilder<ImageShader>(
               future: _createShaderAndImage(513, 846),
               builder: (context, snapshot) {
-                if (!snapshot.hasData) return const SizedBox.shrink();
                 return Stack(
                   children: [
                     FittedBox(
                       child: SizedBox(
                         width: 513,
                         height: 846,
-                        child: ShaderMask(
-                          blendMode: BlendMode.srcATop,
-                          shaderCallback: (rect) => snapshot.data!,
-                          child: Image.asset('assets/tickets/ticket_${ticket.ticketType.index}.png'),
+                        child: AnimatedSwitcher(
+                          duration: Duration(milliseconds: isSearch ? 500 : 0),
+                          child: !snapshot.hasData
+                              ? Shimmer.fromColors(
+                                  baseColor: Colors.grey.shade300,
+                                  highlightColor: Colors.grey.shade100,
+                                  enabled: true,
+                                  child: Image.asset('assets/tickets/ticket_${ticket.ticketType.index}.png'),
+                                )
+                              : ShaderMask(
+                                  blendMode: BlendMode.srcATop,
+                                  shaderCallback: (rect) => snapshot.data!,
+                                  child: Image.asset('assets/tickets/ticket_${ticket.ticketType.index}.png'),
+                                ),
                         ),
                       ),
                     ),
@@ -238,7 +240,7 @@ class TicketGridFront extends StatelessWidget {
                           ),
                         ),
                       ),
-                      if (hasReport)
+                      if (AuthService.to.member != null && AuthService.to.member!.member!.id != ticket.member!.id)
                         Positioned.fill(
                           right: 14,
                           bottom: 14,
@@ -558,7 +560,7 @@ class _RatingStarWidget extends StatelessWidget {
   }
 }
 
-Future<void> _showTicketDialog(BuildContext context, Ticket ticket, bool isMyTicket, bool hasLike) async {
+Future<void> _showTicketDialog(BuildContext context, Ticket ticket, bool isMyTicket) async {
   await showDialog(
     context: context,
     barrierColor: Colors.black.withOpacity(0.40),
@@ -597,7 +599,7 @@ Future<void> _showTicketDialog(BuildContext context, Ticket ticket, bool isMyTic
                 ),
                 SizedBox(height: 35.w),
               ],
-              SizedBox(width: 342.w, child: FlipCard(front: TicketCardFront(ticket, hasReport: hasLike), back: TicketBack(ticket))),
+              SizedBox(width: 342.w, child: FlipCard(front: TicketCardFront(ticket), back: TicketBack(ticket))),
               if (isMyTicket) ...[
                 SizedBox(height: 10.w),
                 Align(

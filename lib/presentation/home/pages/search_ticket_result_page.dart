@@ -57,7 +57,7 @@ class SearchTicketResultPage extends GetView<SearchTicketController> {
             ),
           );
         } else {
-          return TicatsGridView(ticketList: controller.searchTicketList);
+          return TicatsGridView(ticketList: controller.searchTicketList, isSearch: true);
         }
       }),
     );

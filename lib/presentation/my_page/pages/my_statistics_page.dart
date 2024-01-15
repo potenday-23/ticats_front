@@ -5,9 +5,9 @@ import 'package:get/get.dart';
 import 'package:ticats/app/config/app_color.dart';
 import 'package:ticats/app/config/app_typeface.dart';
 import 'package:ticats/domain/entities/statistics.dart';
-import 'package:ticats/presentation/common/views/ticats_no_ticket_view.dart';
 import 'package:ticats/presentation/common/widgets/ticats_appbar.dart';
 import 'package:ticats/presentation/my_page/controller/statistic_controller.dart';
+import 'package:ticats/presentation/my_page/views/no_statistics_view.dart';
 
 final List<Color> pieColors = [
   const Color(0xFFF683BB),
@@ -29,7 +29,7 @@ class StatisticsPage extends GetView<StatisticController> {
       appBar: const BackAppBar(title: "통계"),
       body: Obx(() {
         if (controller.isStatisticLoading.value) return const Center(child: CircularProgressIndicator());
-        if (controller.statisticsList.isEmpty) return const Center(child: TicatsNoTicketView());
+        if (controller.statisticsList.isEmpty) return const Center(child: NoStatisticsView());
 
         return SingleChildScrollView(
           controller: controller.scrollController,
@@ -83,7 +83,7 @@ class _FavoriteCategoryWidget extends GetView<StatisticController> {
                                 ],
                               ),
                             ),
-                            if (i != controller.statisticsList.length)
+                            if (i != controller.statisticsList.length - 1)
                               Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 16.w),
                                 child: const Divider(height: 1, thickness: 1, color: AppColor.grayE5),

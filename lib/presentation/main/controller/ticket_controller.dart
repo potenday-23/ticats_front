@@ -84,10 +84,10 @@ class TicketController extends GetxController {
 
       if (likeTicketList.contains(ticket)) {
         likeTicketList.remove(ticket);
-        await showTextDialog(Get.context!, "좋아요 한 티켓에서 삭제 되었습니다!");
+        await showTextDialog(Get.context!, "좋아요 한 티켓에서 삭제되었습니다!");
       } else {
         likeTicketList.add(ticket);
-        await showTextDialog(Get.context!, "좋아요 한 티켓에 저장 되었습니다!");
+        await showTextDialog(Get.context!, "좋아요 한 티켓에 저장되었습니다!");
       }
 
       update();

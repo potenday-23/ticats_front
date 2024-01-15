@@ -4,6 +4,7 @@ import 'package:ticats/app/config/routes/route_path.dart';
 import 'package:ticats/app/service/auth_service.dart';
 import 'package:ticats/domain/usecases/member_use_cases.dart';
 import 'package:ticats/presentation/common/widgets/ticats_dialog.dart';
+import 'package:ticats/presentation/main/controller/ticket_controller.dart';
 
 class ResignController extends GetxController {
   final MemberUseCases memberUseCases = Get.find<MemberUseCases>();
@@ -18,7 +19,9 @@ class ResignController extends GetxController {
       await resignMemberUseCase.execute(resignReasonList);
 
       await AuthService.to.logout();
-      Get.offAllNamed(RoutePath.main);
+      await Get.find<TicketController>().getTickets();
+
+      Get.back();
 
       await showTextDialog(Get.context!, "회원 탈퇴가 완료되었습니다 ㅜ.ㅜ");
     } catch (e) {

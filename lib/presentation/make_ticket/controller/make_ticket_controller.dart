@@ -9,7 +9,7 @@ import 'package:ticats/domain/entities/ticket.dart';
 import 'package:ticats/domain/usecases/ticket_use_cases.dart';
 import 'package:ticats/presentation/common/enum/color_type.dart';
 import 'package:ticats/presentation/common/enum/ticket_enum.dart';
-import 'package:ticats/presentation/make_ticket/pages/crop_image_page.dart';
+import 'package:ticats/presentation/common/pages/crop_image_page.dart';
 
 class MakeTicketController extends GetxController {
   final Rx<Ticket> ticket = Ticket(
@@ -47,7 +47,11 @@ class MakeTicketController extends GetxController {
       if (image != null) {
         Uint8List? compressedImage = await FlutterImageCompress.compressWithFile(image.path, quality: 75);
 
-        Get.to(() => CropImagePage(image: compressedImage!));
+        var imagePath = Get.to(() => CropImagePage(image: compressedImage!));
+
+        if (imagePath != null) {
+          ticketImage.value = XFile(await imagePath);
+        }
       }
     } catch (e) {
       if (kDebugMode) {

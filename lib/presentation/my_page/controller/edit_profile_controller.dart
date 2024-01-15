@@ -1,9 +1,11 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ticats/app/service/auth_service.dart';
 import 'package:ticats/domain/entities/ticats_member.dart';
 import 'package:ticats/domain/usecases/member_use_cases.dart';
+import 'package:ticats/presentation/common/pages/crop_image_page.dart';
 
 class EditProfileController extends GetxController {
   final MemberUseCases memberUseCases = Get.find<MemberUseCases>();
@@ -19,7 +21,17 @@ class EditProfileController extends GetxController {
     try {
       final ImagePicker picker = ImagePicker();
 
-      profileImage.value = await picker.pickImage(source: ImageSource.gallery);
+      XFile? image = await picker.pickImage(source: ImageSource.gallery);
+
+      if (image != null) {
+        Uint8List? compressedImage = await FlutterImageCompress.compressWithFile(image.path, quality: 75);
+
+        var imagePath = Get.to(() => CropImagePage(image: compressedImage!, isProfile: true));
+
+        if (imagePath != null) {
+          profileImage.value = XFile(await imagePath);
+        }
+      }
     } catch (e) {
       if (kDebugMode) {
         print(e);

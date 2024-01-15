@@ -24,7 +24,7 @@ class EditProfileController extends GetxController {
       XFile? image = await picker.pickImage(source: ImageSource.gallery);
 
       if (image != null) {
-        Uint8List? compressedImage = await FlutterImageCompress.compressWithFile(image.path, quality: 75);
+        Uint8List? compressedImage = await FlutterImageCompress.compressWithFile(image.path, quality: 95);
 
         var imagePath = Get.to(() => CropImagePage(image: compressedImage!, isProfile: true));
 

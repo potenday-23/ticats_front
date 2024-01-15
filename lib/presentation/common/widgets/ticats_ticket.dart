@@ -1,6 +1,7 @@
 import 'dart:io' as io;
 import 'dart:ui';
 
+import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/file.dart';
@@ -21,73 +22,64 @@ import 'package:ticats/presentation/main/controller/ticket_controller.dart';
 import '../enum/ticket_enum.dart';
 import 'ticats_chip.dart';
 
-class TicketFront extends StatelessWidget {
-  const TicketFront(this.ticket, {super.key, this.hasLike = true, this.isSmall = false});
+class TicketCardFront extends StatelessWidget {
+  const TicketCardFront(this.ticket, {super.key, this.hasReport = true});
 
   final Ticket ticket;
-  final bool hasLike;
-  final bool isSmall;
+  final bool hasReport;
 
   @override
   Widget build(BuildContext context) {
     return FittedBox(
       child: SizedBox(
-        width: 342 * 1.5,
-        height: 564 * 1.5,
-        child: LayoutBuilder(builder: (context, constraints) {
-          return FutureBuilder<ImageShader>(
-            future: _createShaderAndImage(constraints.maxWidth, constraints.maxHeight),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) return const SizedBox.shrink();
-              return Stack(
-                children: [
-                  ShaderMask(
-                    blendMode: BlendMode.srcATop,
-                    shaderCallback: (rect) => snapshot.data!,
-                    child: Image.asset('assets/tickets/ticket_${ticket.ticketType.index}.png'),
+        width: 513,
+        height: 846,
+        child: FutureBuilder<ImageShader>(
+          future: _createShaderAndImage(513, 846),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) return const SizedBox.shrink();
+            return Stack(
+              children: [
+                ShaderMask(
+                  blendMode: BlendMode.srcATop,
+                  shaderCallback: (rect) => snapshot.data!,
+                  child: Image.asset('assets/tickets/ticket_${ticket.ticketType.index}.png'),
+                ),
+                Positioned.fill(
+                  child: Align(
+                    alignment: Alignment.topCenter,
+                    child: Image.asset('assets/tickets/ticket_${ticket.ticketType.index}_gradient.png'),
                   ),
+                ),
+                Positioned.fill(
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: RotatedBox(quarterTurns: 2, child: Image.asset('assets/tickets/ticket_${ticket.ticketType.index}_gradient.png')),
+                  ),
+                ),
+                if (AuthService.to.isLogin) ...[
                   Positioned.fill(
+                    top: 40,
+                    right: 40,
                     child: Align(
-                      alignment: Alignment.topCenter,
-                      child: Image.asset('assets/tickets/ticket_${ticket.ticketType.index}_gradient.png'),
-                    ),
-                  ),
-                  Positioned.fill(
-                    child: Align(
-                      alignment: Alignment.bottomCenter,
-                      child:
-                          RotatedBox(quarterTurns: 2, child: Image.asset('assets/tickets/ticket_${ticket.ticketType.index}_gradient.png')),
-                    ),
-                  ),
-                  Positioned.fill(
-                    bottom: 24 * 1.5,
-                    child: Align(
-                      alignment: Alignment.bottomCenter,
-                      child: SvgPicture.asset('assets/tickets/ticats_logo.svg', width: 46 * 1.5, height: 14 * 1.5),
-                    ),
-                  ),
-                  if (hasLike && AuthService.to.isLogin) ...[
-                    Positioned.fill(
-                      top: 40,
-                      right: 40,
-                      child: Align(
-                        alignment: Alignment.topRight,
-                        child: GestureDetector(
-                          onTap: () async {
-                            await Get.find<TicketController>().likeTicket(ticket);
+                      alignment: Alignment.topRight,
+                      child: GestureDetector(
+                        onTap: () async {
+                          await Get.find<TicketController>().likeTicket(ticket);
+                        },
+                        child: GetX<TicketController>(
+                          builder: (controller) {
+                            return SvgPicture.asset(
+                              controller.likeTicketList.contains(ticket) ? 'assets/icons/like.svg' : 'assets/icons/unlike.svg',
+                              width: 48,
+                              height: 48,
+                            );
                           },
-                          child: GetX<TicketController>(
-                            builder: (controller) {
-                              return SvgPicture.asset(
-                                controller.likeTicketList.contains(ticket) ? 'assets/icons/like.svg' : 'assets/icons/unlike.svg',
-                                width: !isSmall ? 72 : 48,
-                                height: !isSmall ? 72 : 48,
-                              );
-                            },
-                          ),
                         ),
                       ),
                     ),
+                  ),
+                  if (hasReport)
                     Positioned.fill(
                       left: 40,
                       bottom: 40,
@@ -97,20 +89,163 @@ class TicketFront extends StatelessWidget {
                           onTap: () async {
                             await showReportDialog(context, ticket);
                           },
-                          child: SvgPicture.asset(
-                            'assets/icons/report.svg',
-                            width: !isSmall ? 54 : 36,
-                            height: !isSmall ? 54 : 36,
-                          ),
+                          child: SvgPicture.asset('assets/icons/report.svg', width: 36, height: 36),
                         ),
                       ),
                     ),
-                  ],
                 ],
-              );
-            },
-          );
-        }),
+                Positioned.fill(
+                  bottom: 36,
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: SvgPicture.asset('assets/tickets/ticats_logo.svg', width: 69, height: 21),
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  Future<ImageShader> _createShaderAndImage(double w, double h) async {
+    late Uint8List data;
+
+    if (ticket.imageUrl != null) {
+      File file = await DefaultCacheManager().getSingleFile(ticket.imageUrl!);
+
+      data = file.readAsBytesSync().buffer.asUint8List();
+    } else {
+      data = io.File(ticket.imagePath!).readAsBytesSync().buffer.asUint8List();
+    }
+
+    Codec codec = await instantiateImageCodec(data, targetWidth: w.toInt(), targetHeight: h.toInt());
+
+    FrameInfo fi = await codec.getNextFrame();
+    ImageShader shader = ImageShader(fi.image, TileMode.clamp, TileMode.clamp, Matrix4.identity().storage);
+
+    return shader;
+  }
+}
+
+class TicketGridFront extends StatelessWidget {
+  const TicketGridFront(this.ticket, {super.key, this.hasReport = true});
+
+  final Ticket ticket;
+  final bool hasReport;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () async => _showTicketDialog(context, ticket, hasReport),
+      child: SizedBox(
+        width: 163.w,
+        child: FittedBox(
+          child: SizedBox(
+            width: 163,
+            height: 270,
+            child: FutureBuilder<ImageShader>(
+              future: _createShaderAndImage(513, 846),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) return const SizedBox.shrink();
+                return Stack(
+                  children: [
+                    FittedBox(
+                      child: SizedBox(
+                        width: 513,
+                        height: 846,
+                        child: ShaderMask(
+                          blendMode: BlendMode.srcATop,
+                          shaderCallback: (rect) => snapshot.data!,
+                          child: Image.asset('assets/tickets/ticket_${ticket.ticketType.index}.png'),
+                        ),
+                      ),
+                    ),
+                    Positioned.fill(
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Image.asset('assets/tickets/ticket_${ticket.ticketType.index}_grid_gradient.png', fit: BoxFit.fitWidth),
+                      ),
+                    ),
+                    Positioned.fill(
+                      top: 16,
+                      left: 16,
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: TicatsChip(
+                          ticket.category!.name,
+                          color: AppColor.primaryDark,
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          textStyle: AppTypeFace.xSmall12Regular,
+                          textColor: Colors.white,
+                        ),
+                      ),
+                    ),
+                    Positioned.fill(
+                      top: ticket.ticketType == TicketType.type0
+                          ? 206
+                          : ticket.ticketType == TicketType.type1
+                              ? 203
+                              : 210,
+                      child: Align(
+                        alignment: Alignment.topCenter,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Text(ticket.title, style: AppTypeFace.xSmall12Bold.copyWith(color: Colors.white)),
+                        ),
+                      ),
+                    ),
+                    if (AuthService.to.isLogin) ...[
+                      Positioned.fill(
+                        top: 16,
+                        right: 16,
+                        child: Align(
+                          alignment: Alignment.topRight,
+                          child: GestureDetector(
+                            onTap: () async {
+                              await Get.find<TicketController>().likeTicket(ticket);
+                            },
+                            child: GetX<TicketController>(
+                              builder: (controller) {
+                                return SvgPicture.asset(
+                                  controller.likeTicketList.contains(ticket) ? 'assets/icons/like.svg' : 'assets/icons/unlike.svg',
+                                  width: 24,
+                                  height: 24,
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+                      if (hasReport)
+                        Positioned.fill(
+                          right: 14,
+                          bottom: 14,
+                          child: Align(
+                            alignment: Alignment.bottomRight,
+                            child: GestureDetector(
+                              onTap: () async {
+                                await showReportDialog(context, ticket);
+                              },
+                              child: SvgPicture.asset('assets/icons/report.svg', width: 20, height: 20),
+                            ),
+                          ),
+                        ),
+                    ],
+                    Positioned.fill(
+                      bottom: 12,
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: SvgPicture.asset('assets/tickets/ticats_logo.svg', width: 23, height: 7),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -401,4 +536,19 @@ class _RatingStarWidget extends StatelessWidget {
       );
     }
   }
+}
+
+Future<void> _showTicketDialog(BuildContext context, Ticket ticket, bool hasLike) async {
+  await showDialog(
+    context: context,
+    barrierColor: Colors.black.withOpacity(0.40),
+    builder: (context) {
+      return AlertDialog(
+        backgroundColor: Colors.transparent,
+        surfaceTintColor: Colors.transparent,
+        insetPadding: EdgeInsets.zero,
+        content: FlipCard(front: TicketCardFront(ticket, hasReport: hasLike), back: TicketBack(ticket)),
+      );
+    },
+  );
 }

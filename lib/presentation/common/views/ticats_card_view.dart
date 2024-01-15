@@ -33,7 +33,7 @@ class _TicatsCardViewState extends State<TicatsCardView> with AutomaticKeepAlive
             height: 564.h,
             child: RepaintBoundary(
               child: FlipCard(
-                front: TicketFront(ticket, hasLike: widget.hasLike, isSmall: true),
+                front: TicketCardFront(ticket, hasReport: widget.hasLike),
                 back: TicketBack(ticket),
               ),
             ),

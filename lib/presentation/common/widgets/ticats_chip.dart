@@ -4,12 +4,13 @@ import 'package:ticats/app/config/app_color.dart';
 import 'package:ticats/app/config/app_typeface.dart';
 
 class TicatsChip extends StatelessWidget {
-  const TicatsChip(this.text, {super.key, this.color, this.textColor, this.padding, this.onTap});
+  const TicatsChip(this.text, {super.key, this.color, this.textColor, this.textStyle, this.padding, this.onTap});
 
   final String text;
   final EdgeInsets? padding;
   final Color? color;
   final Color? textColor;
+  final TextStyle? textStyle;
   final VoidCallback? onTap;
 
   @override
@@ -23,7 +24,11 @@ class TicatsChip extends StatelessWidget {
         ),
         child: Padding(
           padding: padding ?? EdgeInsets.symmetric(horizontal: 16.w, vertical: 7.h),
-          child: Text(text, style: AppTypeFace.xSmall14Medium.copyWith(color: textColor ?? Colors.black)),
+          child: Text(
+            text,
+            style: textStyle?.copyWith(color: textColor ?? Colors.black) ??
+                AppTypeFace.xSmall14Medium.copyWith(color: textColor ?? Colors.black),
+          ),
         ),
       ),
     );

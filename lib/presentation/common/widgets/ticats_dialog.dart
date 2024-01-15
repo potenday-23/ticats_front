@@ -39,7 +39,7 @@ showDeleteDialog(BuildContext context, int ticketId) async {
                         Expanded(
                           child: GestureDetector(
                             behavior: HitTestBehavior.translucent,
-                            onTap: () => Get.back(),
+                            onTap: () => Get.back(result: false),
                             child: Container(
                               height: 56.w,
                               decoration: BoxDecoration(
@@ -57,7 +57,10 @@ showDeleteDialog(BuildContext context, int ticketId) async {
                         Expanded(
                           child: GestureDetector(
                             behavior: HitTestBehavior.translucent,
-                            onTap: () async => await Get.find<TicketController>().deleteTicket(ticketId),
+                            onTap: () async {
+                              await Get.find<TicketController>().deleteTicket(ticketId);
+                              Get.back(result: true);
+                            },
                             child: Container(
                               height: 56.w,
                               decoration: BoxDecoration(

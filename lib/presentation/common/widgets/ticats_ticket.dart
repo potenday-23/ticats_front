@@ -564,7 +564,11 @@ Future<void> _showTicketDialog(BuildContext context, Ticket ticket, bool isMyTic
                       '삭제',
                       color: AppColor.grayE5,
                       radius: 16.r,
-                      onTap: () async => await showDeleteDialog(context, ticket.id!),
+                      onTap: () async {
+                        bool result = await showDeleteDialog(context, ticket.id!);
+
+                        if (result) Get.back();
+                      },
                     ),
                     TicatsChip(
                       '완료',

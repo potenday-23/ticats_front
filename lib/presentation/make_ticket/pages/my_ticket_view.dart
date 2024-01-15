@@ -123,7 +123,7 @@ class _CategoryListView extends GetView<TicketController> {
                   () => Stack(
                     clipBehavior: Clip.none,
                     children: [
-                      SizedBox(width: 163.w, child: TicketFront(ticket)),
+                      SizedBox(width: 163.w, child: TicketGridFront(ticket, hasReport: false)),
                       if (controller.isEditing.value) ...[
                         Positioned.fill(
                           top: -9,

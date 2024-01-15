@@ -18,11 +18,7 @@ class TicatsGridView extends StatelessWidget {
           spacing: 16.w,
           runSpacing: 18.w,
           children: [
-            for (final ticket in ticketList)
-              SizedBox(
-                width: 163.w,
-                child: TicketFront(ticket, hasLike: hasLike),
-              ),
+            for (final ticket in ticketList) TicketGridFront(ticket, hasReport: hasLike),
           ],
         ),
       ),

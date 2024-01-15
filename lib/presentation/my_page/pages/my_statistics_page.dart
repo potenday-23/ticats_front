@@ -32,29 +32,49 @@ class StatisticsPage extends GetView<StatisticController> {
         if (controller.statisticsList.isEmpty) return const Center(child: TicatsNoTicketView());
 
         return SingleChildScrollView(
+          controller: controller.scrollController,
           physics: const ClampingScrollPhysics(),
           child: Column(
             children: [
               const _ChartWidget(),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 24.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 24.h),
-                    Text("이번 달엔 ${controller.statisticsList[0].category}를 가장 많이 봤어요", style: AppTypeFace.small18SemiBold),
-                    SizedBox(height: 36.h),
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(14.r),
-                        color: AppColor.grayF2,
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 14.h),
-                        child: Column(children: [
-                          for (int i = 0; i < controller.statisticsList.length; i++)
+              const _FavoriteCategoryWidget(),
+              SizedBox(height: 65.h),
+            ],
+          ),
+        );
+      }),
+    );
+  }
+}
+
+class _FavoriteCategoryWidget extends GetView<StatisticController> {
+  const _FavoriteCategoryWidget();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 24.w),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: 24.h),
+          Text("이번 달엔 ${controller.statisticsList[0].category}를 가장 많이 봤어요", style: AppTypeFace.small18SemiBold),
+          SizedBox(height: 36.h),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(14.r),
+              color: AppColor.grayF2,
+            ),
+            child: Obx(
+              () => Column(
+                children: [
+                  if (!controller.isStatisticOpen.value) ...[
+                    for (int i = 0; i < controller.statisticsList.length; i++) ...[
+                      if (i < 3)
+                        Column(
+                          children: [
                             Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
+                              padding: EdgeInsets.all(16.w),
                               child: Row(
                                 children: [
                                   Text(controller.statisticsList[i].category, style: AppTypeFace.xSmall16SemiBold),
@@ -63,17 +83,70 @@ class StatisticsPage extends GetView<StatisticController> {
                                 ],
                               ),
                             ),
-                        ]),
+                            if (i != controller.statisticsList.length)
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                                child: const Divider(height: 1, thickness: 1, color: AppColor.grayE5),
+                              ),
+                          ],
+                        ),
+                    ],
+                    if (controller.statisticsList.length > 3)
+                      GestureDetector(
+                        behavior: HitTestBehavior.translucent,
+                        onTap: () {
+                          controller.isStatisticOpen.value = true;
+
+                          Future.delayed(const Duration(milliseconds: 50), () {
+                            controller.scrollController.animateTo(
+                              controller.scrollController.position.maxScrollExtent,
+                              duration: const Duration(milliseconds: 400),
+                              curve: Curves.easeOut,
+                            );
+                          });
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.all(16.w),
+                          child: Center(child: Text('펼치기', style: AppTypeFace.xSmall14Medium)),
+                        ),
+                      ),
+                  ] else ...[
+                    for (int i = 0; i < controller.statisticsList.length; i++) ...[
+                      Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.all(16.w),
+                            child: Row(
+                              children: [
+                                Text(controller.statisticsList[i].category, style: AppTypeFace.xSmall16SemiBold),
+                                const Spacer(),
+                                Text('${controller.statisticsList[i].categoryCnt}회', style: AppTypeFace.xSmall16SemiBold),
+                              ],
+                            ),
+                          ),
+                          if (i != controller.statisticsList.length)
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 16.w),
+                              child: const Divider(height: 1, thickness: 1, color: AppColor.grayE5),
+                            ),
+                        ],
+                      ),
+                    ],
+                    GestureDetector(
+                      behavior: HitTestBehavior.translucent,
+                      onTap: () => controller.isStatisticOpen.value = false,
+                      child: Padding(
+                        padding: EdgeInsets.all(16.w),
+                        child: Center(child: Text('닫기', style: AppTypeFace.xSmall14Medium)),
                       ),
                     ),
                   ],
-                ),
+                ],
               ),
-              SizedBox(height: 65.h),
-            ],
+            ),
           ),
-        );
-      }),
+        ],
+      ),
     );
   }
 }

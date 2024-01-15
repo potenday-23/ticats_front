@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:ticats/domain/entities/statistics.dart';
@@ -13,8 +14,11 @@ class StatisticController extends GetxController {
 
   RxInt touchedIndex = (-1).obs;
   RxBool isStatisticLoading = true.obs;
+  RxBool isStatisticOpen = false.obs;
 
   late Rx<YearStatistics> selectedMonth;
+
+  final ScrollController scrollController = ScrollController();
 
   @override
   void onInit() async {

@@ -63,43 +63,53 @@ class HomeView extends GetView<HomeController> {
   }
 }
 
-class _BuildTicketLoadingView extends StatelessWidget {
+class _BuildTicketLoadingView extends GetView<HomeController> {
   const _BuildTicketLoadingView();
 
   @override
   Widget build(BuildContext context) {
-    return StackedCardCarousel(
-      type: StackedCardCarouselType.fadeOutStack,
-      initialOffset: 24.h,
-      spaceBetweenItems: 588.h,
-      items: [
-        SizedBox(
-          height: 564.h,
-          child: Shimmer.fromColors(
-            baseColor: Colors.grey.shade300,
-            highlightColor: Colors.grey.shade100,
-            enabled: true,
-            child: Image.asset('assets/tickets/ticket_0.png'),
-          ),
-        ),
-        SizedBox(
-          height: 564.h,
-          child: Shimmer.fromColors(
-            baseColor: Colors.grey.shade300,
-            highlightColor: Colors.grey.shade100,
-            enabled: true,
-            child: Image.asset('assets/tickets/ticket_1.png'),
-          ),
-        ),
-        SizedBox(
-          child: Shimmer.fromColors(
-            baseColor: Colors.grey.shade300,
-            highlightColor: Colors.grey.shade100,
-            enabled: true,
-            child: Image.asset('assets/tickets/ticket_2.png'),
-          ),
-        )
-      ],
+    return Obx(
+      () {
+        if (controller.totalHomeViewType.value == HomeViewType.card) {
+          return StackedCardCarousel(
+            type: StackedCardCarouselType.fadeOutStack,
+            initialOffset: 24.h,
+            spaceBetweenItems: 588.h,
+            items: [
+              for (int i = 0; i < 3; i++)
+                SizedBox(
+                  height: 564.h,
+                  child: Shimmer.fromColors(
+                    baseColor: Colors.grey.shade300,
+                    highlightColor: Colors.grey.shade100,
+                    enabled: true,
+                    child: Image.asset('assets/tickets/ticket_$i.png'),
+                  ),
+                ),
+            ],
+          );
+        } else {
+          return Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
+            child: Wrap(
+              spacing: 16.w,
+              runSpacing: 18.w,
+              children: [
+                for (int i = 0; i < 3; i++)
+                  SizedBox(
+                    width: 163.w,
+                    child: Shimmer.fromColors(
+                      baseColor: Colors.grey.shade300,
+                      highlightColor: Colors.grey.shade100,
+                      enabled: true,
+                      child: Image.asset('assets/tickets/ticket_$i.png'),
+                    ),
+                  ),
+              ],
+            ),
+          );
+        }
+      },
     );
   }
 }
@@ -123,12 +133,18 @@ class _BuildTabBarViewState extends State<_BuildTabBarView> with AutomaticKeepAl
         return TabBarView(
           controller: homeController.tabController,
           children: [
-            IndexedStack(
-              index: homeController.totalHomeViewType.value.index,
-              children: [
-                TicatsCardView(controller: homeController.totalPageController, ticketList: ticketController.totalTicketList, isMain: true),
-                TicatsGridView(ticketList: ticketController.totalTicketList),
-              ],
+            RefreshIndicator(
+              onRefresh: () async {
+                await Get.find<TicketController>().getTotalTicket();
+              },
+              child: IndexedStack(
+                index: homeController.totalHomeViewType.value.index,
+                children: [
+                  TicatsCardView(
+                      controller: homeController.totalPageController, ticketList: ticketController.totalTicketList, isMain: true),
+                  TicatsGridView(ticketList: ticketController.totalTicketList),
+                ],
+              ),
             ),
             if (ticketController.myTicketList.isNotEmpty) ...[
               IndexedStack(

@@ -16,9 +16,7 @@ class MainController extends GetxController {
   int get selectedIndex => _selectedIndex.value;
 
   void changePage(int index) {
-    _selectedIndex.value = index;
-
-    if (index == 0) {
+    if (index == 0 && _selectedIndex.value == 0) {
       if (Get.find<HomeController>().tabIndex.value == 0) {
         Get.find<HomeController>()
             .totalPageController
@@ -27,5 +25,7 @@ class MainController extends GetxController {
         Get.find<HomeController>().myPageController.animateToPage(0, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
       }
     }
+
+    _selectedIndex.value = index;
   }
 }

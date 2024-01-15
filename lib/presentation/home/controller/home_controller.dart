@@ -63,10 +63,11 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
   Future<void> saveCategory() async {
     try {
       TicatsMember member = await Get.find<AuthRepository>().saveCategorys(categoryList);
-
       AuthService.to.setMember(member);
-      await Get.find<TicketController>().getTotalTicket();
+
+      tabController.index = 0;
       Get.back();
+      await Get.find<TicketController>().getTotalTicket();
     } catch (e) {
       debugPrint(e.toString());
     }

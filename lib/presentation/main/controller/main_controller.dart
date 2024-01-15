@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ticats/presentation/home/controller/home_controller.dart';
 import 'package:ticats/presentation/home/pages/home_view.dart';
 import 'package:ticats/presentation/make_ticket/pages/my_ticket_view.dart';
 import 'package:ticats/presentation/my_page/pages/my_page_view.dart';
@@ -16,5 +17,15 @@ class MainController extends GetxController {
 
   void changePage(int index) {
     _selectedIndex.value = index;
+
+    if (index == 0) {
+      if (Get.find<HomeController>().tabIndex.value == 0) {
+        Get.find<HomeController>()
+            .totalPageController
+            .animateToPage(0, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+      } else {
+        Get.find<HomeController>().myPageController.animateToPage(0, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+      }
+    }
   }
 }

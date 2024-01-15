@@ -29,8 +29,8 @@ class SearchTicketController extends GetxController {
         await Get.find<TicketUseCases>().searchTicketUseCase.execute(
               categorys: categoryList,
               period: dateType.value,
-              start: rangeStart.value != null ? DateFormat('yyyy-MM-dd').format(rangeStart.value!) : null,
-              end: rangeStart.value != null ? DateFormat('yyyy-MM-dd').format(rangeEnd.value!) : null,
+              start: dateType.value == "day" && rangeStart.value != null ? DateFormat('yyyy-MM-dd').format(rangeStart.value!) : null,
+              end: dateType.value == "day" && rangeStart.value != null ? DateFormat('yyyy-MM-dd').format(rangeEnd.value!) : null,
               search: searchTextController.text,
             ),
       );
@@ -39,8 +39,8 @@ class SearchTicketController extends GetxController {
         await Get.find<TicketUseCases>().getTotalTicketUseCase.execute(
               categorys: categoryList,
               period: dateType.value,
-              start: rangeStart.value != null ? DateFormat('yyyy-MM-dd').format(rangeStart.value!) : null,
-              end: rangeStart.value != null ? DateFormat('yyyy-MM-dd').format(rangeEnd.value!) : null,
+              start: dateType.value == "day" && rangeStart.value != null ? DateFormat('yyyy-MM-dd').format(rangeStart.value!) : null,
+              end: dateType.value == "day" && rangeStart.value != null ? DateFormat('yyyy-MM-dd').format(rangeEnd.value!) : null,
               search: searchTextController.text,
             ),
       );

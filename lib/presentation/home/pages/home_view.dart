@@ -95,14 +95,14 @@ class _BuildTicketLoadingView extends GetView<HomeController> {
               spacing: 16.w,
               runSpacing: 18.w,
               children: [
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < 6; i++)
                   SizedBox(
                     width: 163.w,
                     child: Shimmer.fromColors(
                       baseColor: Colors.grey.shade300,
                       highlightColor: Colors.grey.shade100,
                       enabled: true,
-                      child: Image.asset('assets/tickets/ticket_$i.png'),
+                      child: Image.asset('assets/tickets/ticket_${i % 3}.png'),
                     ),
                   ),
               ],

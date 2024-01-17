@@ -17,12 +17,12 @@ class MainController extends GetxController {
 
   void changePage(int index) {
     if (index == 0 && _selectedIndex.value == 0) {
-      if (Get.find<HomeController>().tabIndex.value == 0) {
-        Get.find<HomeController>()
-            .totalPageController
-            .animateToPage(0, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
-      } else {
-        Get.find<HomeController>().myPageController.animateToPage(0, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+      final HomeController homeController = Get.find<HomeController>();
+
+      if (homeController.tabIndex.value == 0 && homeController.totalHomeViewType.value == HomeViewType.card) {
+        homeController.totalPageController.animateToPage(0, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+      } else if (homeController.tabIndex.value == 1 && homeController.myHomeViewType.value == HomeViewType.card) {
+        homeController.myPageController.animateToPage(0, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
       }
     }
 

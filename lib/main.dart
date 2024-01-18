@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flash/flash_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -36,6 +37,7 @@ void main() async {
 class MainApp extends StatelessWidget {
   MainApp({super.key});
 
+  final FirebaseAnalytics analytics = FirebaseAnalytics.instance;
   final navigatorKey = GlobalKey<NavigatorState>();
 
   @override
@@ -76,6 +78,9 @@ class MainApp extends StatelessWidget {
               child: child,
             );
           },
+          navigatorObservers: [
+            FirebaseAnalyticsObserver(analytics: analytics),
+          ],
           initialBinding: AppBinding(),
           initialRoute: RoutePath.login,
           navigatorKey: navigatorKey,

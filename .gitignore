@@ -409,3 +409,11 @@ hs_err_pid*
 !/gradle/wrapper/gradle-wrapper.jar
 
 # End of https://www.toptal.com/developers/gitignore/api/dart,flutter,android,androidstudio,macos,cocoapods,intellij,dotenv
+
+# FlutterFire Congigure
+lib/firebase_options.dart
+ios/Runner/GoogleService-Info.plist
+ios/firebase_app_id_file.json
+macos/Runner/GoogleService-Info.plist
+macos/firebase_app_id_file.json
+android/app/google-services.json

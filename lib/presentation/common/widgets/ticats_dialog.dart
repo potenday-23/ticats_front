@@ -396,7 +396,7 @@ showTextDialog(BuildContext context, String text) async {
     Text(text),
     duration: const Duration(milliseconds: 3500),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40.r)),
-    queue: true,
+    queue: false,
     backgroundColor: Colors.black,
     textStyle: AppTypeFace.xSmall14Medium.copyWith(color: Colors.white),
     padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 11.h),

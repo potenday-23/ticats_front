@@ -155,8 +155,10 @@ class _CategoryListView extends GetView<TicketController> {
                                         height: 31.w,
                                         child: CupertinoSwitch(
                                           activeColor: AppColor.primaryDark,
-                                          value: true,
-                                          onChanged: (value) {},
+                                          value: ticket.isPrivate! == "PRIVATE" ? true : false,
+                                          onChanged: (value) async {
+                                            await controller.changeTicketVisible(ticket, value);
+                                          },
                                         ),
                                       ),
                                     ],

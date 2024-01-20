@@ -617,11 +617,7 @@ Future<void> _showTicketDialog(BuildContext context, Ticket ticket, bool isMyTic
                         SizedBox(
                           width: 51.w,
                           height: 31.w,
-                          child: CupertinoSwitch(
-                            activeColor: AppColor.primaryDark,
-                            value: true,
-                            onChanged: (value) {},
-                          ),
+                          child: _VisibilitySwitch(ticket, ticket.isPrivate! == "PRIVATE" ? true : false),
                         ),
                       ],
                     ),
@@ -635,4 +631,32 @@ Future<void> _showTicketDialog(BuildContext context, Ticket ticket, bool isMyTic
       );
     },
   );
+}
+
+class _VisibilitySwitch extends StatefulWidget {
+  _VisibilitySwitch(this.ticket, this.isPrivate);
+
+  Ticket ticket;
+  bool isPrivate;
+
+  @override
+  State<_VisibilitySwitch> createState() => _VisibilitySwitchState();
+}
+
+class _VisibilitySwitchState extends State<_VisibilitySwitch> {
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoSwitch(
+      activeColor: AppColor.primaryDark,
+      value: widget.isPrivate,
+      onChanged: (value) async {
+        await Get.find<TicketController>().changeTicketVisible(widget.ticket, value);
+
+        setState(() {
+          widget.ticket = widget.ticket.copyWith(isPrivate: value ? "PRIVATE" : "PUBLIC");
+          widget.isPrivate = value;
+        });
+      },
+    );
+  }
 }

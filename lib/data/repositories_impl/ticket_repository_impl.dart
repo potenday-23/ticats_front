@@ -18,6 +18,13 @@ class TicketRepositoryImpl extends TicketRepository {
   final TicketAPI _api = Get.find();
 
   @override
+  Future<void> changeTicketVisible(int ticketId, bool isPrivate) {
+    return _api.changeTicketVisible(ticketId, {
+      'isPrivate': isPrivate ? "PRIVATE" : "PUBLIC",
+    });
+  }
+
+  @override
   Future<void> deleteTicket(int ticketId) async {
     await _api.deleteTicket(ticketId);
   }

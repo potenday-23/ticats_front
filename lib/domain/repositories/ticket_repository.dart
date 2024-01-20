@@ -1,6 +1,8 @@
 import '../entities/ticket.dart';
 
 abstract class TicketRepository {
+  Future<void> changeTicketVisible(int ticketId, bool isPrivate);
+
   Future<void> deleteTicket(int ticketId);
 
   Future<List<Ticket>> getTotalTicket({

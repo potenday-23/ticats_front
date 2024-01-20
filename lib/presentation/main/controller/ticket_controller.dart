@@ -13,6 +13,7 @@ class TicketController extends GetxController {
   GetLikesUseCase get getLikesUseCase => likeUseCases.getLikesUseCase;
   PostLikeUseCase get postLikeUseCase => likeUseCases.postLikeUseCase;
 
+  ChangeTicketVisibleUseCase get changeTicketVisibleUseCase => ticketUseCases.changeTicketVisibleUseCase;
   DeleteTicketUseCase get deleteTicketUseCase => ticketUseCases.deleteTicketUseCase;
   GetMyTicketUseCase get getMyTicketUseCase => ticketUseCases.getMyTicketUseCase;
   GetTotalTicketUseCase get getTotalTicketUseCase => ticketUseCases.getTotalTicketUseCase;
@@ -29,6 +30,27 @@ class TicketController extends GetxController {
     super.onInit();
 
     await getTickets();
+  }
+
+  Future<void> changeTicketVisible(Ticket ticket, bool isPrivate) async {
+    try {
+      await changeTicketVisibleUseCase.execute(ticket.id!, isPrivate);
+
+      myTicketList.remove(ticket);
+      myTicketList.add(ticket.copyWith(isPrivate: isPrivate ? "PRIVATE" : "PUBLIC"));
+      myTicketList.sort((a, b) => b.ticketDate.compareTo(a.ticketDate));
+
+      if (isPrivate) {
+        totalTicketList.remove(ticket);
+      } else {
+        totalTicketList.add(ticket.copyWith(isPrivate: isPrivate ? "PRIVATE" : "PUBLIC"));
+        totalTicketList.sort((a, b) => b.ticketDate.compareTo(a.ticketDate));
+      }
+
+      update();
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 
   Future<void> deleteTicket(int ticketId) async {

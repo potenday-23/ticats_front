@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_debouncer/flutter_debouncer.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -144,27 +145,34 @@ class _NickNameTextFieldState extends State<_NickNameTextField> {
           ),
           scrollPadding: const EdgeInsets.only(bottom: 200),
           onChanged: (value) async {
+            final Debouncer debouncer = Debouncer();
+
             bool hasError = true;
 
-            if (value.isNotEmpty && value.length > 10) {
-              nickErrorMessage = "10자 이하로 입력해주세요.";
-            } else if (!nickController.text.isValidNick()) {
-              nickErrorMessage = "닉네임을 확인해주세요.";
-            } else if (!await Get.find<EditProfileController>().checkNicknameUseCase.execute(nickController.text)) {
-              nickErrorMessage = "이미 사용중인 닉네임입니다.";
-            } else {
-              nickErrorMessage = "";
+            debouncer.debounce(
+              duration: const Duration(milliseconds: 100),
+              onDebounce: () async {
+                if (value.isNotEmpty && value.length > 10) {
+                  nickErrorMessage = "10자 이하로 입력해주세요.";
+                } else if (!nickController.text.isValidNick()) {
+                  nickErrorMessage = "닉네임을 확인해주세요.";
+                } else if (!await Get.find<EditProfileController>().checkNicknameUseCase.execute(nickController.text)) {
+                  nickErrorMessage = "이미 사용중인 닉네임입니다.";
+                } else {
+                  nickErrorMessage = "";
 
-              hasError = false;
-            }
+                  hasError = false;
+                }
 
-            setState(() {
-              if (hasError) {
-                Get.find<EditProfileController>().nickname.value = "";
-              } else {
-                Get.find<EditProfileController>().nickname.value = nickController.text;
-              }
-            });
+                setState(() {
+                  if (hasError) {
+                    Get.find<EditProfileController>().nickname.value = "";
+                  } else {
+                    Get.find<EditProfileController>().nickname.value = nickController.text;
+                  }
+                });
+              },
+            );
           },
           onTapOutside: (PointerDownEvent event) {
             FocusManager.instance.primaryFocus?.unfocus();

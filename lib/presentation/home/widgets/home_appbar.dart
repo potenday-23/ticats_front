@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:ticats/app/config/app_color.dart';
 import 'package:ticats/app/config/app_typeface.dart';
 import 'package:ticats/app/config/routes/route_path.dart';
+import 'package:ticats/app/service/ticats_service.dart';
 import 'package:ticats/presentation/main/controller/ticket_controller.dart';
 
 import '../controller/home_controller.dart';
@@ -24,7 +25,13 @@ class HomeAppBar extends GetView<HomeController> implements PreferredSizeWidget 
       leading: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.w),
         child: GestureDetector(
-          onTap: () => Get.toNamed(RoutePath.selectCategory),
+          onTap: () {
+            if (Get.find<HomeController>().categoryList.isEmpty) {
+              Get.find<HomeController>().categoryList.assignAll(TicatsService.to.ticatsCategories.map((e) => e.name));
+            }
+
+            Get.toNamed(RoutePath.selectCategory);
+          },
           child: SvgPicture.asset('assets/icons/category.svg', width: 24.w, height: 24.w),
         ),
       ),

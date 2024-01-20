@@ -9,6 +9,9 @@ part 'ticket_api.g.dart';
 abstract class TicketAPI {
   factory TicketAPI(Dio dioBuilder) = _TicketAPI;
 
+  @POST('/tickets/{ticketId}/status')
+  Future<void> changeTicketVisible(@Path('ticketId') int ticketId, @Body() Map<String, dynamic> body);
+
   @DELETE('/tickets/{ticketId}')
   Future<void> deleteTicket(@Path('ticketId') int ticketId);
 

@@ -1,4 +1,5 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flash/flash_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -27,6 +28,9 @@ void main() async {
 
   // Initialize Kakao SDK
   KakaoSdk.init(nativeAppKey: dotenv.env['KAKAO_NATIVE_APP_KEY']!);
+
+  // Initialize Firebase
+  await Firebase.initializeApp();
 
   // Initialize Flutter Native Splash and freeze the splash screen
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);

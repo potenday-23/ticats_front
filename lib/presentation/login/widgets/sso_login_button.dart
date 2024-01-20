@@ -52,7 +52,7 @@ class SSOLoginLayout extends GetView<LoginController> {
         if (needGuestButton) ...[
           TicatsButton(
             color: AppColor.grayC7,
-            onPressed: () => Get.offAllNamed(RoutePath.main),
+            onPressed: () => Get.offNamedUntil(RoutePath.main, ModalRoute.withName(RoutePath.main)),
             child: Text("로그인 없이 둘러보기", style: AppTypeFace.small18SemiBold),
           ),
         ],

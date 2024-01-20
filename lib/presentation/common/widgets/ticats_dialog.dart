@@ -9,6 +9,8 @@ import 'package:ticats/app/config/app_typeface.dart';
 import 'package:ticats/app/service/auth_service.dart';
 import 'package:ticats/app/util/email_util.dart';
 import 'package:ticats/domain/entities/ticket.dart';
+import 'package:ticats/presentation/home/controller/home_controller.dart';
+import 'package:ticats/presentation/main/controller/main_controller.dart';
 import 'package:ticats/presentation/main/controller/ticket_controller.dart';
 import 'package:ticats/presentation/make_ticket/controller/make_ticket_controller.dart';
 
@@ -162,6 +164,8 @@ showLogoutDialog(BuildContext context) async {
                       child: GestureDetector(
                         behavior: HitTestBehavior.translucent,
                         onTap: () async {
+                          Get.find<HomeController>().tabIndex.value = 0;
+                          Get.find<MainController>().changePage(0);
                           await AuthService.to.logout();
                           Get.back();
                           await Get.find<TicketController>().getTickets();

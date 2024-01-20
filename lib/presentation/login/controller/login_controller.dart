@@ -8,6 +8,8 @@ import 'package:ticats/domain/entities/ticats_member.dart';
 import 'package:ticats/domain/entities/member_oauth.dart';
 import 'package:ticats/domain/usecases/auth_use_cases.dart';
 import 'package:ticats/domain/usecases/member_use_cases.dart';
+import 'package:ticats/presentation/home/controller/home_controller.dart';
+import 'package:ticats/presentation/main/controller/main_controller.dart';
 import 'package:ticats/presentation/main/controller/ticket_controller.dart';
 
 enum SSOType { apple, kakao }
@@ -42,6 +44,8 @@ class LoginController extends GetxController {
           await AuthService.to.setMemberOAuth(memberOAuth);
 
           if (Get.isRegistered<TicketController>()) {
+            Get.find<MainController>().changePage(0);
+            Get.find<HomeController>().tabIndex.value = 0;
             Get.back();
             await Get.find<TicketController>().getTickets();
           } else {

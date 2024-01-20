@@ -218,8 +218,8 @@ class _ChartWidget extends GetView<StatisticController> {
         color: pieColors[i],
         value: controller.statisticsList[i].categoryPercent,
         title: controller.statisticsList[i].categoryPercent < 10
-            ? '${controller.statisticsList[i].categoryPercent.toInt()}%'
-            : '${controller.statisticsList[i].category}\n${controller.statisticsList[i].categoryPercent.toInt()}%',
+            ? '${controller.statisticsList[i].categoryPercent.toStringAsFixed(1)}%'
+            : '${controller.statisticsList[i].category}\n${controller.statisticsList[i].categoryPercent.toStringAsFixed(1)}%',
         radius: radius,
         titleStyle: AppTypeFace.xSmall16SemiBold,
       );

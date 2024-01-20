@@ -94,6 +94,8 @@ class __DownloadButtonState extends State<_DownloadButton> {
             )
           : Text("다운로드가 완료되었습니다!", style: AppTypeFace.xSmall12Bold.copyWith(color: Colors.white)),
       onTap: (startLoading, stopLoading, btnState) async {
+        ShareResultStatus? shareResult;
+
         if (btnState == ButtonState.idle) {
           startLoading();
 
@@ -103,13 +105,15 @@ class __DownloadButtonState extends State<_DownloadButton> {
               final imagePath = await File('${directory.path}/image.png').create();
               await imagePath.writeAsBytes(image);
 
-              await Share.shareXFiles([XFile(imagePath.path)]);
+              shareResult = await Share.shareXFiles([XFile(imagePath.path)]).then((value) => value.status);
             }
           });
 
-          setState(() {
-            isEnable = true;
-          });
+          if (shareResult == ShareResultStatus.success) {
+            setState(() {
+              isEnable = true;
+            });
+          }
 
           stopLoading();
         }

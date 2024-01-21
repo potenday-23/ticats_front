@@ -428,10 +428,11 @@ packages:
   fl_chart:
     dependency: "direct main"
     description:
-      name: fl_chart
-      sha256: fe6fec7d85975a99c73b9515a69a6e291364accfa0e4a5b3ce6de814d74b9a1c
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: main
+      resolved-ref: "3858b0bff76d4596fd3934613e0355fc0ea26f89"
+      url: "https://github.com/imaNNeo/fl_chart"
+    source: git
     version: "0.66.0"
   flash:
     dependency: "direct main"

@@ -15,7 +15,10 @@ dependencies:
   extended_image: ^8.2.0
   firebase_analytics: ^10.8.0
   firebase_core: ^2.24.2
-  fl_chart: ^0.66.0
+  fl_chart:
+    git:
+      url: https://github.com/imaNNeo/fl_chart
+      ref: main
   flash: ^3.1.0
   flip_card: ^0.7.0
   flutter:

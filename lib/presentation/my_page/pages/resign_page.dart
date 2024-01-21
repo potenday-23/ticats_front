@@ -71,7 +71,7 @@ class ResignPage extends GetView<ResignController> {
               SizedBox(height: 33.h),
               Obx(
                 () => TicatsButton(
-                  onPressed: () async => controller.postResign(),
+                  onPressed: () async => await controller.postResign(),
                   color: controller.isResignAgree.value && controller.resignReasonList.isNotEmpty
                       ? AppColor.systemPositiveBlue
                       : AppColor.grayE5,

@@ -12,7 +12,7 @@ enum SSOType { apple, kakao }
 class AuthService extends GetxController {
   static AuthService get to => Get.find();
 
-  late Rx<TicatsMember> _member = const TicatsMember(member: null, token: null).obs;
+  Rx<TicatsMember> _member = const TicatsMember(member: null, token: null).obs;
   TicatsMember? get member => _member.value;
 
   MemberOAuth? _memberOAuth;
@@ -68,6 +68,13 @@ class AuthService extends GetxController {
   }
 
   Future<void> logout() async {
+    _member.value = const TicatsMember(member: null, token: null);
+    _memberOAuth = null;
+    tempMemberOAuth = null;
+
+    await AuthLocalDataSource().deleteMember();
+    await AuthLocalDataSource().deleteMemberOAuth();
+
     if (memberOAuth?.socialType == 'KAKAO') {
       try {
         await UserApi.instance.logout();
@@ -75,12 +82,5 @@ class AuthService extends GetxController {
         debugPrint(e.toString());
       }
     }
-
-    _member.value = const TicatsMember(member: null, token: null);
-    _memberOAuth = null;
-    tempMemberOAuth = null;
-
-    await AuthLocalDataSource().deleteMember();
-    await AuthLocalDataSource().deleteMemberOAuth();
   }
 }

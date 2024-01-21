@@ -22,12 +22,7 @@ class ResignController extends GetxController {
 
       await AuthService.to.logout();
 
-      Get.find<HomeController>().tabIndex.value = 0;
-      Get.find<MainController>().changePage(0);
-
-      Get.toNamed(RoutePath.login);
-
-      await Get.find<TicketController>().getTickets();
+      Get.offAllNamed(RoutePath.login);
 
       await showTextDialog(Get.context!, "회원 탈퇴가 완료되었습니다 ㅜ.ㅜ");
     } catch (e) {

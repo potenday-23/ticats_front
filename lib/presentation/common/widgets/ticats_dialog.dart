@@ -165,13 +165,9 @@ showLogoutDialog(BuildContext context) async {
                       child: GestureDetector(
                         behavior: HitTestBehavior.translucent,
                         onTap: () async {
-                          Get.toNamed(RoutePath.login);
-
-                          Get.find<HomeController>().tabIndex.value = 0;
-                          Get.find<MainController>().changePage(0);
+                          Get.offAllNamed(RoutePath.login);
 
                           await AuthService.to.logout();
-                          await Get.find<TicketController>().getTickets();
                         },
                         child: Container(
                           height: 56.h,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ticats/presentation/home/controller/home_controller.dart';
 import 'package:ticats/presentation/home/pages/home_view.dart';
+import 'package:ticats/presentation/main/controller/ticket_controller.dart';
 import 'package:ticats/presentation/make_ticket/pages/my_ticket_view.dart';
 import 'package:ticats/presentation/my_page/pages/my_page_view.dart';
 
@@ -25,6 +26,8 @@ class MainController extends GetxController {
         homeController.myPageController.animateToPage(0, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
       }
     }
+
+    Get.find<TicketController>().isEditing.value = false;
 
     _selectedIndex.value = index;
   }

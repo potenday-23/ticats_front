@@ -57,21 +57,24 @@ class MyTicketView extends GetView<TicketController> {
             fit: StackFit.expand,
             children: [
               SingleChildScrollView(
-                child: Column(
-                  children: [
-                    ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: ticketMap.keys.length,
-                      itemBuilder: (context, index) {
-                        return _CategoryListView(
-                          categoryName: ticketMap.keys.toList()[index].name,
-                          tickets: ticketMap.values.toList()[index],
-                        );
-                      },
-                    ),
-                    SizedBox(height: 88.w),
-                  ],
+                child: GestureDetector(
+                  onTap: () => controller.isEditing.value = false,
+                  child: Column(
+                    children: [
+                      ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: ticketMap.keys.length,
+                        itemBuilder: (context, index) {
+                          return _CategoryListView(
+                            categoryName: ticketMap.keys.toList()[index].name,
+                            tickets: ticketMap.values.toList()[index],
+                          );
+                        },
+                      ),
+                      SizedBox(height: 88.w),
+                    ],
+                  ),
                 ),
               ),
               Positioned.fill(
@@ -80,7 +83,10 @@ class MyTicketView extends GetView<TicketController> {
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.w),
                     child: TicatsButton(
-                      onPressed: () => Get.toNamed(RoutePath.makeTicketInfo),
+                      onPressed: () {
+                        Get.toNamed(RoutePath.makeTicketInfo);
+                        controller.isEditing.value = false;
+                      },
                       color: AppColor.primaryNormal,
                       child: Text("티켓 만들기", style: AppTypeFace.small18Bold.copyWith(color: Colors.white)),
                     ),

@@ -53,9 +53,6 @@ class StatisticController extends GetxController {
       isStatisticLoading.value = true;
 
       yearStatisticsList.assignAll(await getYearStatisticsUseCase.execute());
-
-      yearStatisticsList.sort((a, b) => b.year.compareTo(a.year));
-      yearStatisticsList.sort((a, b) => b.month.compareTo(a.month));
     } catch (e) {
       if (kDebugMode) {
         print(e);

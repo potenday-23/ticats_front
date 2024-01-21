@@ -1,3 +1,4 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -162,7 +163,7 @@ class _ChartWidget extends GetView<StatisticController> {
       child: Obx(
         () => Column(
           children: [
-            DropdownButton(
+            DropdownButton2(
               value: controller.selectedMonth.value,
               items: controller.yearStatisticsList.map<DropdownMenuItem<YearStatistics>>((YearStatistics value) {
                 return DropdownMenuItem(value: value, child: Text('${value.year}년 ${value.month}월'));

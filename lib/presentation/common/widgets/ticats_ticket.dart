@@ -185,6 +185,7 @@ class TicketGridFront extends StatelessWidget {
                       ),
                     ),
                     Positioned.fill(
+                      bottom: 1.5,
                       child: Align(
                         alignment: Alignment.bottomCenter,
                         child: Image.asset('assets/tickets/ticket_${ticket.ticketType.index}_grid_gradient.png', fit: BoxFit.fitWidth),

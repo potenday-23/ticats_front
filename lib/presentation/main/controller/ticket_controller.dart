@@ -47,6 +47,12 @@ class TicketController extends GetxController {
         totalTicketList.sort((a, b) => b.ticketDate.compareTo(a.ticketDate));
       }
 
+      if (likeTicketList.contains(ticket)) {
+        likeTicketList.remove(ticket);
+        likeTicketList.add(ticket.copyWith(isPrivate: isPrivate ? "PRIVATE" : "PUBLIC"));
+        likeTicketList.sort((a, b) => b.ticketDate.compareTo(a.ticketDate));
+      }
+
       update();
     } catch (e) {
       debugPrint(e.toString());

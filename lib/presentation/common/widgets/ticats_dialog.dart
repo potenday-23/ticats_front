@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flash/flash_helper.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -109,10 +112,11 @@ Future<void> showErrorDialog(BuildContext context) async {
         title: const Text('이메일 전송 실패'),
         content: const Text('기본 메일 앱을 사용할 수 없어요.\n\n아래 이메일로 연락주시면 친절하게 답변해드릴게요.\n\n${AppConst.ticatsEmail}'),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('확인'),
-          ),
+          if (Platform.isIOS) ...[
+            CupertinoDialogAction(onPressed: () => Get.back(), child: const Text('확인')),
+          ] else if (Platform.isAndroid) ...[
+            TextButton(onPressed: () => Get.back(), child: const Text('확인')),
+          ],
         ],
       );
     },

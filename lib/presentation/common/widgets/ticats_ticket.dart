@@ -618,16 +618,16 @@ class _BuildTicketDialogState extends State<_BuildTicketDialog> {
               ),
             ],
           ),
-          SizedBox(height: 35.w),
+          SizedBox(height: 35.h),
         ],
-        SizedBox(width: 342.w, child: FlipCard(front: TicketCardFront(widget.ticket), back: TicketBack(widget.ticket))),
+        SizedBox(width: 342.h, child: FlipCard(front: TicketCardFront(widget.ticket), back: TicketBack(widget.ticket))),
         if (widget.isMyTicket) ...[
-          SizedBox(height: 10.w),
+          SizedBox(height: 10.h),
           Align(
             alignment: Alignment.centerRight,
             child: TicatsChip(
               '',
-              padding: EdgeInsets.fromLTRB(12.w, 4.5.w, 6.w, 4.5.w),
+              padding: EdgeInsets.fromLTRB(12.w, 4.5.h, 6.w, 4.5.h),
               radius: 16.r,
               color: AppColor.grayF2,
               child: Row(

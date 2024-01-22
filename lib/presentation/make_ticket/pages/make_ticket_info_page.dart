@@ -11,6 +11,7 @@ import 'package:ticats/app/config/app_color.dart';
 import 'package:ticats/app/config/app_typeface.dart';
 import 'package:ticats/app/config/routes/route_path.dart';
 import 'package:ticats/app/service/ticats_service.dart';
+import 'package:ticats/app/util/ga_util.dart';
 import 'package:ticats/domain/entities/category.dart';
 import 'package:ticats/presentation/common/widgets/ticats_appbar.dart';
 import 'package:ticats/presentation/common/widgets/ticats_button.dart';
@@ -142,7 +143,10 @@ class _SelectCategoryWidget extends GetView<MakeTicketController> {
               for (Category category in TicatsService.to.ticatsCategories) ...[
                 TicatsChip(
                   category.name,
-                  onTap: () => controller.selectedCategory.value = category,
+                  onTap: () async {
+                    controller.selectedCategory.value = category;
+                    await GAUtil().sendGAButtonEvent('make_ticket_category_button', {'category': category.name});
+                  },
                   color: controller.selectedCategory.value.id == category.id ? null : AppColor.grayF2,
                   textColor: controller.selectedCategory.value.id == category.id ? Colors.white : null,
                 ),

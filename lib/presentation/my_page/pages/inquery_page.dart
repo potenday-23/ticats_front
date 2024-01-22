@@ -6,6 +6,7 @@ import 'package:ticats/app/config/app_const.dart';
 
 import 'package:ticats/app/config/app_typeface.dart';
 import 'package:ticats/app/util/email_util.dart';
+import 'package:ticats/app/util/ga_util.dart';
 import 'package:ticats/presentation/common/widgets/ticats_appbar.dart';
 import 'package:ticats/presentation/common/widgets/ticats_button.dart';
 import 'package:ticats/presentation/common/widgets/ticats_dialog.dart';
@@ -48,6 +49,8 @@ class InqueryPage extends StatelessWidget {
                 } catch (e) {
                   if (context.mounted) await showErrorDialog(context);
                   debugPrint(e.toString());
+                } finally {
+                  await GAUtil().sendGAButtonEvent('inquery_button', {});
                 }
               },
             )),

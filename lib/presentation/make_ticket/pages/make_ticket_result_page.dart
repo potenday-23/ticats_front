@@ -11,6 +11,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:ticats/app/config/app_typeface.dart';
+import 'package:ticats/app/util/ga_util.dart';
 import 'package:ticats/presentation/common/widgets/ticats_appbar.dart';
 import 'package:ticats/presentation/common/widgets/ticats_ticket.dart';
 import 'package:ticats/presentation/main/controller/main_controller.dart';
@@ -114,6 +115,8 @@ class __DownloadButtonState extends State<_DownloadButton> {
               isEnable = true;
             });
           }
+
+          await GAUtil().sendGAButtonEvent('download_button', {'result': shareResult == ShareResultStatus.success ? 'true' : 'false'});
 
           stopLoading();
         }

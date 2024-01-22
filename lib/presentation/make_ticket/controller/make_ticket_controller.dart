@@ -4,6 +4,7 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ticats/app/service/ticats_service.dart';
+import 'package:ticats/app/util/ga_util.dart';
 import 'package:ticats/domain/entities/category.dart';
 import 'package:ticats/domain/entities/ticket.dart';
 import 'package:ticats/domain/usecases/ticket_use_cases.dart';
@@ -85,5 +86,11 @@ class MakeTicketController extends GetxController {
   Future<void> postTicket() async {
     makeTicket();
     await Get.find<TicketUseCases>().postTicketUseCase.execute(ticket.value);
+
+    await GAUtil().sendGAButtonEvent('make_ticket_button', {
+      'ticket_type': ticket.value.ticketType.toString(),
+      'ticket_layout': ticket.value.layoutType.toString(),
+      'ticket_is_private': ticket.value.isPrivate,
+    });
   }
 }

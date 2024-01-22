@@ -228,7 +228,7 @@ class _MyProfileWidget extends StatelessWidget {
                       ),
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: 12.h),
-                        child: const VerticalDivider(thickness: 1, color: AppColor.grayC7),
+                        child: const VerticalDivider(thickness: 1, width: 1, color: AppColor.grayC7),
                       ),
                       Expanded(
                         child: GestureDetector(
@@ -239,7 +239,7 @@ class _MyProfileWidget extends StatelessWidget {
                       ),
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: 12.h),
-                        child: const VerticalDivider(thickness: 1, color: AppColor.grayC7),
+                        child: const VerticalDivider(thickness: 1, width: 1, color: AppColor.grayC7),
                       ),
                       Expanded(
                         child: GestureDetector(

@@ -18,10 +18,16 @@ class TokenInterceptor extends QueuedInterceptorsWrapper {
     try {
       TicatsMember? member = AuthService.to.member;
 
-      var localToken = member?.token?.accessToken;
+      String localToken = member?.token?.accessToken! ?? '';
 
       if (AuthService.to.isTokenExpired) {
-        // TODO: Implement token refresh logic
+        try {
+          await AuthService.to.refreshToken();
+
+          options.headers[_authHeaderKey] = AuthService.to.member?.token?.accessToken;
+        } catch (e) {
+          if (kDebugMode) print(e);
+        }
       } else {
         options.headers[_authHeaderKey] = localToken;
       }
@@ -45,7 +51,14 @@ class TokenInterceptor extends QueuedInterceptorsWrapper {
         var latestToken = localToken;
 
         if ((requestToken == latestToken) || (requestToken.isEmpty && localToken!.isEmpty)) {
-          // latestToken = '$_bearer ${await _refreshToken()}';
+          // Refresh token
+          try {
+            await AuthService.to.refreshToken();
+
+            latestToken = AuthService.to.member?.token?.accessToken ?? '';
+          } catch (e) {
+            if (kDebugMode) print(e);
+          }
         }
 
         // Update header

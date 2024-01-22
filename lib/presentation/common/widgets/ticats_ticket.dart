@@ -572,91 +572,90 @@ Future<void> _showTicketDialog(BuildContext context, Ticket ticket, bool isMyTic
         content: GestureDetector(
           behavior: HitTestBehavior.translucent,
           onTap: () => Navigator.pop(context),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              if (isMyTicket) ...[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TicatsChip(
-                      '삭제',
-                      color: AppColor.grayE5,
-                      radius: 16.r,
-                      onTap: () async {
-                        bool result = await showDeleteDialog(context, ticket.id!);
-
-                        if (result) Get.back();
-                      },
-                    ),
-                    TicatsChip(
-                      '완료',
-                      color: const Color(0xFFFFE34F),
-                      radius: 16.r,
-                      onTap: () => Get.back(),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 35.w),
-              ],
-              SizedBox(width: 342.w, child: FlipCard(front: TicketCardFront(ticket), back: TicketBack(ticket))),
-              if (isMyTicket) ...[
-                SizedBox(height: 10.w),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TicatsChip(
-                    '',
-                    padding: EdgeInsets.fromLTRB(12.w, 4.5.w, 6.w, 4.5.w),
-                    radius: 16.r,
-                    color: AppColor.grayF2,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text('나만 보기', style: AppTypeFace.xSmall14Medium),
-                        SizedBox(width: 6.w),
-                        SizedBox(
-                          width: 51.w,
-                          height: 31.w,
-                          child: _VisibilitySwitch(ticket, ticket.isPrivate! == "PRIVATE" ? true : false),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const Spacer(),
-              ],
-            ],
-          ),
+          child: _BuildTicketDialog(ticket, isMyTicket),
         ),
       );
     },
   );
 }
 
-class _VisibilitySwitch extends StatefulWidget {
-  _VisibilitySwitch(this.ticket, this.isPrivate);
+class _BuildTicketDialog extends StatefulWidget {
+  _BuildTicketDialog(this.ticket, this.isMyTicket);
 
   Ticket ticket;
-  bool isPrivate;
+  final bool isMyTicket;
 
   @override
-  State<_VisibilitySwitch> createState() => _VisibilitySwitchState();
+  State<_BuildTicketDialog> createState() => _BuildTicketDialogState();
 }
 
-class _VisibilitySwitchState extends State<_VisibilitySwitch> {
+class _BuildTicketDialogState extends State<_BuildTicketDialog> {
   @override
   Widget build(BuildContext context) {
-    return CupertinoSwitch(
-      activeColor: AppColor.primaryDark,
-      value: widget.isPrivate,
-      onChanged: (value) async {
-        await Get.find<TicketController>().changeTicketVisible(widget.ticket, value);
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        if (widget.isMyTicket) ...[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TicatsChip(
+                '삭제',
+                color: AppColor.grayE5,
+                radius: 16.r,
+                onTap: () async {
+                  bool result = await showDeleteDialog(context, widget.ticket.id!);
 
-        setState(() {
-          widget.ticket = widget.ticket.copyWith(isPrivate: value ? "PRIVATE" : "PUBLIC");
-          widget.isPrivate = value;
-        });
-      },
+                  if (result) Get.back();
+                },
+              ),
+              TicatsChip(
+                '완료',
+                color: const Color(0xFFFFE34F),
+                radius: 16.r,
+                onTap: () => Get.back(),
+              ),
+            ],
+          ),
+          SizedBox(height: 35.w),
+        ],
+        SizedBox(width: 342.w, child: FlipCard(front: TicketCardFront(widget.ticket), back: TicketBack(widget.ticket))),
+        if (widget.isMyTicket) ...[
+          SizedBox(height: 10.w),
+          Align(
+            alignment: Alignment.centerRight,
+            child: TicatsChip(
+              '',
+              padding: EdgeInsets.fromLTRB(12.w, 4.5.w, 6.w, 4.5.w),
+              radius: 16.r,
+              color: AppColor.grayF2,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text('나만 보기', style: AppTypeFace.xSmall14Medium),
+                  SizedBox(width: 6.w),
+                  SizedBox(
+                    width: 51.w,
+                    height: 31.w,
+                    child: CupertinoSwitch(
+                      activeColor: AppColor.primaryDark,
+                      value: widget.ticket.isPrivate! == "PRIVATE" ? true : false,
+                      onChanged: (value) async {
+                        await Get.find<TicketController>().changeTicketVisible(widget.ticket, value);
+
+                        setState(() {
+                          widget.ticket = widget.ticket.copyWith(isPrivate: value ? "PRIVATE" : "PUBLIC");
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const Spacer(),
+        ],
+      ],
     );
   }
 }

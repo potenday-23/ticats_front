@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:ticats/app/config/app_typeface.dart';
 import 'package:ticats/app/service/ticats_service.dart';
+import 'package:ticats/app/util/ga_util.dart';
 import 'package:ticats/domain/entities/category.dart';
 import 'package:ticats/presentation/common/widgets/ticats_appbar.dart';
 import 'package:ticats/presentation/common/widgets/ticats_button.dart';
@@ -54,12 +55,14 @@ class _CategorySelectWidget extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Obx(
       () => GestureDetector(
-        onTap: () {
+        onTap: () async {
           if (controller.categoryList.contains(category.name)) {
             controller.categoryList.remove(category.name);
           } else {
             controller.categoryList.add(category.name);
           }
+
+          await GAUtil().sendGAButtonEvent('onboarding_category_button', {'category': category.name});
         },
         child: controller.categoryList.contains(category.name)
             ? Stack(

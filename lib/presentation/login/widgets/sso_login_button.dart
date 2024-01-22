@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:ticats/app/config/app_color.dart';
 import 'package:ticats/app/config/app_typeface.dart';
 import 'package:ticats/app/config/routes/route_path.dart';
+import 'package:ticats/app/util/ga_util.dart';
 import 'package:ticats/presentation/common/widgets/ticats_button.dart';
 
 import '../controller/login_controller.dart';
@@ -52,7 +53,10 @@ class SSOLoginLayout extends GetView<LoginController> {
         if (needGuestButton) ...[
           TicatsButton(
             color: AppColor.grayC7,
-            onPressed: () => Get.offNamedUntil(RoutePath.main, ModalRoute.withName(RoutePath.main)),
+            onPressed: () async {
+              Get.offAllNamed(RoutePath.main);
+              await GAUtil().sendGAButtonEvent('login_guest_button', {'press': true});
+            },
             child: Text("로그인 없이 둘러보기", style: AppTypeFace.small18SemiBold),
           ),
         ],

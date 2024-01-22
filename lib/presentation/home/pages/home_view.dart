@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:stacked_card_carousel/stacked_card_carousel.dart';
 import 'package:ticats/app/config/app_color.dart';
+import 'package:ticats/app/util/ga_util.dart';
 import 'package:ticats/presentation/common/views/ticats_card_view.dart';
 import 'package:ticats/presentation/common/views/ticats_grid_view.dart';
 import 'package:ticats/presentation/common/views/ticats_no_ticket_view.dart';
@@ -39,13 +40,18 @@ class HomeView extends GetView<HomeController> {
           shape: const CircleBorder(),
           backgroundColor: Colors.white,
           splashColor: AppColor.primaryNormal.withOpacity(0.5),
-          onPressed: () {
+          onPressed: () async {
             if (controller.tabIndex.value == 0) {
               controller.totalHomeViewType.value =
                   controller.totalHomeViewType.value == HomeViewType.card ? HomeViewType.grid : HomeViewType.card;
+
+              await GAUtil()
+                  .sendGAButtonEvent('view_type_button', {'type': controller.totalHomeViewType.value == HomeViewType.card ? 0 : 1});
             } else {
               controller.myHomeViewType.value =
                   controller.myHomeViewType.value == HomeViewType.card ? HomeViewType.grid : HomeViewType.card;
+
+              await GAUtil().sendGAButtonEvent('view_type_button', {'type': controller.myHomeViewType.value == HomeViewType.card ? 0 : 1});
             }
           },
           child: Obx(

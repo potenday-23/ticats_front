@@ -8,6 +8,7 @@ import 'package:ticats/app/config/app_color.dart';
 import 'package:ticats/app/config/app_typeface.dart';
 import 'package:ticats/app/config/routes/route_path.dart';
 import 'package:ticats/app/service/auth_service.dart';
+import 'package:ticats/app/util/ga_util.dart';
 import 'package:ticats/domain/entities/version.dart';
 import 'package:ticats/domain/usecases/my_page_use_cases.dart';
 import 'package:ticats/presentation/common/enum/term_type.dart';
@@ -131,7 +132,11 @@ class _MyPageListView extends StatelessWidget {
                 _MyPageTile(
                   "로그아웃",
                   icon: "logout",
-                  onTap: () => showLogoutDialog(context),
+                  onTap: () async {
+                    showLogoutDialog(context);
+
+                    await GAUtil().sendGAButtonEvent('logout_button', {});
+                  },
                 ),
                 _MyPageTile(
                   "탈퇴하기",

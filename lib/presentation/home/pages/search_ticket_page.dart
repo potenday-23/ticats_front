@@ -9,6 +9,7 @@ import 'package:ticats/app/config/app_typeface.dart';
 import 'package:ticats/app/config/routes/route_path.dart';
 import 'package:ticats/app/service/auth_service.dart';
 import 'package:ticats/app/service/ticats_service.dart';
+import 'package:ticats/app/util/ga_util.dart';
 import 'package:ticats/domain/entities/category.dart';
 import 'package:ticats/presentation/common/widgets/ticats_button.dart';
 import 'package:ticats/presentation/common/widgets/ticats_chip.dart';
@@ -156,6 +157,14 @@ class SearchTicketPage extends GetView<SearchTicketController> {
               onPressed: () async {
                 Get.toNamed(RoutePath.searchTicketResult);
                 await controller.searchTicket();
+
+                await GAUtil().sendGAButtonEvent('search_button', {
+                  'search_text': controller.searchTextController.text,
+                  'search_date': controller.dateType.value,
+                  'search_start_date': controller.rangeStart.value.toString(),
+                  'search_end_date': controller.rangeEnd.value.toString(),
+                  'search_category': controller.categoryList.toString(),
+                });
               },
               child: Text(
                 "검색하기",

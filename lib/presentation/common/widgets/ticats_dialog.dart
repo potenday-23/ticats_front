@@ -338,7 +338,7 @@ showReportDialog(BuildContext context, Ticket ticket) async {
                             onTap: () async {
                               try {
                                 Get.back();
-                                await EmailUtil().sendReportEmail('', '');
+                                await EmailUtil().sendReportEmail(ticket.id!);
                               } catch (e) {
                                 debugPrint(e.toString());
                                 if (context.mounted) await showErrorDialog(context);

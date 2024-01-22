@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
+import 'package:ticats/app/config/routes/route_path.dart';
 import 'package:ticats/data/datasources/local/auth_local_datasource.dart';
 import 'package:ticats/domain/entities/ticats_member.dart';
 import 'package:ticats/domain/entities/member_oauth.dart';
+import 'package:ticats/domain/usecases/auth_use_cases.dart';
 import 'package:ticats/presentation/common/widgets/ticats_dialog.dart';
 
 enum SSOType { apple, kakao }
@@ -25,7 +27,7 @@ class AuthService extends GetxController {
   bool get isTokenExpired {
     if (member!.member == null) return true;
 
-    return !member!.member!.updatedDate!.isAfter(DateTime.now().subtract(const Duration(days: 1)));
+    return !member!.member!.updatedDate!.isAfter(DateTime.now().subtract(const Duration(days: 5)));
   }
 
   @override
@@ -36,10 +38,14 @@ class AuthService extends GetxController {
 
     if (member!.member == null) {
     } else if (isTokenExpired) {
-      await logout();
-      await showTextDialog(Get.context!, "로그인이 만료되었습니다. 다시 로그인해주세요.");
+      if (await refreshToken()) {
+        Get.offAllNamed(RoutePath.main);
+      } else {
+        await logout();
+        await showTextDialog(Get.context!, "로그인이 만료되었습니다. 다시 로그인해주세요.");
+      }
     } else {
-      Get.offAllNamed('/main');
+      Get.offAllNamed(RoutePath.main);
     }
 
     FlutterNativeSplash.remove();
@@ -81,6 +87,19 @@ class AuthService extends GetxController {
       } catch (e) {
         debugPrint(e.toString());
       }
+    }
+  }
+
+  Future<bool> refreshToken() async {
+    try {
+      TicatsMember member = await Get.find<AuthUseCases>().loginUseCase.execute(memberOAuth!);
+
+      await setMember(member);
+
+      return true;
+    } catch (e) {
+      debugPrint(e.toString());
+      return false;
     }
   }
 }

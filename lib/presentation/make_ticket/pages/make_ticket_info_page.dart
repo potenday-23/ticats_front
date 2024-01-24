@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -264,7 +265,7 @@ class _SelectMemoWidget extends GetView<MakeTicketController> {
             children: [
               TextField(
                 controller: controller.memoController,
-                maxLines: 6,
+                maxLines: 5,
                 decoration: InputDecoration(
                   isDense: true,
                   border: OutlineInputBorder(
@@ -284,6 +285,16 @@ class _SelectMemoWidget extends GetView<MakeTicketController> {
                 onTapOutside: (PointerDownEvent event) {
                   FocusManager.instance.primaryFocus?.unfocus();
                 },
+                inputFormatters: [
+                  TextInputFormatter.withFunction((oldValue, newValue) {
+                    int newLines = newValue.text.split('\n').length;
+                    if (newLines > 5) {
+                      return oldValue;
+                    } else {
+                      return newValue;
+                    }
+                  }),
+                ],
               ),
               Positioned.fill(
                 right: 12.w,

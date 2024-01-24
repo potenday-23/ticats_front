@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:ticats/app/config/app_color.dart';
 import 'package:ticats/app/config/app_typeface.dart';
 import 'package:ticats/app/config/routes/route_path.dart';
+import 'package:ticats/app/service/permission_service.dart';
 import 'package:ticats/presentation/common/enum/term_type.dart';
 import 'package:ticats/presentation/common/widgets/ticats_appbar.dart';
 import 'package:ticats/presentation/common/widgets/ticats_button.dart';
@@ -33,8 +34,14 @@ class TermAgreePage extends StatelessWidget {
               GetX<RegisterController>(
                 builder: (controller) {
                   return TicatsButton(
-                    onPressed: () {
-                      if (controller.isRequiredAgree) Get.toNamed(RoutePath.requestPermssion);
+                    onPressed: () async {
+                      if (controller.isRequiredAgree) {
+                        if (await PermissionService.to.checkPhotoPermission()) {
+                          Get.toNamed(RoutePath.registerProfile);
+                        } else {
+                          Get.toNamed(RoutePath.requestPermssion);
+                        }
+                      }
                     },
                     color: controller.isRequiredAgree ? null : AppColor.grayC7,
                     child: Text("다음", style: AppTypeFace.small18Bold.copyWith(color: Colors.white)),

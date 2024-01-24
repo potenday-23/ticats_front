@@ -312,7 +312,7 @@ class TicketBack extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.topCenter,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 50),
+                    padding: const EdgeInsets.fromLTRB(24, 50, 24, 28),
                     child: Column(children: [
                       Text(ticket.title, style: AppTypeFace.small18SemiBold),
                       const SizedBox(height: 10),

@@ -36,7 +36,7 @@ class MakeTicketController extends GetxController {
   final RxInt selectedColor = 1.obs;
   final RxBool isPrivate = false.obs;
 
-  bool get isEnable => ticketImage.value!.path.isNotEmpty && titleTextLength.value != 0;
+  bool get isEnable => ticketImage.value!.path.isNotEmpty && titleTextLength.value != 0 && memoTextLength.value <= 100;
 
   Future<void> getImage() async {
     try {

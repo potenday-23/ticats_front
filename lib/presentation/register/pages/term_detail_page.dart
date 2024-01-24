@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:ticats/app/config/app_typeface.dart';
 import 'package:ticats/presentation/common/enum/term_type.dart';
 import 'package:ticats/presentation/common/widgets/ticats_appbar.dart';
 
@@ -22,13 +21,13 @@ class TermDetailPage extends StatelessWidget {
           if (snapshot.hasData) {
             return Markdown(
                 data: snapshot.data,
-                padding: EdgeInsets.symmetric(horizontal: 44.w, vertical: 36.w),
+                padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 32.w),
                 physics: const ClampingScrollPhysics(),
                 styleSheet: MarkdownStyleSheet(
-                  strong: AppTypeFace.xSmall14Medium,
-                  p: AppTypeFace.xSmall14Medium,
-                  listBullet: AppTypeFace.xSmall14Medium,
-                  blockSpacing: 2,
+                  strong: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w700, height: 1.3),
+                  p: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w500, height: 1.2),
+                  listBullet: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w500, height: 1),
+                  listBulletPadding: EdgeInsets.zero,
                 ));
           } else {
             return const Center(child: CircularProgressIndicator());

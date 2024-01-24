@@ -108,6 +108,7 @@ class _TicketNameWidget extends GetView<MakeTicketController> {
               isDense: true,
               border: InputBorder.none,
               counter: const SizedBox(),
+              contentPadding: EdgeInsets.zero,
               hintText: "티켓 제목을 입력해주세요.",
               hintStyle: AppTypeFace.small18SemiBold.copyWith(color: AppColor.gray98),
             ),

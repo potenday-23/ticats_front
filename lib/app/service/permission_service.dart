@@ -7,7 +7,7 @@ class PermissionService extends GetxService {
   Future<bool> checkPhotoPermission() async {
     final status = await Permission.photos.status;
 
-    return status == PermissionStatus.granted;
+    return status == PermissionStatus.granted || status == PermissionStatus.limited;
   }
 
   Future<bool> requestPhotoPermission() async {

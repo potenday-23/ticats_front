@@ -290,7 +290,10 @@ class _SelectMemoWidget extends GetView<MakeTicketController> {
                 bottom: 12.h,
                 child: Align(
                   alignment: Alignment.bottomRight,
-                  child: Text("${controller.memoTextLength.value}/100", style: AppTypeFace.xSmall14Medium.copyWith(color: AppColor.grayAE)),
+                  child: Text("${controller.memoTextLength.value}/100",
+                      style: AppTypeFace.xSmall14Medium.copyWith(
+                        color: controller.memoTextLength <= 100 ? AppColor.grayAE : AppColor.systemError,
+                      )),
                 ),
               ),
             ],

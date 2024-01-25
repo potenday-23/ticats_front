@@ -197,97 +197,108 @@ showLogoutDialog(BuildContext context) async {
 showPostTicketDialog(BuildContext context) async {
   return await showDialog(
     context: context,
+    barrierDismissible: false,
     builder: (BuildContext context) {
-      return Stack(
-        children: [
-          AlertDialog(
-            contentPadding: EdgeInsets.zero,
-            insetPadding: const EdgeInsets.symmetric(horizontal: 24.0),
-            scrollable: true,
-            backgroundColor: Colors.white,
-            surfaceTintColor: Colors.white,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.r)),
-            elevation: 0,
-            content: Padding(
-              padding: EdgeInsets.only(top: 40.w),
-              child: SizedBox(
-                width: double.maxFinite,
-                child: Column(
-                  children: [
-                    Text("짜잔~\n티켓을 완성했어요!", style: AppTypeFace.xSmall16SemiBold, textAlign: TextAlign.center),
-                    SizedBox(height: 12.w),
-                    GestureDetector(
-                      behavior: HitTestBehavior.translucent,
-                      onTap: () => Get.find<MakeTicketController>().isPrivate.value = !Get.find<MakeTicketController>().isPrivate.value,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+      return GetX<MakeTicketController>(builder: (controller) {
+        return PopScope(
+          canPop: !controller.isUploading.value,
+          child: GestureDetector(
+            onTap: () {
+              if (!controller.isUploading.value) Get.back();
+            },
+            behavior: HitTestBehavior.translucent,
+            child: Stack(
+              children: [
+                AlertDialog(
+                  contentPadding: EdgeInsets.zero,
+                  insetPadding: const EdgeInsets.symmetric(horizontal: 24.0),
+                  scrollable: true,
+                  backgroundColor: Colors.white,
+                  surfaceTintColor: Colors.white,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.r)),
+                  elevation: 0,
+                  content: Padding(
+                    padding: EdgeInsets.only(top: 40.w),
+                    child: SizedBox(
+                      width: double.maxFinite,
+                      child: Column(
                         children: [
-                          Padding(
-                            padding: EdgeInsets.all(11.w),
-                            child: SizedBox(
-                              width: 24.w,
-                              height: 24.w,
-                              child: Obx(
-                                () => Checkbox(
-                                  activeColor: AppColor.systemPositiveBlue,
-                                  value: Get.find<MakeTicketController>().isPrivate.value,
-                                  onChanged: (value) => Get.find<MakeTicketController>().isPrivate.value = value!,
+                          Text("짜잔~\n티켓을 완성했어요!", style: AppTypeFace.xSmall16SemiBold, textAlign: TextAlign.center),
+                          SizedBox(height: 12.w),
+                          GestureDetector(
+                            behavior: HitTestBehavior.translucent,
+                            onTap: () =>
+                                Get.find<MakeTicketController>().isPrivate.value = !Get.find<MakeTicketController>().isPrivate.value,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.all(11.w),
+                                  child: SizedBox(
+                                    width: 24.w,
+                                    height: 24.w,
+                                    child: Obx(
+                                      () => Checkbox(
+                                        activeColor: AppColor.systemPositiveBlue,
+                                        value: Get.find<MakeTicketController>().isPrivate.value,
+                                        onChanged: (value) => Get.find<MakeTicketController>().isPrivate.value = value!,
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                Padding(
+                                  padding: EdgeInsets.only(right: 24.w),
+                                  child: Text("나만 보기", style: AppTypeFace.small18SemiBold),
+                                ),
+                              ],
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(right: 24.w),
-                            child: Text("나만 보기", style: AppTypeFace.small18SemiBold),
+                          SizedBox(height: 6.w),
+                          GestureDetector(
+                            onTap: () async {
+                              try {
+                                controller.isUploading.value = true;
+                                await controller.postTicket();
+                                await Get.find<TicketController>().getTickets();
+                                controller.isUploading.value = false;
+
+                                Get.back(result: true);
+                              } catch (e) {
+                                debugPrint(e.toString());
+                              }
+                            },
+                            child: Container(
+                              width: double.maxFinite,
+                              height: 56.w,
+                              decoration: BoxDecoration(
+                                color: AppColor.primaryDark,
+                                borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(14.r),
+                                  bottomRight: Radius.circular(14.r),
+                                ),
+                              ),
+                              child: Center(
+                                child: controller.isUploading.value
+                                    ? const CircularProgressIndicator()
+                                    : Text("내 티켓 저장하기", style: AppTypeFace.small18SemiBold.copyWith(color: Colors.white)),
+                              ),
+                            ),
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(height: 6.w),
-                    GetX<MakeTicketController>(builder: (controller) {
-                      return GestureDetector(
-                        onTap: () async {
-                          try {
-                            controller.isUploading.value = true;
-                            await controller.postTicket();
-                            await Get.find<TicketController>().getTickets();
-                            controller.isUploading.value = false;
-
-                            Get.back(result: true);
-                          } catch (e) {
-                            debugPrint(e.toString());
-                          }
-                        },
-                        child: Container(
-                          width: double.maxFinite,
-                          height: 56.w,
-                          decoration: BoxDecoration(
-                            color: AppColor.primaryDark,
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(14.r),
-                              bottomRight: Radius.circular(14.r),
-                            ),
-                          ),
-                          child: Center(
-                            child: controller.isUploading.value
-                                ? const CircularProgressIndicator()
-                                : Text("내 티켓 저장하기", style: AppTypeFace.small18SemiBold.copyWith(color: Colors.white)),
-                          ),
-                        ),
-                      );
-                    }),
-                  ],
+                  ),
                 ),
-              ),
+                Positioned.fill(
+                  left: 50.w,
+                  top: -310.w,
+                  child: Align(alignment: Alignment.center, child: SvgPicture.asset('assets/cats/cat_enjoy.svg')),
+                ),
+              ],
             ),
           ),
-          Positioned.fill(
-            left: 50.w,
-            top: -310.w,
-            child: Align(alignment: Alignment.center, child: SvgPicture.asset('assets/cats/cat_enjoy.svg')),
-          ),
-        ],
-      );
+        );
+      });
     },
   );
 }

@@ -83,11 +83,6 @@ class TicketController extends GetxController {
     if (AuthService.to.isLogin) {
       myTicketList.assignAll(await getMyTicketUseCase.execute(categorys: AuthService.to.member!.member!.categorys));
       likeTicketList.assignAll(await getLikesUseCase.execute());
-
-      // HACK : 좋아요한 티켓의 isLike가 null로 옴
-      for (int i = 0; i < likeTicketList.length; i++) {
-        likeTicketList[i] = likeTicketList[i].copyWith(isLike: true);
-      }
     }
     totalTicketList.assignAll(await getTotalTicketUseCase.execute(categorys: AuthService.to.member?.member?.categorys ?? []));
     isLoading.value = false;
@@ -99,7 +94,12 @@ class TicketController extends GetxController {
     isLoading.value = true;
 
     totalTicketList.clear();
+    likeTicketList.clear();
+
     totalTicketList.assignAll(await getTotalTicketUseCase.execute(categorys: AuthService.to.member?.member?.categorys ?? []));
+    if (AuthService.to.isLogin) {
+      likeTicketList.assignAll(await getLikesUseCase.execute());
+    }
 
     isLoading.value = false;
 

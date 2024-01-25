@@ -11,6 +11,7 @@ import 'package:intl/intl.dart';
 import 'package:ticats/app/config/app_color.dart';
 import 'package:ticats/app/config/app_typeface.dart';
 import 'package:ticats/app/config/routes/route_path.dart';
+import 'package:ticats/app/extension/input_formatter.dart';
 import 'package:ticats/app/service/ticats_service.dart';
 import 'package:ticats/app/util/ga_util.dart';
 import 'package:ticats/domain/entities/category.dart';
@@ -113,8 +114,11 @@ class _TicketNameWidget extends GetView<MakeTicketController> {
               hintStyle: AppTypeFace.small18SemiBold.copyWith(color: AppColor.gray98),
             ),
             style: AppTypeFace.small18SemiBold,
-            maxLength: 20,
             onChanged: (value) => controller.titleTextLength.value = value.length,
+            inputFormatters: [
+              LangLengthLimitingTextInputFormatter(18),
+              RemoveEmojiInputFormatter(),
+            ],
           ),
         ),
       ],

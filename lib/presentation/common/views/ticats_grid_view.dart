@@ -13,9 +13,9 @@ class TicatsGridView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
+        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),
         child: Wrap(
-          spacing: 16.w,
+          spacing: 14.w,
           runSpacing: 18.w,
           children: [
             for (final ticket in ticketList) TicketGridFront(ticket, isSearch: isSearch),

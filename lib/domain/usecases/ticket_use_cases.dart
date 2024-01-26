@@ -43,10 +43,7 @@ class GetMyTicketUseCase {
     String? end,
     String? search,
   }) async {
-    String categorysString = categorys!.join(',');
-
     List<Ticket> result = await _repository.getMyTicket(
-      categorys: categorysString,
       period: period,
       start: start,
       end: end,

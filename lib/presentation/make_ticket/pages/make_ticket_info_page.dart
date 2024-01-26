@@ -104,22 +104,21 @@ class _TicketNameWidget extends GetView<MakeTicketController> {
         Text("* ", style: AppTypeFace.small18SemiBold.copyWith(color: AppColor.systemError)),
         Expanded(
           child: TextField(
-            controller: controller.titleController,
-            decoration: InputDecoration(
-              isDense: true,
-              border: InputBorder.none,
-              counter: const SizedBox(),
-              contentPadding: EdgeInsets.zero,
-              hintText: "티켓 제목을 입력해주세요.",
-              hintStyle: AppTypeFace.small18SemiBold.copyWith(color: AppColor.gray98),
-            ),
-            style: AppTypeFace.small18SemiBold,
-            onChanged: (value) => controller.titleTextLength.value = value.length,
-            inputFormatters: [
-              LangLengthLimitingTextInputFormatter(18),
-              RemoveEmojiInputFormatter(),
-            ],
-          ),
+              controller: controller.titleController,
+              decoration: InputDecoration(
+                isDense: true,
+                border: InputBorder.none,
+                counter: const SizedBox(),
+                contentPadding: EdgeInsets.zero,
+                hintText: "티켓 제목을 입력해주세요.",
+                hintStyle: AppTypeFace.small18SemiBold.copyWith(color: AppColor.gray98),
+              ),
+              style: AppTypeFace.small18SemiBold,
+              onChanged: (value) => controller.titleTextLength.value = value.length,
+              inputFormatters: [
+                LangLengthLimitingTextInputFormatter(18),
+                FilteringTextInputFormatter.deny(RegExp(emojiRegExp)),
+              ]),
         ),
       ],
     );

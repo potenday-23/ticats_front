@@ -28,7 +28,7 @@ class SelectCategoryPage extends StatelessWidget {
               Text("관심 있는 카테고리를 선택해주세요.", style: AppTypeFace.small20Bold),
               SizedBox(height: 16.h),
               Wrap(
-                spacing: 16.w,
+                spacing: 12.w,
                 runSpacing: 24.h,
                 children: [for (final Category category in TicatsService.to.ticatsCategories) _CategorySelectWidget(category)],
               ),
@@ -67,7 +67,7 @@ class _CategorySelectWidget extends GetView<HomeController> {
         child: controller.categoryList.contains(category.name)
             ? Stack(
                 children: [
-                  CachedNetworkImage(imageUrl: category.clickImage, width: 163.w, height: 121.h, fit: BoxFit.contain),
+                  CachedNetworkImage(imageUrl: category.clickImage, width: 155.w, fit: BoxFit.cover),
                   Positioned.fill(
                     child: Align(
                       alignment: Alignment.center,

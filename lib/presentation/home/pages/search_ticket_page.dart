@@ -47,131 +47,137 @@ class SearchTicketPage extends GetView<SearchTicketController> {
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (AuthService.to.isLogin) ...[
-              SizedBox(height: 32.h),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: CustomScrollView(
+          slivers: [
+            SliverFillRemaining(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("내 티켓만 보기", style: AppTypeFace.small18SemiBold),
-                  Obx(
-                    () => CupertinoSwitch(
-                      activeColor: AppColor.primaryDark,
-                      value: controller.isMyTicket.value,
-                      onChanged: (value) => controller.isMyTicket.value = value,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-            SizedBox(height: 28.h),
-            Text("기간", style: AppTypeFace.small18SemiBold),
-            SizedBox(height: 12.h),
-            Obx(
-              () => Wrap(
-                spacing: 12.w,
-                runSpacing: 12.h,
-                children: [
-                  TicatsChip(
-                    "일주일",
-                    onTap: () => controller.dateType.value = "week",
-                    color: controller.dateType.value == "week" ? null : AppColor.grayE5,
-                    textColor: controller.dateType.value == "week" ? Colors.white : null,
-                  ),
-                  TicatsChip(
-                    "한 달",
-                    onTap: () => controller.dateType.value = "month",
-                    color: controller.dateType.value == "month" ? null : AppColor.grayE5,
-                    textColor: controller.dateType.value == "month" ? Colors.white : null,
-                  ),
-                  TicatsChip(
-                    "6개월",
-                    onTap: () => controller.dateType.value = "6month",
-                    color: controller.dateType.value == "6month" ? null : AppColor.grayE5,
-                    textColor: controller.dateType.value == "6month" ? Colors.white : null,
-                  ),
-                  TicatsChip(
-                    controller.dateType.value == "day"
-                        ? "${DateFormat('yy.MM.dd').format(controller.rangeStart.value!)} ~ ${DateFormat('yy.MM.dd').format(controller.rangeEnd.value!)}"
-                        : "직접 지정",
-                    onTap: () async {
-                      List<DateTime?>? result = await showCalendarDatePicker2Dialog(
-                        dialogBackgroundColor: Colors.white,
-                        context: context,
-                        config: CalendarDatePicker2WithActionButtonsConfig(
-                          calendarType: CalendarDatePicker2Type.range,
-                          lastDate: DateTime.now(),
+                  if (AuthService.to.isLogin) ...[
+                    SizedBox(height: 32.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("내 티켓만 보기", style: AppTypeFace.small18SemiBold),
+                        Obx(
+                          () => CupertinoSwitch(
+                            activeColor: AppColor.primaryDark,
+                            value: controller.isMyTicket.value,
+                            onChanged: (value) => controller.isMyTicket.value = value,
+                          ),
                         ),
-                        dialogSize: const Size(325, 400),
-                        value: [],
-                        borderRadius: BorderRadius.circular(15),
-                      );
-
-                      if (result != null && result.length == 2) {
-                        controller.rangeStart.value = result[0];
-                        controller.rangeEnd.value = result[1];
-
-                        controller.dateType.value = "day";
-                      } else if (result != null && result.length == 1) {
-                        controller.rangeStart.value = result[0];
-                        controller.rangeEnd.value = result[0];
-
-                        controller.dateType.value = "day";
-                      }
-                    },
-                    color: controller.dateType.value == "day" ? null : AppColor.grayE5,
-                    textColor: controller.dateType.value == "day" ? Colors.white : null,
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 28.h),
-            Text("카테고리", style: AppTypeFace.small18SemiBold),
-            SizedBox(height: 12.h),
-            Obx(
-              () => Wrap(
-                spacing: 12.w,
-                runSpacing: 12.h,
-                children: [
-                  for (Category category in TicatsService.to.ticatsCategories)
-                    TicatsChip(
-                      category.name,
-                      onTap: () {
-                        if (controller.categoryList.contains(category.name)) {
-                          controller.categoryList.remove(category.name);
-                        } else {
-                          controller.categoryList.add(category.name);
-                        }
-                      },
-                      color: controller.categoryList.contains(category.name) ? null : AppColor.grayE5,
-                      textColor: controller.categoryList.contains(category.name) ? Colors.white : null,
+                      ],
                     ),
+                  ],
+                  SizedBox(height: 28.h),
+                  Text("기간", style: AppTypeFace.small18SemiBold),
+                  SizedBox(height: 12.h),
+                  Obx(
+                    () => Wrap(
+                      spacing: 12.w,
+                      runSpacing: 12.h,
+                      children: [
+                        TicatsChip(
+                          "일주일",
+                          onTap: () => controller.dateType.value = "week",
+                          color: controller.dateType.value == "week" ? null : AppColor.grayE5,
+                          textColor: controller.dateType.value == "week" ? Colors.white : null,
+                        ),
+                        TicatsChip(
+                          "한 달",
+                          onTap: () => controller.dateType.value = "month",
+                          color: controller.dateType.value == "month" ? null : AppColor.grayE5,
+                          textColor: controller.dateType.value == "month" ? Colors.white : null,
+                        ),
+                        TicatsChip(
+                          "6개월",
+                          onTap: () => controller.dateType.value = "6month",
+                          color: controller.dateType.value == "6month" ? null : AppColor.grayE5,
+                          textColor: controller.dateType.value == "6month" ? Colors.white : null,
+                        ),
+                        TicatsChip(
+                          controller.dateType.value == "day"
+                              ? "${DateFormat('yy.MM.dd').format(controller.rangeStart.value!)} ~ ${DateFormat('yy.MM.dd').format(controller.rangeEnd.value!)}"
+                              : "직접 지정",
+                          onTap: () async {
+                            List<DateTime?>? result = await showCalendarDatePicker2Dialog(
+                              dialogBackgroundColor: Colors.white,
+                              context: context,
+                              config: CalendarDatePicker2WithActionButtonsConfig(
+                                calendarType: CalendarDatePicker2Type.range,
+                                lastDate: DateTime.now(),
+                              ),
+                              dialogSize: const Size(325, 400),
+                              value: [],
+                              borderRadius: BorderRadius.circular(15),
+                            );
+
+                            if (result != null && result.length == 2) {
+                              controller.rangeStart.value = result[0];
+                              controller.rangeEnd.value = result[1];
+
+                              controller.dateType.value = "day";
+                            } else if (result != null && result.length == 1) {
+                              controller.rangeStart.value = result[0];
+                              controller.rangeEnd.value = result[0];
+
+                              controller.dateType.value = "day";
+                            }
+                          },
+                          color: controller.dateType.value == "day" ? null : AppColor.grayE5,
+                          textColor: controller.dateType.value == "day" ? Colors.white : null,
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 28.h),
+                  Text("카테고리", style: AppTypeFace.small18SemiBold),
+                  SizedBox(height: 12.h),
+                  Obx(
+                    () => Wrap(
+                      spacing: 12.w,
+                      runSpacing: 12.h,
+                      children: [
+                        for (Category category in TicatsService.to.ticatsCategories)
+                          TicatsChip(
+                            category.name,
+                            onTap: () {
+                              if (controller.categoryList.contains(category.name)) {
+                                controller.categoryList.remove(category.name);
+                              } else {
+                                controller.categoryList.add(category.name);
+                              }
+                            },
+                            color: controller.categoryList.contains(category.name) ? null : AppColor.grayE5,
+                            textColor: controller.categoryList.contains(category.name) ? Colors.white : null,
+                          ),
+                      ],
+                    ),
+                  ),
+                  const Spacer(),
+                  TicatsButton(
+                    color: AppColor.primaryNormal,
+                    onPressed: () async {
+                      Get.toNamed(RoutePath.searchTicketResult);
+                      await controller.searchTicket();
+
+                      await GAUtil().sendGAButtonEvent('search_button', {
+                        'search_text': controller.searchTextController.text,
+                        'search_date': controller.dateType.value,
+                        'search_start_date': controller.rangeStart.value.toString(),
+                        'search_end_date': controller.rangeEnd.value.toString(),
+                        'search_category': controller.categoryList.toString(),
+                      });
+                    },
+                    child: Text(
+                      "검색하기",
+                      style: AppTypeFace.small18Bold.copyWith(color: Colors.white),
+                    ),
+                  ),
+                  SizedBox(height: MediaQuery.of(context).padding.bottom + 16.h),
                 ],
               ),
             ),
-            const Spacer(),
-            TicatsButton(
-              color: AppColor.primaryNormal,
-              onPressed: () async {
-                Get.toNamed(RoutePath.searchTicketResult);
-                await controller.searchTicket();
-
-                await GAUtil().sendGAButtonEvent('search_button', {
-                  'search_text': controller.searchTextController.text,
-                  'search_date': controller.dateType.value,
-                  'search_start_date': controller.rangeStart.value.toString(),
-                  'search_end_date': controller.rangeEnd.value.toString(),
-                  'search_category': controller.categoryList.toString(),
-                });
-              },
-              child: Text(
-                "검색하기",
-                style: AppTypeFace.small18Bold.copyWith(color: Colors.white),
-              ),
-            ),
-            SizedBox(height: MediaQuery.of(context).padding.bottom + 16.h),
           ],
         ),
       ),
